@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MOBDEVE Project</string>
+    <string name="title_activity_main_window_compose">MainWindowCompose</string>
 </resources>
