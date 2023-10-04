@@ -1,11 +1,11 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.SkillPriority
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
@@ -39,44 +40,60 @@ fun SkillEntry(skill : Skill){
                 .padding(20.dp)
                 .padding(start = 40.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
+            Column(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Column(
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(end = 16.dp),
-                    horizontalAlignment = Alignment.Start
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Max)
                 ) {
-                    // Skill name
-                    Text(
+                    Column(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        text = skill.name,
-                        color = TextColor
+                            .weight(8.0f)
+                            .fillMaxHeight(),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        // Skill name
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = skill.name,
+                            color = TextColor
+                        )
+
+                        // Skill description
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = skill.description,
+                            color = TextColor
+                        )
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .weight(1.0f)
+                            .fillMaxHeight()
                     )
 
-                    // Skill description
-                    Text(
+                    Column(
                         modifier = Modifier
-                            .fillMaxSize(),
-                        text = skill.description,
-                        color = TextColor
-                    )
-
-                    ProgressBar(min = 0f, max = 100f, value = skill.xp.toFloat())
+                            .weight(2.0f)
+                            .fillMaxHeight()
+                    ) {
+                        PriorityIndicator(skill.priority)
+                    }
                 }
 
-                Button(
+                Spacer(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .align(Alignment.CenterVertically),
-                    onClick = { /*  TODO: Add button click logic */ }
+                        .height(4.dp)
+                )
+                Box(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = "Play"
-                    )
+                    ProgressBar(min = 0f, max = 100f, value = skill.xp.toFloat())
                 }
             }
         }
@@ -84,14 +101,26 @@ fun SkillEntry(skill : Skill){
 }
 
 @Composable
+fun PriorityIndicator(priority : SkillPriority){
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(AccentColor),
+        text = priority.name
+    )
+}
+
+@Composable
 fun ProgressBar(min : Float, max : Float, value : Float){
     Box(
         modifier = Modifier
-            .fillMaxHeight(),
-        contentAlignment = Alignment.BottomCenter
+            .fillMaxHeight()
+            .fillMaxWidth(),
+        contentAlignment = Alignment.BottomStart,
     ) {
         LinearProgressIndicator(
             modifier = Modifier
+                .fillMaxWidth()
                 .height(8.dp),
             progress = (value - min) / (max - min),
             trackColor = Color.White,
