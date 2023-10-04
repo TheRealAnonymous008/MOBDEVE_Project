@@ -65,6 +65,12 @@ fun TaskEntry(task : Task){
                         text = task.description,
                         color = TextColor
                     )
+
+                    // Display timestamp info
+                    Text(
+                        text = task.timeInfo.getDurationAsString(),
+                        color = TextColor
+                    )
                 }
 
                 Column (
