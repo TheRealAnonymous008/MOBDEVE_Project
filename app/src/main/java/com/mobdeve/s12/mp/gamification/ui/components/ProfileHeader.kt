@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -43,55 +44,41 @@ fun ProfileHeader(profile : Profile){
             .height(ProfileHeaderParameters.HEADER_SIZE)
     ) {
         // Profile Avatar
-        Box(
+        Image(painter = painterResource(profile.avatarId),
+            contentDescription = "Profile Avatar",
             modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .background(SecondaryColor)
-                .height(ProfileHeaderParameters.IMAGE_SIZE)
                 .width(ProfileHeaderParameters.IMAGE_SIZE)
-        ) {
-            Image(painter = painterResource(profile.avatarId),
-                contentDescription = "Profile Avatar",
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .fillMaxWidth()
-                    .size(ProfileHeaderParameters.IMAGE_SIZE, ProfileHeaderParameters.IMAGE_SIZE),
-                contentScale = ContentScale.FillBounds
-            )
-        }
+                .fillMaxHeight()
+                .background(SecondaryColor)
+                .size(ProfileHeaderParameters.IMAGE_SIZE, ProfileHeaderParameters.IMAGE_SIZE),
+            contentScale = ContentScale.FillBounds
+        )
 
         // Other half
         Column(
             modifier = Modifier
                 .background(PrimaryColor)
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .fillMaxSize()
         ) {
             // Username
-            Box(
+            Text(
                 modifier = Modifier
                     .background(PrimaryColor)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = profile.name,
-                    color = TextColor,
-                )
-            }
+                    .fillMaxWidth(),
+                text = profile.name,
+                color = TextColor,
+            )
 
             Spacer(modifier = Modifier.height(10.dp))
+
             // Description
-            Box(
+            Text(
                 modifier = Modifier
                     .background(PrimaryColor)
-                    .fillMaxHeight()
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = profile.description,
-                    color = TextColor,
-                )
-            }
+                    .fillMaxSize(),
+                text = profile.description,
+                color = TextColor,
+            )
         }
     }
 }

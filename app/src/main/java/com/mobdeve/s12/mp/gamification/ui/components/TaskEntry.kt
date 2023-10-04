@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -26,48 +27,48 @@ fun TaskEntry(task : Task){
     ){
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .background(PrimaryColor)
-                .fillMaxWidth()
                 .padding(20.dp)
                 .padding(start = 40.dp)
         ) {
             Row(
-
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
                 Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.8f)
+                        .padding(end = 16.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    // Task title
+                    // Skill name
                     Text(
+                        modifier = Modifier
+                            .fillMaxSize(),
                         text = task.title,
                         color = TextColor
                     )
 
-                    // Task description
+                    // Skill description
                     Text(
+                        modifier = Modifier
+                            .fillMaxSize(),
                         text = task.description,
                         color = TextColor
                     )
 
-                    // Display timestamp info
-                    Text(
-                        text = task.timeInfo.getDurationAsString(),
-                        color = TextColor
-                    )
                 }
 
-                Column (
-                    modifier = Modifier.
-                    fillMaxWidth(),
-                    horizontalAlignment = Alignment.End
-                ){
-                    Button(
-                        onClick = { /*  TODO: Add button click logic */ }
-                    ) {
-                        Text(
-                            text = "Play"
-                        )
-                    }
+                Button(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .align(Alignment.CenterVertically),
+                    onClick = { /*  TODO: Add button click logic */ }
+                ) {
+                    Text(
+                        text = "Play"
+                    )
                 }
             }
         }
