@@ -9,6 +9,7 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
+import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import java.time.LocalDateTime
 
@@ -25,8 +26,7 @@ fun PreviewMainWindow() {
         "Generic Description",
         R.drawable.download)
 
-    val taskList = ArrayList<Task>()
-    taskList.add(createDefaultTask())
+    val taskList = createDefaultTaskList()
 
     MainWindow(profile, taskList)
 }

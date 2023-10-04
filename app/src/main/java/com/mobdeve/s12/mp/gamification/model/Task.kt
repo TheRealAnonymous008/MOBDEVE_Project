@@ -25,3 +25,24 @@ fun createDefaultTask(): Task {
         )
     )
 }
+
+fun createDefaultTaskList() : ArrayList<Task>{
+    val taskList : ArrayList<Task> = ArrayList<Task>()
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+    taskList.add(createDefaultTask())
+
+    return taskList
+}
