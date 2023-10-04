@@ -100,31 +100,4 @@ fun SkillEntry(skill : Skill){
     }
 }
 
-@Composable
-fun PriorityIndicator(priority : SkillPriority){
-    Text(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(AccentColor),
-        text = priority.name
-    )
-}
 
-@Composable
-fun ProgressBar(min : Float, max : Float, value : Float){
-    Box(
-        modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(),
-        contentAlignment = Alignment.BottomStart,
-    ) {
-        LinearProgressIndicator(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(8.dp),
-            progress = (value - min) / (max - min),
-            trackColor = Color.White,
-            color = AccentColor
-        )
-    }
-}
