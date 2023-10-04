@@ -14,12 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
 @Composable
-fun MainWindow(profile : Profile) {
+fun MainWindow(profile : Profile, list : ArrayList<Task>) {
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
         Surface(
@@ -39,7 +40,7 @@ fun MainWindow(profile : Profile) {
                         .fillMaxHeight()
                         .fillMaxWidth()
                 ){
-                    TaskList()
+                    TaskList(list)
                 }
             }
         }
