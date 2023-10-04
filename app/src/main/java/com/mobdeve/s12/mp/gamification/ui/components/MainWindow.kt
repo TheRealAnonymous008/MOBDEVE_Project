@@ -8,19 +8,25 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
 @Composable
-fun MainWindow(profile : Profile, list : ArrayList<Task>) {
+fun MainWindow(profile : Profile, list : ArrayList<Task>, skills : ArrayList<Skill>) {
+    val currentWindow = 0
+
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
         Surface(
@@ -40,7 +46,9 @@ fun MainWindow(profile : Profile, list : ArrayList<Task>) {
                         .fillMaxHeight()
                         .fillMaxWidth()
                 ){
-                    TaskList(list)
+
+//                    TaskList(taskList = list)
+                    SkillList(skills)
                 }
             }
         }

@@ -61,7 +61,7 @@ fun createDefaultTask(): Task {
         TimeInfo(
             Timestamp(System.currentTimeMillis()),
             Timestamp(System.currentTimeMillis()),
-            Timestamp(System.currentTimeMillis())
+            Timestamp(System.currentTimeMillis() + 1000000)
         )
     )
 }
