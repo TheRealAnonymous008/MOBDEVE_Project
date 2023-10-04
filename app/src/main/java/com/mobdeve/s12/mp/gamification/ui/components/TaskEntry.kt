@@ -32,8 +32,7 @@ fun TaskEntry(task : Task){
             modifier = Modifier
                 .fillMaxSize()
                 .background(PrimaryColor)
-                .padding(20.dp)
-                .padding(start = 40.dp)
+                .padding(start = 40.dp, top =  20.dp)
         ) {
             Row(
                 modifier = Modifier
