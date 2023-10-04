@@ -47,8 +47,8 @@ fun MainWindow(profile : Profile, list : ArrayList<Task>, skills : ArrayList<Ski
                         .fillMaxWidth()
                 ){
 
-//                    TaskList(taskList = list)
-                    SkillList(skills)
+                    TaskList(taskList = list)
+//                    SkillList(skills)
                 }
             }
         }

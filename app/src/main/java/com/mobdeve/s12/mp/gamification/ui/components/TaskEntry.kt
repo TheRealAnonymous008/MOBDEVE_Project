@@ -3,10 +3,13 @@ package com.mobdeve.s12.mp.gamification.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,41 +37,54 @@ fun TaskEntry(task : Task){
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Max)
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f)
-                        .padding(end = 16.dp),
+                        .fillMaxWidth(0.8f),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    // Skill name
+                    // Task name
                     Text(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxWidth(),
                         text = task.title,
                         color = TextColor
                     )
 
-                    // Skill description
+                    // Task description
                     Text(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxWidth(),
                         text = task.description,
+                        color = TextColor
+                    )
+
+                    // Task duration
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        text = task.timeInfo.getDurationAsString(),
                         color = TextColor
                     )
 
                 }
 
-                Button(
+                Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .align(Alignment.CenterVertically),
-                    onClick = { /*  TODO: Add button click logic */ }
+                        .align(Alignment.CenterVertically)
                 ) {
-                    Text(
-                        text = "Play"
-                    )
+                    Button(
+                        modifier = Modifier
+                            .width(32.dp)
+                            .height(32.dp)
+                            .align(Alignment.Center),
+                        onClick = { /*  TODO: Add button click logic */ }
+                    ){
+
+                    }
                 }
             }
         }
