@@ -47,6 +47,16 @@ fun TaskDetailsLayout(task : Task) {
         Spacer(modifier = Modifier.height(8.dp))
 
         TimeInfoDetails(timeInfo = task.timeInfo)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Rewards list
+        Text(
+            text = "Rewards",
+            fontSize = 18.sp
+        )
+
+        TaskRewardsList(rewards = task.rewards)
     }
 }
 

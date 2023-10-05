@@ -9,7 +9,7 @@ enum class SkillPriority {
 
 data class Skill(
     val name : String,
-    val description : String,
+    val description : String = "",
     val level : Int = 0,
     val xp : Int = 0,
     val priority :SkillPriority = SkillPriority.NONE,
