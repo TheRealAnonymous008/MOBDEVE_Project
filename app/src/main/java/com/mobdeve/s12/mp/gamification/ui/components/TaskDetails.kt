@@ -56,7 +56,13 @@ fun TaskDetailsLayout(task : Task) {
             fontSize = 18.sp
         )
 
-        TaskRewardsList(rewards = task.rewards)
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(0.5f)
+        ) {
+            TaskRewardsList(rewards = task.rewards)
+        }
     }
 }
 
