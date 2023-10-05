@@ -66,7 +66,7 @@ fun SkillEntry(skill : Skill){
                     Text(
                         text = skill.name,
                         modifier = Modifier
-                            .fillMaxWidth(0.75f)
+                            .fillMaxWidth(0.7f)
                             .padding(bottom = 4.dp),
                         color = TextColor
                     )
