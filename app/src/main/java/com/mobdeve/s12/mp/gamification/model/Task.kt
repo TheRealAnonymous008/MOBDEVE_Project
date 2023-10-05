@@ -3,10 +3,10 @@ package com.mobdeve.s12.mp.gamification.model
 import java.sql.Timestamp
 
 data class Task(
-    val title : String,
-    val description: String,
-    val timeInfo : TimeInfo,
-    val rewards : ArrayList<Reward> = ArrayList<Reward>()
+    var title : String,
+    var description: String,
+    var timeInfo : TimeInfo,
+    var rewards : ArrayList<Reward> = ArrayList<Reward>()
 ) {}
 
 fun createDefaultTask(): Task {

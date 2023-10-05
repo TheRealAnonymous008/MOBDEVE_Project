@@ -6,9 +6,9 @@ import java.util.Date
 import java.util.Locale
 
 data class TimeInfo(
-    val datetimeCreated: Timestamp = Timestamp(System.currentTimeMillis()),
-    val datetimeFrom: Timestamp? = Timestamp(System.currentTimeMillis()),
-    val dateTimeTo: Timestamp? = null,
+    var datetimeCreated: Timestamp = Timestamp(System.currentTimeMillis()),
+    var datetimeFrom: Timestamp? = Timestamp(System.currentTimeMillis()),
+    var dateTimeTo: Timestamp? = null,
 ){
     fun getDurationAsString(): String {
         if (datetimeFrom == null && dateTimeTo == null)

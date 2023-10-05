@@ -8,12 +8,12 @@ enum class SkillPriority {
 }
 
 data class Skill(
-    val name : String,
-    val description : String = "",
-    val level : Int = 0,
-    val xp : Int = 0,
-    val priority :SkillPriority = SkillPriority.NONE,
-    val imageBytes: ByteArray? = null
+    var name : String,
+    var description : String = "",
+    var level : Int = 0,
+    var xp : Int = 0,
+    var priority :SkillPriority = SkillPriority.NONE,
+    var imageId : Int = -1
 ) {
 
 }

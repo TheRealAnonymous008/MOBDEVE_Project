@@ -1,8 +1,8 @@
 package com.mobdeve.s12.mp.gamification.model
 
 data class Reward(
-    val skill : Skill,
-    val xp: Float
+    var skill : Skill,
+    var xp: Float
 ) {}
 
 fun createDefaultSkillReward() : Reward{
