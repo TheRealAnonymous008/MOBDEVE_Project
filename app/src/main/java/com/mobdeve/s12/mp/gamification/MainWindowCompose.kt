@@ -30,5 +30,9 @@ fun PreviewMainWindow() {
     val taskList = createDefaultTaskList()
     val skillList = createDefaultSkillList()
 
+    for(skill in skillList){
+        skill.imageId = R.drawable.download
+    }
+
     MainWindow(profile, taskList, skillList)
 }
