@@ -14,6 +14,7 @@ import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import java.time.LocalDateTime
 
+
 class MainWindowCompose : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
