@@ -2,6 +2,7 @@ package com.mobdeve.s12.mp.gamification.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,23 +28,31 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.SkillPriority
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
+import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
+import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
 fun SkillEntry(skill : Skill){
-    Column(
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = PrimaryColor
+        ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(bottom = 16.dp)
+
     ) {
         // Skill Title, Priority, and Image
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 10.dp, start = 10.dp)
         ) {
             // Image
             Image(
@@ -51,6 +62,7 @@ fun SkillEntry(skill : Skill){
                     .size(64.dp)
                     .clip(shape = MaterialTheme.shapes.medium)
                     .background(MaterialTheme.colorScheme.primary)
+                    .padding()
             )
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -71,7 +83,10 @@ fun SkillEntry(skill : Skill){
                         color = TextColor
                     )
 
-                    PriorityIndicator(priority = skill.priority)
+                    PriorityIndicator(
+                        priority = skill.priority
+
+                    )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -86,8 +101,11 @@ fun SkillEntry(skill : Skill){
         // Description
         Text(
             text = skill.description,
-            modifier = Modifier.fillMaxWidth(),
-            color = TextColor
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            color = TextColor,
+            fontSize = 12.sp
         )
     }
 }

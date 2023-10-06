@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,18 +9,23 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.Task
+import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
+import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
@@ -31,25 +37,31 @@ fun MainWindow(profile : Profile, list : ArrayList<Task>, skills : ArrayList<Ski
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
+            color = Background
+
+
         ) {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
             ) {
                 ProfileHeader(profile)
+                Card (
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .height(550.dp)
 
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Box(
+                ) { Box(
                     modifier = Modifier
                         .background(SecondaryColor)
-                        .fillMaxHeight()
-                        .fillMaxWidth()
+                        .padding(10.dp),
                 ){
 
-//                    TaskList(taskList = list)
+
+                    //TaskList(taskList = list)
                     SkillList(skills)
-                }
+                }}
+
             }
         }
     }
