@@ -30,8 +30,6 @@ fun MainWindow(profile : Profile, list : ArrayList<Task>, skills : ArrayList<Ski
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Background
-
-
         ) {
             Column(
                 modifier = Modifier

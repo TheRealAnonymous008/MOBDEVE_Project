@@ -25,7 +25,7 @@ class MainWindowCompose : ComponentActivity() {
 fun PreviewMainWindow() {
     val profile = Profile("Hello",
         "Generic Description",
-        R.drawable.download)
+        R.drawable.download, currency = 10)
 
     val taskList = createDefaultTaskList()
     val skillList = createDefaultSkillList()

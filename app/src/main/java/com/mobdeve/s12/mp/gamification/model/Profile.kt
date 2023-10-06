@@ -4,5 +4,6 @@ data class Profile(
     var name : String,
     var description : String,
     var avatarId  : Int,
+    var currency : Int
 ) {}
 
