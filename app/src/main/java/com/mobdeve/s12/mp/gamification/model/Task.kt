@@ -6,8 +6,17 @@ data class Task(
     var title : String,
     var description: String,
     var timeInfo : TimeInfo,
-    var rewards : ArrayList<Reward> = ArrayList<Reward>()
-) {}
+    var rewards : ArrayList<Reward> = ArrayList<Reward>(),
+    var isFinished : Boolean = true
+) {
+    fun finish() {
+        isFinished = true
+    }
+
+    fun unfinish() {
+        isFinished = false
+    }
+}
 
 fun createDefaultTask(): Task {
     val rw = ArrayList<Reward>()
