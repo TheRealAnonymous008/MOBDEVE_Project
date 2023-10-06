@@ -2,10 +2,12 @@ package com.mobdeve.s12.mp.gamification.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Task
+import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
@@ -40,11 +44,18 @@ fun TaskEntry(task : Task){
                 .background(PrimaryColor)
         ) {
             Row {
+                Spacer(Modifier.width(10.dp))
+                Box(modifier = Modifier
+                    .background(AccentColor)
+                    .width(5.dp)
+                    .fillMaxHeight()) {
+
+                }
+                Spacer(Modifier.width(10.dp))
                 Column(
                     modifier = Modifier
                         .fillMaxWidth(0.8f)
-                        .padding(start = 10.dp)
-                        .border(1.dp, Color.Red),
+                        .padding(start = 10.dp),
                 ) {
                     // Task name
                     Text(
