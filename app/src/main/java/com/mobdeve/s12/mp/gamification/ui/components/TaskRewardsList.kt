@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Reward
-import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
 fun TaskRewardsList(rewards: ArrayList<Reward>){
@@ -39,16 +38,14 @@ fun RewardEntry(reward : Reward) {
         Text(
             text = reward.skill.name,
             modifier = Modifier
-                .weight(1f),
-            color = TextColor,
+                .weight(1f)
         )
 
         // XP
         Text(
             text = reward.xp.toString(),
             modifier = Modifier
-                .weight(0.25f),
-            color = TextColor,
+                .weight(0.25f)
         )
     }
 }
