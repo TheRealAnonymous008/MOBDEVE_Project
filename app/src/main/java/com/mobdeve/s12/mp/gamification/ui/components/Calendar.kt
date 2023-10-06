@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,6 +45,7 @@ import java.time.temporal.ChronoUnit
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Header(data: CalendarUiModel,
     // callbacks to click previous & back button should be registered outside
@@ -67,14 +68,14 @@ fun Header(data: CalendarUiModel,
         IconButton(onClick = { }) {
             onPrevClickListener(data.startDate.date)
             Icon(
-                imageVector = Icons.Filled.ChevronLeft,
+                imageVector = Icons.Filled.KeyboardArrowLeft,
                 contentDescription = "Back"
             )
         }
         IconButton(onClick = { }) {
             onNextClickListener(data.endDate.date)
             Icon(
-                imageVector = Icons.Filled.ChevronRight,
+                imageVector = Icons.Filled.KeyboardArrowRight,
                 contentDescription = "Next"
             )
         }
@@ -175,6 +176,7 @@ fun CalendarAppPreview() {
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContentItem(date: CalendarUiModel.Date, onDateClickListener: (CalendarUiModel.Date) -> Unit) {
@@ -211,6 +213,7 @@ fun ContentItem(date: CalendarUiModel.Date, onDateClickListener: (CalendarUiMode
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Content(
     data: CalendarUiModel,
@@ -240,6 +243,7 @@ data class CalendarUiModel(
         val isSelected: Boolean,
         val isToday: Boolean
     ) {
+        @RequiresApi(Build.VERSION_CODES.O)
         val day: String = date.format(DateTimeFormatter.ofPattern("E")) // get the day by formatting the date
     }
 }
