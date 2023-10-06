@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -13,19 +14,24 @@ import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
 import com.mobdeve.s12.mp.gamification.model.formatTimestampDate
 import com.mobdeve.s12.mp.gamification.model.formatTimestampTime
+import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
+import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
+import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
 fun TaskDetailsLayout(task : Task) {
     Column(
         modifier = Modifier
+            .background(SecondaryColor)
             .fillMaxSize()
             .padding(16.dp)
     ) {
         // Title of the Task
         Text(
             text = task.title,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextColor
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -33,27 +39,35 @@ fun TaskDetailsLayout(task : Task) {
         // Description
         Text(
             text = task.description,
-            fontSize = 18.sp
+            fontSize = 14.sp,
+            color = TextColor,
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Scheduled
         Text(
+            modifier = Modifier
+                .background(OtherAccent)
+                .padding(start = 10.dp, end = 10.dp),
             text = "Scheduled",
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            color = TextColor,
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         TimeInfoDetails(timeInfo = task.timeInfo)
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Rewards list
         Text(
             text = "Rewards",
-            fontSize = 18.sp
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextColor
         )
 
         Box(
