@@ -20,7 +20,6 @@ fun createDefaultCosmeticList() : ArrayList<Cosmetic> {
     cosmeticList.add(Cosmetic("Fedora", 10, R.drawable.potato, CosmeticType.HAT))
     cosmeticList.add(Cosmetic("Hutao Hat", 100000, R.drawable.hutaohat, CosmeticType.HAT))
     cosmeticList.add(Cosmetic("Joaquin Face Hat", 51, R.drawable.potato, CosmeticType.HAT))
-    cosmeticList.add(Cosmetic("Jared Face Hat", 51, R.drawable.potato, CosmeticType.HAT))
 
     cosmeticList.add(Cosmetic("Gray Polo Shirt", 10, R.drawable.potato, CosmeticType.TOP))
     cosmeticList.add(Cosmetic("Red Polo Shirt", 10, R.drawable.potato, CosmeticType.TOP))
