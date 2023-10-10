@@ -1,6 +1,16 @@
 package com.mobdeve.s12.mp.gamification.model
 
 class TaskListHolder(val tasks : ArrayList<Task>) {
+    fun get(str : String) : Task?{
+        for (t in tasks){
+            if(t.title == str){
+                return t
+            }
+        }
+        return null
+    }
+
+
     fun add(t: Task){
         tasks.add(t)
     }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
@@ -34,7 +35,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskEntry(task : Task){
+fun TaskEntry(task : Task, profile : Profile){
     var show by remember {mutableStateOf(true) }
     val dismissState = rememberDismissState(
         confirmValueChange = {

@@ -12,14 +12,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
+import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
-fun TaskDetailsLayout(task : Task) {
+fun TaskDetailsLayout(task : Task, profile : Profile) {
     var title by remember { mutableStateOf(task.title)}
     var description by remember { mutableStateOf(task.description) }
 
@@ -97,7 +99,7 @@ fun TaskDetailsLayout(task : Task) {
                 .fillMaxHeight()
                 .fillMaxWidth(0.5f)
         ) {
-            TaskRewardsList(rewards = task.rewards)
+            TaskRewardsList(rewards = task.rewards, profile = profile)
         }
     }
 }
@@ -106,5 +108,6 @@ fun TaskDetailsLayout(task : Task) {
 @Composable
 fun PreviewTaskDetailsLayout() {
     val t = createDefaultTask()
-    TaskDetailsLayout(t)
+    val p = generateDefaultProfile()
+    TaskDetailsLayout(t, p)
 }

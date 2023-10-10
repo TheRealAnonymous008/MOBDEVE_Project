@@ -6,11 +6,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 
 @Composable
-fun TaskList(taskList : TaskListHolder){
+fun TaskList(taskList : TaskListHolder, profile : Profile){
     LazyColumn(
         modifier = Modifier
             .padding(10.dp)
@@ -19,7 +20,7 @@ fun TaskList(taskList : TaskListHolder){
 
     ) {
         items(taskList.tasks) { task ->
-            TaskEntry(task)
+            TaskEntry(task, profile)
         }
     }
 }

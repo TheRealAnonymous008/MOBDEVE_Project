@@ -62,9 +62,9 @@ fun MainWindow(profile : Profile) {
 
                     HorizontalPager(3) {
                         when(it) {
-                            0 -> TaskList(taskList = profile.tasks) /* TODO: Replace this with the calendar */
-                            1 -> TaskList(taskList = profile.tasks)
-                            2 -> SkillList (skillList = profile.skills)
+                            0 -> TaskList(taskList = profile.tasks, profile) /* TODO: Replace this with the calendar */
+                            1 -> TaskList(taskList = profile.tasks, profile)
+                            2 -> SkillList (skillList = profile.skills, profile)
                         }
                     }
                 }}
