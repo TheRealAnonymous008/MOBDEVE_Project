@@ -4,8 +4,8 @@ import com.mobdeve.s12.mp.gamification.R
 
 class Profile (
     var profileDetails: ProfileDetails,
-    var skills : ArrayList<Skill>,
-    var tasks: ArrayList<Task>,
+    var skills : SkillListHolder,
+    var tasks: TaskListHolder,
     var cosmetics : ArrayList<Cosmetic>
 ){}
 
@@ -23,8 +23,8 @@ fun generateDefaultProfile() : Profile{
 
     return Profile(
         profileDetails,
-        skillList,
-        taskList,
+        SkillListHolder(skillList),
+        TaskListHolder(taskList),
         ArrayList<Cosmetic>()
     )
 }

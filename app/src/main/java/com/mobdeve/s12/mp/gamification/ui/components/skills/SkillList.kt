@@ -6,9 +6,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.SkillListHolder
 
 @Composable
-fun SkillList(skillList : ArrayList<Skill>){
+fun SkillList(skillList : SkillListHolder){
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -16,7 +17,7 @@ fun SkillList(skillList : ArrayList<Skill>){
         // TODO: Add padding as necessary
 
     ) {
-        items(skillList) { skill ->
+        items(skillList.skills) { skill ->
             SkillEntry(skill)
         }
     }
