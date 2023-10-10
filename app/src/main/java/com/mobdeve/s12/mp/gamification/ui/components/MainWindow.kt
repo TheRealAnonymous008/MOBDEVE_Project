@@ -1,11 +1,14 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,6 +25,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainWindow(profile : Profile) {
     val currentWindow = 0
@@ -41,12 +45,14 @@ fun MainWindow(profile : Profile) {
                 Card (
                     modifier = Modifier
                         .padding(10.dp)
-                        .advancedShadow(Color.Black,
+                        .advancedShadow(
+                            Color.Black,
                             offsetX = 10.dp,
                             offsetY = 5.dp,
                             spread = 4.dp,
                             blurRadius = 5.dp,
-                            borderRadius = 5.dp)
+                            borderRadius = 5.dp
+                        )
                         .height(550.dp)
 
                 ) { Box(
@@ -56,8 +62,13 @@ fun MainWindow(profile : Profile) {
                 ){
 
 
-                    TaskList(taskList = profile.tasks)
-//                    SkillList(skillList = profile.skills)
+                    HorizontalPager(3) {
+                        when(it) {
+                            0 -> TaskList(taskList = profile.tasks) /* TODO: Replace this with the calendar */
+                            1 -> TaskList(taskList = profile.tasks)
+                            2 -> SkillList (skillList = profile.skills)
+                        }
+                    }
                 }}
 
             }
