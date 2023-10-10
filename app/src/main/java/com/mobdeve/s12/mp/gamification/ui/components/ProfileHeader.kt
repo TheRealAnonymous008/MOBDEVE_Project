@@ -24,7 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
-import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -41,7 +41,7 @@ class ProfileHeaderParameters {
 }
 
 @Composable
-fun ProfileHeader(profile : Profile){
+fun ProfileHeader(profileDetails : ProfileDetails){
 
 
     Row  (
@@ -66,7 +66,7 @@ fun ProfileHeader(profile : Profile){
                 .background(PrimaryColor)
 
         ){
-            Image(painter = painterResource(profile.avatarId),
+            Image(painter = painterResource(profileDetails.avatarId),
                 contentDescription = "Profile Avatar",
                 modifier = Modifier
                     .width(ProfileHeaderParameters.IMAGE_SIZE)
@@ -104,7 +104,7 @@ fun ProfileHeader(profile : Profile){
                 Text(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = profile.name,
+                    text = profileDetails.name,
                     color = TextColor,
                 )
 
@@ -114,7 +114,7 @@ fun ProfileHeader(profile : Profile){
                 Text(
                     modifier = Modifier
                         .fillMaxSize(),
-                    text = profile.description,
+                    text = profileDetails.description,
                     color = TextColor,
                 )
             }

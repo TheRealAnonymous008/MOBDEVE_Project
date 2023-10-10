@@ -17,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
-import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @Composable
-fun ShopWindow(profile : Profile, cosmeticsList : ArrayList<Cosmetic>) {
+fun ShopWindow(profileDetails : ProfileDetails, cosmeticsList : ArrayList<Cosmetic>) {
     MOBDEVEProjectTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),

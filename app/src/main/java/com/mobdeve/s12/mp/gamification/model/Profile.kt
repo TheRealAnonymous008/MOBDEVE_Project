@@ -1,9 +1,9 @@
 package com.mobdeve.s12.mp.gamification.model
 
-data class Profile(
-    var name : String,
-    var description : String,
-    var avatarId  : Int,
-    var currency : Int
-) {}
-
+class Profile (
+    var profileDetails: ProfileDetails,
+    var skills : ArrayList<Skill>,
+    var tasks: ArrayList<Task>,
+    var cosmetics : ArrayList<Cosmetic>
+){
+}

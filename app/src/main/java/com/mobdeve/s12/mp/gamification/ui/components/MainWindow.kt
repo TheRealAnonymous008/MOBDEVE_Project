@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
-import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
@@ -22,7 +22,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
 @Composable
-fun MainWindow(profile : Profile, list : ArrayList<Task>, skills : ArrayList<Skill>) {
+fun MainWindow(profileDetails : ProfileDetails, list : ArrayList<Task>, skills : ArrayList<Skill>) {
     val currentWindow = 0
 
     MOBDEVEProjectTheme{
@@ -36,7 +36,7 @@ fun MainWindow(profile : Profile, list : ArrayList<Task>, skills : ArrayList<Ski
                     .fillMaxSize()
 
             ) {
-                ProfileHeader(profile)
+                ProfileHeader(profileDetails)
                 Card (
                     modifier = Modifier
                         .padding(10.dp)
