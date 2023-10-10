@@ -42,6 +42,7 @@ fun TaskDetailsLayout(task : Task) {
                 color = TextColor,
             ),
             modifier = Modifier
+                .background(Color.Transparent)
                 .fillMaxWidth()
         )
 
@@ -59,6 +60,7 @@ fun TaskDetailsLayout(task : Task) {
                 color = TextColor,
             ),
             modifier = Modifier
+                .background(Color.Transparent)
                 .fillMaxWidth()
 
         )
