@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
 import java.sql.Timestamp
+import kotlin.random.Random
 
 data class Task(
     var title : String,
@@ -18,11 +19,18 @@ data class Task(
     }
 }
 
-fun createDefaultTask(): Task {
+fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>()): Task {
     val rw = ArrayList<Reward>()
-    rw.add(createDefaultSkillReward())
-    rw.add(createDefaultSkillReward())
-    rw.add(createDefaultSkillReward())
+
+    for (i in 1 .. 3) {
+        if(pool.size < 0) {
+            val sk = pool[Random.nextInt(pool.size)];
+            rw.add(createDefaultSkillReward(sk))
+        }
+        else {
+            rw.add(createDefaultSkillReward())
+        }
+    }
 
     return Task(
         "Generic Task",
@@ -36,11 +44,11 @@ fun createDefaultTask(): Task {
     )
 }
 
-fun createDefaultTaskList() : ArrayList<Task>{
+fun createDefaultTaskList(pool : ArrayList<Skill> = ArrayList<Skill>()) : ArrayList<Task>{
     val taskList : ArrayList<Task> = ArrayList<Task>()
 
     for(i in 1..10) {
-        taskList.add(createDefaultTask())
+        taskList.add(createDefaultTask(pool))
     }
     return taskList
 }

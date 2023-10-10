@@ -5,7 +5,6 @@ data class Reward(
     var xp: Float
 ) {}
 
-fun createDefaultSkillReward() : Reward{
-    val sk = Skill("Rewarded skill", "Description", )
+fun createDefaultSkillReward(sk: Skill = Skill("Rewarded skill", "Description", )) : Reward{
     return Reward(sk, 10.0f)
 }
