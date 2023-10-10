@@ -1,4 +1,4 @@
-package com.mobdeve.s12.mp.gamification.ui.components
+package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize

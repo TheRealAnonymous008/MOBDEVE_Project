@@ -1,4 +1,4 @@
-package com.mobdeve.s12.mp.gamification.ui.components
+package com.mobdeve.s12.mp.gamification.ui.components.calendar
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -49,8 +49,8 @@ import java.util.stream.Stream
 @Composable
 fun Header(data: CalendarUiModel,
     // callbacks to click previous & back button should be registered outside
-                             onPrevClickListener: (LocalDate) -> Unit,
-                             onNextClickListener: (LocalDate) -> Unit,) {
+           onPrevClickListener: (LocalDate) -> Unit,
+           onNextClickListener: (LocalDate) -> Unit,) {
     Row {
         Text(
             text = if (data.selectedDate.isToday) {

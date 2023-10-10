@@ -1,4 +1,4 @@
-package com.mobdeve.s12.mp.gamification.ui.components
+package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,10 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Task
-import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
-import com.mobdeve.s12.mp.gamification.model.formatTimestampDate
-import com.mobdeve.s12.mp.gamification.model.formatTimestampTime
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor

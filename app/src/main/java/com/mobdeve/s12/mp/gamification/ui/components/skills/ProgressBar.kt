@@ -1,4 +1,4 @@
-package com.mobdeve.s12.mp.gamification.ui.components
+package com.mobdeve.s12.mp.gamification.ui.components.skills
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
