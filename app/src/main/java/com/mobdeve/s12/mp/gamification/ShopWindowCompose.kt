@@ -7,7 +7,7 @@ import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 
-class ShowWindowCompose : ComponentActivity() {
+class ShopWindowCompose : ComponentActivity() {
 
 }
 
