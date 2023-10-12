@@ -70,3 +70,22 @@ fun MOBDEVEProjectTheme(
         content = content
     )
 }
+
+@Composable
+fun WeekScheduleTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable() () -> Unit
+) {
+    val colorScheme = if (darkTheme) {
+        DarkColorScheme
+    } else {
+        LightColorScheme
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme, // Use colorScheme instead of colors
+        typography = Typography,
+        shapes = Shapes,
+        content = content
+    )
+}
