@@ -83,7 +83,7 @@ fun WeekScheduleTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme, // Use colorScheme instead of colors
+        colorScheme = colorScheme,
         typography = Typography,
         shapes = Shapes,
         content = content
