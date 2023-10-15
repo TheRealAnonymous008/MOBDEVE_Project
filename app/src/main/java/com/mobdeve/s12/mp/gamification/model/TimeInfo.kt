@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.model
 
+import java.io.Serializable
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -9,7 +10,7 @@ data class TimeInfo(
     var datetimeCreated: Timestamp = Timestamp(System.currentTimeMillis()),
     var datetimeFrom: Timestamp? = Timestamp(System.currentTimeMillis()),
     var dateTimeTo: Timestamp? = null,
-){
+) : Serializable {
     fun getDurationAsString(): String {
         if (datetimeFrom == null && dateTimeTo == null)
             return ""

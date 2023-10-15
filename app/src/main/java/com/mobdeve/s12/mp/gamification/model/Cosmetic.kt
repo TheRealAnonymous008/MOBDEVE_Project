@@ -2,6 +2,7 @@ package com.mobdeve.s12.mp.gamification.model
 
 import android.media.Image
 import com.mobdeve.s12.mp.gamification.R
+import java.io.Serializable
 
 enum class CosmeticType {
     HAT, TOP, BOTTOM, FOOTWEAR
@@ -12,7 +13,7 @@ data class Cosmetic (
     var cost : Int,
     var image : Int,
     var cosmeticType : Enum<CosmeticType>
-)
+) : Serializable
 
 fun createDefaultCosmeticList() : ArrayList<Cosmetic> {
     val cosmeticList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()

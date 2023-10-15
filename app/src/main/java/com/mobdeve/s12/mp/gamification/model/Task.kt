@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
 import android.util.Log
+import java.io.Serializable
 import java.sql.Timestamp
 import java.time.Duration
 import kotlin.random.Random
@@ -11,7 +12,7 @@ data class Task(
     var timeInfo : TimeInfo,
     var rewards : ArrayList<Reward> = ArrayList<Reward>(),
     var isFinished : Boolean = true
-) {
+) : Serializable {
     private var currentTimestamp = Timestamp(System.currentTimeMillis())
     private var records = ArrayList<Duration>()
     fun finish() {

@@ -1,13 +1,14 @@
 package com.mobdeve.s12.mp.gamification.model
 
 import com.mobdeve.s12.mp.gamification.R
+import java.io.Serializable
 
 class Profile (
     var profileDetails: ProfileDetails,
     var skills : SkillListHolder,
     var tasks: TaskListHolder,
     var cosmetics : ArrayList<Cosmetic>
-){}
+) : Serializable {}
 
 fun generateDefaultProfile() : Profile{
     val profileDetails = ProfileDetails("Hello",

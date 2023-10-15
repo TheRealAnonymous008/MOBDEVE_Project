@@ -1,5 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
+import java.io.Serializable
+
 enum class SkillPriority {
     NONE,
     LOW,
@@ -14,7 +16,7 @@ data class Skill(
     var xp : Int = 0,
     var priority :SkillPriority = SkillPriority.NONE,
     var imageId : Int = -1
-) {
+) : Serializable {
 
 }
 
