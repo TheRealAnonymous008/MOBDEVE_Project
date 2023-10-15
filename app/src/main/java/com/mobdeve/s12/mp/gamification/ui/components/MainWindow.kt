@@ -6,11 +6,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +30,9 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainWindow(profile : Profile) {
-    val currentWindow = 0
+    val pagerState = rememberPagerState(pageCount = {
+        3
+    })
 
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
@@ -62,14 +65,15 @@ fun MainWindow(profile : Profile) {
                         .padding(10.dp),
                 ){
 
-
-                    HorizontalPager(3) {
-                        when(it) {
-                            0 -> TaskList(taskList = profile.tasks, profile) /* TODO: Replace this with the calendar */
-                            1 -> TaskList(taskList = profile.tasks, profile)
-                            2 -> SkillList (skillList = profile.skills, profile)
-                        }
+                /* TODO: Replace this with the calendar */
+                HorizontalPager(state = pagerState) { page ->
+                    // Our page content
+                    when(page) {
+                        0 -> TaskList(taskList = profile.tasks, profile = profile)
+                        1 -> TaskList(taskList = profile.tasks, profile = profile)
+                        2 -> SkillList(skillList = profile.skills, profile = profile )
                     }
+                }
                 }}
 
             }
