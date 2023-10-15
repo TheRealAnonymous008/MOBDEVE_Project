@@ -11,7 +11,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,9 +29,13 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainWindow(profile : Profile) {
-    val pagerState = rememberPagerState(pageCount = {
-        3
-    })
+//    val pagerState = rememberPagerState(
+//        initialPage = 1,
+//        initialPageOffsetFraction = 0f
+//    ) {
+//        // provide pageCount
+//        3
+//    }
 
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
@@ -66,14 +69,15 @@ fun MainWindow(profile : Profile) {
                 ){
 
                 /* TODO: Replace this with the calendar */
-                HorizontalPager(state = pagerState) { page ->
-                    // Our page content
-                    when(page) {
-                        0 -> TaskList(taskList = profile.tasks, profile = profile)
-                        1 -> TaskList(taskList = profile.tasks, profile = profile)
-                        2 -> SkillList(skillList = profile.skills, profile = profile )
-                    }
-                }
+//                HorizontalPager(state = pagerState) { page ->
+//                    // Our page content
+//                    when(page) {
+//                        0 -> TaskList(taskList = profile.tasks, profile = profile)
+//                        1 -> TaskList(taskList = profile.tasks, profile = profile)
+//                        2 -> SkillList(skillList = profile.skills, profile = profile )
+//                    }
+//                }
+                    TaskList(taskList = profile.tasks, profile = profile)
                 }}
 
             }

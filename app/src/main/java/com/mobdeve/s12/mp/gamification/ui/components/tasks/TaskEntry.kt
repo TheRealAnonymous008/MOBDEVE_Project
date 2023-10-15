@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -139,14 +141,21 @@ fun TaskEntry(task : Task, profile : Profile) {
                             .height(64.dp)
                             .align(Alignment.Center)
                             .paint(
-                                painterResource(id = if(isPlaying) R.drawable.play else R.drawable.pause),
-                                contentScale = ContentScale.FillBounds
+                                painterResource(id = if (isPlaying) R.drawable.pause else R.drawable.play),
+                                contentScale = ContentScale.FillBounds,
                             ) ,
+                        colors = ButtonDefaults.buttonColors(
+                            Color.Transparent,
+                            Color.Transparent,
+                            Color.Transparent,
+                            Color.Transparent
+                        ),
                         onClick = {
+                            isPlaying = !isPlaying
                             if (isPlaying) {
-                                task.pause()
-                            } else {
                                 task.play()
+                            } else {
+                                task.pause()
                             }
                         },
                     ) {}

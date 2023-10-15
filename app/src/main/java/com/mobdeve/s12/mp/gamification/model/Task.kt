@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.model
 
+import android.util.Log
 import java.sql.Timestamp
 import java.time.Duration
 import kotlin.random.Random
@@ -23,6 +24,7 @@ data class Task(
 
     fun play() {
         currentTimestamp = getCurrentTimeStamp()
+        Log.e("E", "Hello")
     }
 
     fun pause() {
