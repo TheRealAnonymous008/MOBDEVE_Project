@@ -40,9 +40,9 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.ui.theme.WeekScheduleTheme
-import com.mobdeve.s12.mp.gamification.ui.theme.body1
-import com.mobdeve.s12.mp.gamification.ui.theme.body2
-import com.mobdeve.s12.mp.gamification.ui.theme.caption
+//import com.mobdeve.s12.mp.gamification.ui.theme.body1
+//import com.mobdeve.s12.mp.gamification.ui.theme.body2
+//import com.mobdeve.s12.mp.gamification.ui.theme.caption
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -114,14 +114,14 @@ fun BasicEvent(
             text = "${EventTimeFormatter.format(event.start as TemporalAccessor?)} - ${EventTimeFormatter.format(
                 event.end as TemporalAccessor?
             )}",
-            style = caption,
+//            style = caption,
             maxLines = 1,
             overflow = TextOverflow.Clip,
         )
 
         Text(
             text = event.name,
-            style = body1,
+//            style = body1,
             fontWeight = FontWeight.Bold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -130,7 +130,7 @@ fun BasicEvent(
         if (event.description != null) {
             Text(
                 text = event.description,
-                style = body2,
+//                style = body2,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
