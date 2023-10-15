@@ -12,7 +12,12 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 
+
 class MainActivity : AppCompatActivity() {
+    companion object {
+        const val PROFILE_DATA_KEY = "PROFILE_DATA"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

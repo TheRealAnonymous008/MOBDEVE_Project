@@ -1,7 +1,5 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
-import android.graphics.drawable.Icon
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -14,17 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.Profile
@@ -57,6 +48,7 @@ fun TaskEntry(task : Task, profile : Profile) {
     var show by remember { mutableStateOf(true) }
     var dismissState by remember { mutableStateOf(false) }
     var isPlaying by remember { mutableStateOf(false)}
+    var isShowingTaskDetails by remember { mutableStateOf(false)}
 
     if (dismissState) {
         offsetX = Offset(300f, 0f)
@@ -70,9 +62,13 @@ fun TaskEntry(task : Task, profile : Profile) {
             .offset(offsetX.x.dp, 0.dp),
 
         onClick = {
-            // TODO: Render the Task Details list on click
+            isShowingTaskDetails = true
         }
     ) {
+        // Show the task details as needed
+        if (isShowingTaskDetails){
+            TaskDetailsLayout(task = task, profile = profile)
+        } else {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -147,7 +143,7 @@ fun TaskEntry(task : Task, profile : Profile) {
                             .paint(
                                 painterResource(id = if (isPlaying) R.drawable.pause else R.drawable.play),
                                 contentScale = ContentScale.FillBounds,
-                            ) ,
+                            ),
                         colors = ButtonDefaults.buttonColors(
                             Color.Transparent,
                             Color.Transparent,
@@ -163,6 +159,7 @@ fun TaskEntry(task : Task, profile : Profile) {
                             }
                         },
                     ) {}
+                }
                 }
             }
         }
