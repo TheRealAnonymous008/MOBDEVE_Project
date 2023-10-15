@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -30,11 +31,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
@@ -49,6 +54,7 @@ fun TaskEntry(task : Task, profile : Profile) {
     var offsetX by remember { mutableStateOf(Offset.Zero) }
     var show by remember { mutableStateOf(true) }
     var dismissState by remember { mutableStateOf(false) }
+    var isPlaying by remember { mutableStateOf(false)}
 
     if (dismissState) {
         offsetX = Offset(300f, 0f)
@@ -127,21 +133,23 @@ fun TaskEntry(task : Task, profile : Profile) {
                         .fillMaxSize()
                         .align(Alignment.CenterVertically)
                 ) {
-                    IconButton(
+                    Button(
                         modifier = Modifier
                             .width(64.dp)
                             .height(64.dp)
-                            .align(Alignment.Center),
-                        onClick = { /*  TODO: Add button click logic */ }
-                    ) {
-                        Icon(
-                            Icons.Filled.PlayArrow,
-                            contentDescription = "Refresh Button",
-                            modifier = Modifier
-                                .size(80.dp, 80.dp),
-                            tint = AccentColor
-                        )
-                    }
+                            .align(Alignment.Center)
+                            .paint(
+                                painterResource(id = if(isPlaying) R.drawable.play else R.drawable.pause),
+                                contentScale = ContentScale.FillBounds
+                            ) ,
+                        onClick = {
+                            if (isPlaying) {
+                                task.pause()
+                            } else {
+                                task.play()
+                            }
+                        },
+                    ) {}
                 }
             }
         }

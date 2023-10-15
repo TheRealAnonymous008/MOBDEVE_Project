@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
 import java.sql.Timestamp
+import java.time.Duration
 import kotlin.random.Random
 
 data class Task(
@@ -10,12 +11,23 @@ data class Task(
     var rewards : ArrayList<Reward> = ArrayList<Reward>(),
     var isFinished : Boolean = true
 ) {
+    private var currentTimestamp = Timestamp(System.currentTimeMillis())
+    private var records = ArrayList<Duration>()
     fun finish() {
         isFinished = true
     }
 
     fun unfinish() {
         isFinished = false
+    }
+
+    fun play() {
+        currentTimestamp = getCurrentTimeStamp()
+    }
+
+    fun pause() {
+        var thisTimeStamp = getCurrentTimeStamp()
+        records.add(Duration.ofMillis(thisTimeStamp.time - currentTimestamp.time))
     }
 }
 
@@ -51,4 +63,8 @@ fun createDefaultTaskList(pool : ArrayList<Skill> = ArrayList<Skill>()) : ArrayL
         taskList.add(createDefaultTask(pool))
     }
     return taskList
+}
+
+fun getCurrentTimeStamp() : Timestamp{
+    return Timestamp(System.currentTimeMillis())
 }
