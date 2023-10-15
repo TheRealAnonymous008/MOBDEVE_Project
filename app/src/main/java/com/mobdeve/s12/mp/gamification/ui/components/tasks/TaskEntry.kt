@@ -68,6 +68,10 @@ fun TaskEntry(task : Task, profile : Profile) {
             .padding(bottom = 10.dp)
             .height(75.dp)
             .offset(offsetX.x.dp, 0.dp),
+
+        onClick = {
+            // TODO: Render the Task Details list on click
+        }
     ) {
         Box(
             modifier = Modifier
