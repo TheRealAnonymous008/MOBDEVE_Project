@@ -45,13 +45,16 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun MainWindow(profile : Profile) {
-    val pagerState = rememberPagerState(
+    val horizontalPagerState = rememberPagerState(
         initialPage = 1,
         initialPageOffsetFraction = 0f
-    ) {
-        // provide pageCount
-        3
-    }
+    ) { 3 }
+
+    val verticalPagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    )
+    { 2 }
 
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
@@ -85,7 +88,7 @@ fun MainWindow(profile : Profile) {
                 ){
 
                 /* TODO: Replace this with the calendar */
-                    HorizontalPager(state = pagerState) { page ->
+                    HorizontalPager(state = horizontalPagerState) { page ->
                         // Our page content
                         when(page) {
                             0 -> TaskList(taskList = profile.tasks, profile = profile)
@@ -104,7 +107,7 @@ fun MainWindow(profile : Profile) {
                         shape = CircleShape,
                         modifier = Modifier
                             .size(50.dp)
-                            .fillMaxHeight(0.8F)
+                            .fillMaxHeight()
                             .weight(0.5F)
                             .advancedShadow(
                                 Color.Black,
@@ -123,7 +126,7 @@ fun MainWindow(profile : Profile) {
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         modifier = Modifier
                             .size(50.dp)
-                            .fillMaxHeight(0.8F)
+                            .fillMaxHeight()
                             .weight(2F)
                             .advancedShadow(
                                 Color.Black,
@@ -147,7 +150,7 @@ fun MainWindow(profile : Profile) {
                         shape = CircleShape,
                         modifier = Modifier
                             .size(50.dp)
-                            .fillMaxHeight(0.8F)
+                            .fillMaxHeight()
                             .weight(0.75F)
                             .advancedShadow(
                                 Color.Black,
