@@ -164,10 +164,14 @@ fun CosmeticDialog( cosmetic: Cosmetic, showState : Boolean, onDismissRequest: (
 
                     Text(
                         text = cosmetic.name,
-                        fontSize = 40.sp)
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center)
+
                     Text(
                         text = cosmetic.cost.toString(),
-                        fontSize = 20.sp)
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center
+                        )
                     Text(
                         text = cosmetic.description,
                         fontSize = 20.sp,
@@ -186,5 +190,5 @@ fun CosmeticDialog( cosmetic: Cosmetic, showState : Boolean, onDismissRequest: (
 @Preview
 fun CosmeticDialogPreview() {
     val cosmetics = createDefaultCosmeticList()
-    CosmeticDialog( cosmetic = cosmetics.get(1), true, onDismissRequest = {})
+    CosmeticDialog( cosmetic = cosmetics.get(2), true, onDismissRequest = {})
 }
