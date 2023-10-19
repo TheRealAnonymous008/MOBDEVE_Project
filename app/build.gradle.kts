@@ -57,7 +57,6 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-
     implementation("androidx.activity:activity-compose:1.5.2")
     implementation("androidx.compose.material3:material3:1.1.2")
     implementation("androidx.compose.material:material:1.5.3")
