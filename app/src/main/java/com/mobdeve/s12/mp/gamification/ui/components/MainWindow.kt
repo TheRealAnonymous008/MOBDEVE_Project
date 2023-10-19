@@ -1,6 +1,12 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,14 +32,20 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
+import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
@@ -50,11 +62,9 @@ fun MainWindow(profile : Profile) {
         initialPageOffsetFraction = 0f
     ) { 3 }
 
-    val verticalPagerState = rememberPagerState(
-        initialPage = 0,
-        initialPageOffsetFraction = 0f
-    )
-    { 2 }
+    val cosmeticList = createDefaultCosmeticList()
+    val isShopVisible = remember { mutableStateOf(false) }
+    val isTaskVisible = remember {mutableStateOf(true)}
 
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
@@ -67,36 +77,41 @@ fun MainWindow(profile : Profile) {
                     .fillMaxSize()
 
             ) {
-                ProfileHeader(profile.profileDetails)
-                Card (
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .advancedShadow(
-                            Color.Black,
-                            offsetX = 10.dp,
-                            offsetY = 5.dp,
-                            spread = 4.dp,
-                            blurRadius = 5.dp,
-                            borderRadius = 5.dp
-                        )
-                        .fillMaxHeight(0.85F)
+                AnimatedVisibility(visible = isTaskVisible.value) {
+                    Column {
+                        ProfileHeader(profile.profileDetails)
+                        Card (
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .advancedShadow(
+                                    Color.Black,
+                                    offsetX = 10.dp,
+                                    offsetY = 5.dp,
+                                    spread = 4.dp,
+                                    blurRadius = 5.dp,
+                                    borderRadius = 5.dp
+                                )
+                                .fillMaxHeight(0.85F)
 
-                ) { Box(
-                    modifier = Modifier
-                        .background(SecondaryColor)
-                        .padding(10.dp),
-                ){
+                        ) { Box(
+                            modifier = Modifier
+                                .background(SecondaryColor)
+                                .padding(10.dp),
+                        ){
 
-                /* TODO: Replace this with the calendar */
-                    HorizontalPager(state = horizontalPagerState) { page ->
-                        // Our page content
-                        when(page) {
-                            0 -> TaskList(taskList = profile.tasks, profile = profile)
-                            1 -> TaskList(taskList = profile.tasks, profile = profile)
-                            2 -> SkillList(skillList = profile.skills, profile = profile )
-                        }
+                            /* TODO: Replace this with the calendar */
+                            HorizontalPager(state = horizontalPagerState) { page ->
+                                // Our page content
+                                when(page) {
+                                    0 -> TaskList(taskList = profile.tasks, profile = profile)
+                                    1 -> TaskList(taskList = profile.tasks, profile = profile)
+                                    2 -> SkillList(skillList = profile.skills, profile = profile )
+                                }
+                            }
+                        }}
                     }
-                }}
+
+                }
                 Row (
                     modifier = Modifier
                         .padding(10.dp),
@@ -122,7 +137,10 @@ fun MainWindow(profile : Profile) {
                     {
                         Icon(Icons.Default.Settings, contentDescription = "settings button", tint = Color.White)
                     }
-                    Button( onClick = { TODO("Market Button") },
+                    Button( onClick = {
+                        isShopVisible.value = !isShopVisible.value
+                        isTaskVisible.value = !isTaskVisible.value
+                    },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         modifier = Modifier
                             .size(50.dp)
@@ -167,6 +185,21 @@ fun MainWindow(profile : Profile) {
                     }
 
                 }
+                AnimatedVisibility(
+                    visible = isShopVisible.value,
+                    enter = slideInVertically(
+                        initialOffsetY = {fullHeight -> fullHeight}
+                    ) + fadeIn(animationSpec = tween(durationMillis = 300)),
+                    exit = slideOutVertically(
+                        targetOffsetY = {fullHeight -> fullHeight}
+                    ) + fadeOut(animationSpec = tween(durationMillis = 300))
+                ) {
+                    ShopWindow(
+                        profileDetails = profile.profileDetails,
+                        cosmeticsList = cosmeticList,
+                        modifier = Modifier.fillMaxHeight())
+                }
+
             }
         }
     }
