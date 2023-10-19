@@ -11,11 +11,12 @@ data class Task(
     var description: String,
     var timeInfo : TimeInfo,
     var rewards : ArrayList<Reward> = ArrayList<Reward>(),
-    var isFinished : Boolean = true
+    var isFinished : Boolean = false
 ) : Serializable {
     private var currentTimestamp = Timestamp(System.currentTimeMillis())
     private var records = ArrayList<Duration>()
     fun finish() {
+        Log.e("It ha", "It ")
         isFinished = true
     }
 
