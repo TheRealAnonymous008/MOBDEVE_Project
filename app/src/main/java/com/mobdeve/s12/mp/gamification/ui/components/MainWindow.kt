@@ -200,10 +200,10 @@ fun MainWindow(profile : Profile) {
                     visible = isShopVisible.value,
                     enter = slideInVertically(
                         initialOffsetY = {fullHeight -> fullHeight}
-                    ) + fadeIn(animationSpec = tween(durationMillis = 300)),
+                    ) ,
                     exit = slideOutVertically(
                         targetOffsetY = {fullHeight -> fullHeight}
-                    ) + fadeOut(animationSpec = tween(durationMillis = 300))
+                    )
                 ) {
                     ShopWindow(
                         profileDetails = profile.profileDetails,
