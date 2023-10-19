@@ -5,12 +5,26 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,6 +37,7 @@ import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
+import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -70,7 +85,7 @@ fun MainWindow(profile : Profile) {
                         .padding(10.dp),
                 ){
 
-                /* TODO: Replace this with the calendar */
+                    /* TODO: Replace this with the calendar */
                     HorizontalPager(state = pagerState) { page ->
                         // Our page content
                         when(page) {
@@ -78,6 +93,23 @@ fun MainWindow(profile : Profile) {
                             1 -> TaskList(taskList = profile.tasks, profile = profile)
                             2 -> SkillList(skillList = profile.skills, profile = profile )
                         }
+                    }
+
+                    LargeFloatingActionButton(
+                        modifier = Modifier
+                            .size(80.dp, 80.dp),
+                        onClick = {
+                            /*TODO: Add a task to task list. Start the activity as needed*/
+                        },
+                        containerColor = AccentColor,
+                        contentColor = Color.Black,
+                        shape = CircleShape
+                    ){
+                        Icon(Icons.Filled.Add,
+                            contentDescription = "Add FAB",
+                            modifier = Modifier.size(80.dp, 80.dp)
+                                .absoluteOffset(80.dp, 80.dp),
+                        )
                     }
                 }}
 

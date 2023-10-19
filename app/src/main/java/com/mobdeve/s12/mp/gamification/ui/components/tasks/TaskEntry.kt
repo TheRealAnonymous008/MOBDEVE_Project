@@ -12,11 +12,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -135,21 +141,11 @@ fun TaskEntry(task : Task, profile : Profile) {
                         .fillMaxSize()
                         .align(Alignment.CenterVertically)
                 ) {
-                    Button(
+                    IconButton(
                         modifier = Modifier
                             .width(64.dp)
                             .height(64.dp)
-                            .align(Alignment.Center)
-                            .paint(
-                                painterResource(id = if (isPlaying) R.drawable.pause else R.drawable.play),
-                                contentScale = ContentScale.FillBounds,
-                            ),
-                        colors = ButtonDefaults.buttonColors(
-                            Color.Transparent,
-                            Color.Transparent,
-                            Color.Transparent,
-                            Color.Transparent
-                        ),
+                            .align(Alignment.Center),
                         onClick = {
                             isPlaying = !isPlaying
                             if (isPlaying) {
@@ -158,7 +154,23 @@ fun TaskEntry(task : Task, profile : Profile) {
                                 task.pause()
                             }
                         },
-                    ) {}
+                    ) {
+                        if (isPlaying) {
+                            Icon(
+                                painterResource(id = R.drawable.pause),
+                                contentDescription = "Add FAB",
+                                modifier = Modifier.size(32.dp, 32.dp),
+                                tint = AccentColor
+                            )
+                        } else {
+                            Icon(
+                                painterResource(id = R.drawable.play),
+                                contentDescription = "Add FAB",
+                                modifier = Modifier.size(32.dp, 32.dp),
+                                tint = AccentColor
+                            )
+                        }
+                    }
                 }
                 }
             }
