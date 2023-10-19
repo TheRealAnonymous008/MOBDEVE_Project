@@ -149,8 +149,8 @@ fun MainWindow(profile : Profile) {
                         Icon(Icons.Default.Settings, contentDescription = "settings button", tint = Color.White)
                     }
                     Button( onClick = {
-                        isShopVisible.value = !isShopVisible.value
                         isTaskVisible.value = !isTaskVisible.value
+                        isShopVisible.value = !isShopVisible.value
                     },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         modifier = Modifier
