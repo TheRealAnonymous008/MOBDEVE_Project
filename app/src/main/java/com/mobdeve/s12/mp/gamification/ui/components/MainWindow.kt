@@ -1,23 +1,36 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
-import android.app.Activity
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
@@ -25,10 +38,11 @@ import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
+import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun MainWindow(profile : Profile) {
     val pagerState = rememberPagerState(
@@ -62,7 +76,7 @@ fun MainWindow(profile : Profile) {
                             blurRadius = 5.dp,
                             borderRadius = 5.dp
                         )
-                        .fillMaxHeight(0.90F)
+                        .fillMaxHeight(0.85F)
 
                 ) { Box(
                     modifier = Modifier
@@ -80,7 +94,76 @@ fun MainWindow(profile : Profile) {
                         }
                     }
                 }}
+                Row (
+                    modifier = Modifier
+                        .padding(10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
+                ){
+                    Button( onClick = { TODO("Settings Button") },
+                        colors = ButtonDefaults.buttonColors(OtherAccent),
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .size(50.dp)
+                            .fillMaxHeight(0.8F)
+                            .weight(0.5F)
+                            .advancedShadow(
+                                Color.Black,
+                                offsetX = 10.dp,
+                                offsetY = 5.dp,
+                                spread = 4.dp,
+                                blurRadius = 10.dp,
+                                borderRadius = 50.dp
+                            ),
+                        contentPadding = PaddingValues(0.dp)
+                    )
+                    {
+                        Icon(Icons.Default.Settings, contentDescription = "settings button", tint = Color.White)
+                    }
+                    Button( onClick = { TODO("Market Button") },
+                        colors = ButtonDefaults.buttonColors(OtherAccent),
+                        modifier = Modifier
+                            .size(50.dp)
+                            .fillMaxHeight(0.8F)
+                            .weight(2F)
+                            .advancedShadow(
+                                Color.Black,
+                                offsetX = 10.dp,
+                                offsetY = 5.dp,
+                                spread = 4.dp,
+                                blurRadius = 10.dp,
+                                borderRadius = 50.dp
+                            ),
+                        contentPadding = PaddingValues(0.dp)
+                    )
+                    {
+                        Text(
+                            text = "MARKET",
+                            letterSpacing = 10.sp,
+                            fontSize = 20.sp
+                        )
+                    }
+                    Button( onClick = { TODO("Currency Image") },
+                        colors = ButtonDefaults.buttonColors(OtherAccent),
+                        shape = CircleShape,
+                        modifier = Modifier
+                            .size(50.dp)
+                            .fillMaxHeight(0.8F)
+                            .weight(0.75F)
+                            .advancedShadow(
+                                Color.Black,
+                                offsetX = 10.dp,
+                                offsetY = 5.dp,
+                                spread = 4.dp,
+                                blurRadius = 10.dp,
+                                borderRadius = 50.dp
+                            ),
+                        contentPadding = PaddingValues(0.dp)
+                    )
+                    {
+                        Icon(Icons.Default.Star, contentDescription = "settings button", tint = Color.White)
+                    }
 
+                }
             }
         }
     }
