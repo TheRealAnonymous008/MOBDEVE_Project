@@ -10,6 +10,9 @@ class TaskListHolder(val tasks : ArrayList<Task>) {
         return null
     }
 
+    fun getTasks() : List<Task>{
+        return tasks.toList()
+    }
 
     fun add(t: Task){
         tasks.add(t)
