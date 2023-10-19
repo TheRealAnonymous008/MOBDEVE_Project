@@ -29,21 +29,20 @@ import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @Composable
-fun ShopWindow(profileDetails : ProfileDetails, cosmeticsList : ArrayList<Cosmetic>) {
+fun ShopWindow(
+    profileDetails : ProfileDetails,
+    cosmeticsList : ArrayList<Cosmetic>,
+    modifier: Modifier
+) {
     MOBDEVEProjectTheme {
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier,
             color = Background
         ) {
             Column (
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                Spacer( // This is where the buttons go
-                    modifier = Modifier
-                        .fillMaxHeight(.05F)
-                        .fillMaxWidth()
-                )
                 Card(
                     colors = CardDefaults.cardColors (
                         containerColor = SecondaryColor
@@ -83,5 +82,5 @@ fun PreviewShopWindow() {
 
     val cosmeticList = createDefaultCosmeticList()
 
-    ShopWindow(profileDetails, cosmeticList)
+    ShopWindow(profileDetails, cosmeticList, modifier = Modifier)
 }
