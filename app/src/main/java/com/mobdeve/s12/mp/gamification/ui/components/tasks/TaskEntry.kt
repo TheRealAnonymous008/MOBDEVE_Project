@@ -40,6 +40,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
@@ -58,6 +59,11 @@ fun TaskEntry(task : Task,  profile : Profile) {
     var isPlaying by remember { mutableStateOf(false)}
     var isShowingTaskDetails by remember { mutableStateOf(false)}
 
+    if (isShowingTaskDetails) {
+        Dialog(onDismissRequest = { isShowingTaskDetails = false }) {
+            TaskDetailsLayout(task = task, profile = profile)
+        }
+    }
 
     if (show) {
         Card(
@@ -72,106 +78,102 @@ fun TaskEntry(task : Task,  profile : Profile) {
             }
         ) {
             // Show the task details as needed
-            if (isShowingTaskDetails) {
-                TaskDetailsLayout(task = task, profile = profile)
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(PrimaryColor),
-                ) {
-                    Row {
-                        Spacer(Modifier.width(10.dp))
-                        Box(modifier = Modifier
-                            .background(AccentColor)
-                            .width(5.dp)
-                            .fillMaxHeight()
-                            .pointerInput(Unit) {
-                                detectDragGestures(
-                                    onDragCancel = {
-                                        offsetX = Offset.Zero
-                                    },
-                                    onDragEnd = {
-                                        if (offsetX.x < 150) {
-                                            offsetX = Offset.Zero
-                                        } else {
-                                            dismissState = true
-                                            task.finish()
-                                            show = false
-                                            offsetX = Offset(300f, 0f)
-                                        }
-                                    }
-                                ) { change, dragAmount ->
-                                    if (dragAmount.x > 0)
-                                        offsetX += Offset(dragAmount.x, 0f) * 0.5f
-                                    change.consume()
-                                }
-                            }) {
-
-                        }
-                        Spacer(Modifier.width(10.dp))
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth(0.8f)
-                                .padding(start = 10.dp),
-                        ) {
-                            // Task name
-                            Text(
-                                text = task.title,
-                                color = TextColor,
-                                modifier = Modifier.padding(top = 10.dp)
-                            )
-
-                            // Task description
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                text = task.description,
-                                color = TextColor
-                            )
-
-                            // Task duration
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                text = task.timeInfo.getDurationAsString(),
-                                color = TextColor
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .align(Alignment.CenterVertically)
-                        ) {
-                            IconButton(
-                                modifier = Modifier
-                                    .width(64.dp)
-                                    .height(64.dp)
-                                    .align(Alignment.Center),
-                                onClick = {
-                                    isPlaying = !isPlaying
-                                    if (isPlaying) {
-                                        task.play()
-                                    } else {
-                                        task.pause()
-                                    }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(PrimaryColor),
+            ) {
+                Row {
+                    Spacer(Modifier.width(10.dp))
+                    Box(modifier = Modifier
+                        .background(AccentColor)
+                        .width(5.dp)
+                        .fillMaxHeight()
+                        .pointerInput(Unit) {
+                            detectDragGestures(
+                                onDragCancel = {
+                                    offsetX = Offset.Zero
                                 },
-                            ) {
-                                if (isPlaying) {
-                                    Icon(
-                                        painterResource(id = R.drawable.pause),
-                                        contentDescription = "Add FAB",
-                                        modifier = Modifier.size(32.dp, 32.dp),
-                                        tint = AccentColor
-                                    )
-                                } else {
-                                    Icon(
-                                        painterResource(id = R.drawable.play),
-                                        contentDescription = "Add FAB",
-                                        modifier = Modifier.size(32.dp, 32.dp),
-                                        tint = AccentColor
-                                    )
+                                onDragEnd = {
+                                    if (offsetX.x < 150) {
+                                        offsetX = Offset.Zero
+                                    } else {
+                                        dismissState = true
+                                        task.finish()
+                                        show = false
+                                        offsetX = Offset(300f, 0f)
+                                    }
                                 }
+                            ) { change, dragAmount ->
+                                if (dragAmount.x > 0)
+                                    offsetX += Offset(dragAmount.x, 0f) * 0.5f
+                                change.consume()
+                            }
+                        }) {
+
+                    }
+                    Spacer(Modifier.width(10.dp))
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(0.8f)
+                            .padding(start = 10.dp),
+                    ) {
+                        // Task name
+                        Text(
+                            text = task.title,
+                            color = TextColor,
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+
+                        // Task description
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = task.description,
+                            color = TextColor
+                        )
+
+                        // Task duration
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            text = task.timeInfo.getDurationAsString(),
+                            color = TextColor
+                        )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.CenterVertically)
+                    ) {
+                        IconButton(
+                            modifier = Modifier
+                                .width(64.dp)
+                                .height(64.dp)
+                                .align(Alignment.Center),
+                            onClick = {
+                                isPlaying = !isPlaying
+                                if (isPlaying) {
+                                    task.play()
+                                } else {
+                                    task.pause()
+                                }
+                            },
+                        ) {
+                            if (isPlaying) {
+                                Icon(
+                                    painterResource(id = R.drawable.pause),
+                                    contentDescription = "Add FAB",
+                                    modifier = Modifier.size(32.dp, 32.dp),
+                                    tint = AccentColor
+                                )
+                            } else {
+                                Icon(
+                                    painterResource(id = R.drawable.play),
+                                    contentDescription = "Add FAB",
+                                    modifier = Modifier.size(32.dp, 32.dp),
+                                    tint = AccentColor
+                                )
                             }
                         }
                     }
