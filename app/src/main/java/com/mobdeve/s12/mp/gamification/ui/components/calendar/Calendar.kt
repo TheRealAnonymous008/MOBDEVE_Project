@@ -43,12 +43,14 @@ import com.mobdeve.s12.mp.gamification.ui.theme.WeekScheduleTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.body1
 import com.mobdeve.s12.mp.gamification.ui.theme.body2
 import com.mobdeve.s12.mp.gamification.ui.theme.caption
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAccessor
+import java.time.temporal.TemporalAdjusters
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -432,7 +434,7 @@ fun Schedule(
     minTime: LocalTime = LocalTime.MIN,
     maxTime: LocalTime = LocalTime.MAX,
     daySize: ScheduleSize = ScheduleSize.FixedSize(256.dp),
-    hourSize: ScheduleSize = ScheduleSize.FixedSize(64.dp),
+    hourSize: ScheduleSize = ScheduleSize.FixedSize(64.dp)
 ) {
     val numDays = ChronoUnit.DAYS.between(minDate, maxDate).toInt() + 1
     val numMinutes = ChronoUnit.MINUTES.between(minTime, maxTime).toInt() + 1
@@ -441,6 +443,12 @@ fun Schedule(
     val horizontalScrollState = rememberScrollState()
     var sidebarWidth by remember { mutableStateOf(0) }
     var headerHeight by remember { mutableStateOf(0) }
+    var displayedDate by remember { mutableStateOf(LocalDate.now()) }
+    //val startOfWeek = displayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
+   // val endOfWeek = displayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+   // val displayedEvents = events.filter { event ->
+    //    event.start.toLocalDate() == displayedDate
+   // }
     BoxWithConstraints(modifier = modifier) {
         val dayWidth: Dp = when (daySize) {
             is ScheduleSize.FixedSize -> daySize.size
@@ -492,6 +500,12 @@ fun Schedule(
             }
         }
     }
+    NextDayButton(
+        onClick = {
+            
+            displayedDate = displayedDate.plusDays(1)
+        }
+    )
 }
 
 @Composable
@@ -565,6 +579,18 @@ fun BasicSchedule(
     }
 }
 
+@Composable
+fun NextDayButton(
+    onClick: () -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Text("Next Day")
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun SchedulePreview() {
@@ -572,3 +598,10 @@ fun SchedulePreview() {
         Schedule(sampleEvents)
     }
 }
+
+
+
+
+
+
+
