@@ -16,7 +16,6 @@ data class Task(
     private var currentTimestamp = Timestamp(System.currentTimeMillis())
     private var records = ArrayList<Duration>()
     fun finish() {
-        Log.e("It ha", "It ")
         isFinished = true
     }
 
@@ -33,6 +32,16 @@ data class Task(
         var thisTimeStamp = getCurrentTimeStamp()
         records.add(Duration.ofMillis(thisTimeStamp.time - currentTimestamp.time))
     }
+}
+
+fun createEmptyTask() : Task {
+    return Task(
+        "Title",
+        "Description",
+        TimeInfo(
+            getCurrentTimeStamp()
+        )
+    )
 }
 
 fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>()): Task {
