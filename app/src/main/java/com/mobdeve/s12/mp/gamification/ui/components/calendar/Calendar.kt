@@ -502,7 +502,7 @@ fun Schedule(
     }
     NextDayButton(
         onClick = {
-            
+
             displayedDate = displayedDate.plusDays(1)
         }
     )
