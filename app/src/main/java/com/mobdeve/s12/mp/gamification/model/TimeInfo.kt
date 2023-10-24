@@ -7,8 +7,8 @@ import java.util.Date
 import java.util.Locale
 
 data class TimeInfo(
-    var datetimeCreated: Timestamp = Timestamp(System.currentTimeMillis()),
-    var datetimeFrom: Timestamp? = Timestamp(System.currentTimeMillis()),
+    var datetimeCreated: Timestamp = getCurrentTimeStamp(),
+    var datetimeFrom: Timestamp? = null,
     var dateTimeTo: Timestamp? = null,
 ) : Serializable {
     fun getDurationAsString(): String {

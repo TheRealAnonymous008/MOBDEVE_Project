@@ -27,6 +27,8 @@ import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import androidx.compose.runtime.getValue
+import com.mobdeve.s12.mp.gamification.model.createDefaultTask
+import com.mobdeve.s12.mp.gamification.model.createEmptyTask
 
 
 @Composable
@@ -41,8 +43,6 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
         LazyColumn(
             modifier = Modifier
                 .padding(10.dp)
-
-            // TODO: Add padding as necessary
 
         ) {
             items(taskListState) { task ->
@@ -64,7 +64,9 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
             modifier = Modifier
                 .align(Alignment.BottomStart),
             onClick = {
-                /*TODO: Add a task to task list. Start the activity as needed*/
+                val t : Task = createEmptyTask()
+                taskList.add(t)
+                taskListState.add(t)
             },
             containerColor = AccentColor,
             contentColor = Color.Black,
