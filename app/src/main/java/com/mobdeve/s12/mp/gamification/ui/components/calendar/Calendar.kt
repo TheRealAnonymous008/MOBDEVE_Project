@@ -445,7 +445,7 @@ fun Schedule(
     var headerHeight by remember { mutableStateOf(0) }
     var displayedDate by remember { mutableStateOf(LocalDate.now()) }
     //val startOfWeek = displayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-   // val endOfWeek = displayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+    //val endOfWeek = displayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
    // val displayedEvents = events.filter { event ->
     //    event.start.toLocalDate() == displayedDate
    // }
@@ -579,6 +579,36 @@ fun BasicSchedule(
     }
 }
 
+data class TaskEvent(
+    val task: com.mobdeve.s12.mp.gamification.ui.components.calendar.Task,
+    val color: Color,
+    val description: String? = null
+)
+
+data class TaskList(
+    val tasks: List<com.mobdeve.s12.mp.gamification.ui.components.calendar.Task>
+)
+
+data class Task(
+    val title: String,
+    val description: String,
+    val isFinished: Boolean,
+    // Other task properties like timeInfo, rewards, etc.
+)
+
+fun TaskList.toTaskEvents(): List<TaskEvent> {
+    val taskEvents = mutableListOf<TaskEvent>()
+    for (task in this.tasks) {
+        // You can define the color and description as per your requirements
+        val eventColor = if (task.isFinished) Color.Gray else Color.Blue
+        val eventDescription = "Task Description: ${task.description}"
+
+        val taskEvent = TaskEvent(task, eventColor, eventDescription)
+        taskEvents.add(taskEvent)
+    }
+    return taskEvents
+}
+
 @Composable
 fun NextDayButton(
     onClick: () -> Unit
@@ -590,6 +620,50 @@ fun NextDayButton(
         Text("Next Day")
     }
 }
+
+@Composable
+fun TaskSchedule(taskList: TaskList) {
+    val taskEvents = taskList.toTaskEvents()
+
+    val events = taskEvents.map { taskEvent ->
+        Event(
+            name = taskEvent.task.title,
+            color = taskEvent.color,
+            start = LocalDateTime.now(), // Replace with the actual start time of the task
+            end = LocalDateTime.now(),   // Replace with the actual end time of the task
+            description = taskEvent.description
+        )
+    }
+
+    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
+    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
+
+    WeekScheduleTheme {
+        Schedule(
+            events,
+            minDate = startOfWeek, // Set the start of the week
+            maxDate = endOfWeek   // Set the end of the week
+        )
+    }
+}
+
+fun createSampleTaskList(): TaskList {
+    val tasks = listOf(
+        Task("Task 1", "Description for Task 1", false),
+        Task("Task 2", "Description for Task 2", true),
+        // Add more tasks as needed
+    )
+
+    return TaskList(tasks)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TaskSchedulePreview() {
+    val taskList = createSampleTaskList() // Replace with your actual task list
+    TaskSchedule(taskList)
+}
+
 
 @Preview(showBackground = true)
 @Composable
