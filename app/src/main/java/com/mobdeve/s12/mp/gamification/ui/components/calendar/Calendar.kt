@@ -587,7 +587,7 @@ fun BasicSchedule(
     }
 }
 
-data class TaskEvent(
+/*data class TaskEvent(
     val task: com.mobdeve.s12.mp.gamification.ui.components.calendar.Task,
     val color: Color,
     val description: String? = null
@@ -615,7 +615,7 @@ fun TaskList.toTaskEvents(): List<TaskEvent> {
         taskEvents.add(taskEvent)
     }
     return taskEvents
-}
+}*/
 
 @Composable
 fun NextDayButton(
@@ -629,7 +629,7 @@ fun NextDayButton(
     }
 }
 
-@Composable
+/*@Composable
 fun TaskSchedule(taskList: TaskList) {
     val taskEvents = taskList.toTaskEvents()
 
@@ -670,7 +670,7 @@ fun createSampleTaskList(): TaskList {
 fun TaskSchedulePreview() {
     val taskList = createSampleTaskList() // Replace with your actual task list
     TaskSchedule(taskList)
-}
+}*/
 
 
 @Preview(showBackground = true)
