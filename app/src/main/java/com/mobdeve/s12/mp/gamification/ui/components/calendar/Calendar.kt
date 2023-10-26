@@ -262,10 +262,14 @@ fun ScheduleHeader(
 @Preview(showBackground = true)
 @Composable
 fun ScheduleHeaderPreview() {
+
+    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
+    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
+    
     WeekScheduleTheme {
         ScheduleHeader(
-            minDate = LocalDate.now(),
-            maxDate = LocalDate.now().plusDays(5),
+            minDate = startOfWeek,
+            maxDate = endOfWeek,
             dayWidth = 256.dp,
         )
     }
@@ -444,6 +448,8 @@ fun Schedule(
     var sidebarWidth by remember { mutableStateOf(0) }
     var headerHeight by remember { mutableStateOf(0) }
     var displayedDate by remember { mutableStateOf(LocalDate.now()) }
+    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
+    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
     //val startOfWeek = displayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
     //val endOfWeek = displayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
    // val displayedEvents = events.filter { event ->
@@ -462,8 +468,8 @@ fun Schedule(
         }
         Column(modifier = modifier) {
             ScheduleHeader(
-                minDate = minDate,
-                maxDate = maxDate,
+                minDate = startOfWeek,
+                maxDate = endOfWeek,
                 dayWidth = dayWidth,
                 dayHeader = dayHeader,
                 modifier = Modifier
@@ -526,6 +532,8 @@ fun BasicSchedule(
     val isLight = !isSystemInDarkTheme()
     val dividerColor = if (isLight) Color.LightGray else Color.DarkGray
     val positionedEvents = remember(events) { arrangeEvents(splitEvents(events.sortedBy(Event::start))).filter { it.end > minTime && it.start < maxTime } }
+    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
+    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
     Layout(
         content = {
             positionedEvents.forEach { positionedEvent ->
