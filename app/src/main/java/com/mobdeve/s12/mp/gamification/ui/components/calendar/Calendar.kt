@@ -572,7 +572,6 @@ fun TaskSchedulePreview() {
     TaskSchedule(taskListHolder)
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun SchedulePreview() {
