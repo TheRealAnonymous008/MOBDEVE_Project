@@ -7,6 +7,7 @@ import java.time.Duration
 import kotlin.random.Random
 
 data class Task(
+    var id : Int,
     var title : String,
     var description: String,
     var timeInfo : TimeInfo,
@@ -36,6 +37,7 @@ data class Task(
 
 fun createEmptyTask() : Task {
     return Task(
+        -1,
         "Title",
         "Description",
         TimeInfo(
@@ -58,6 +60,7 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>()): Task {
     }
 
     return Task(
+        1,
         "Generic Task",
         "Generic Description of the Task. This description task is to describe the task in a very descriptive manner",
         TimeInfo(

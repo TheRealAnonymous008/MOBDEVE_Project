@@ -7,6 +7,6 @@ data class Reward(
     var xp: Float
 ) : Serializable {}
 
-fun createDefaultSkillReward(sk: Skill = Skill("Rewarded skill", "Description", )) : Reward{
+fun createDefaultSkillReward(sk: Skill = Skill(0, "Rewarded skill", "Description", )) : Reward{
     return Reward(sk, 10.0f)
 }

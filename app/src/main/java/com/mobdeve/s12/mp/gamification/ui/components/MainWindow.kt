@@ -55,6 +55,7 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
+import com.mobdeve.s12.mp.gamification.ui.components.calendar.TaskSchedule
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
@@ -109,12 +110,10 @@ fun MainWindow(profile : Profile) {
                                 .background(SecondaryColor)
                                 .padding(10.dp),
                         ){
-
-                            /* TODO: Replace this with the calendar */
                             HorizontalPager(state = horizontalPagerState) { page ->
                                 // Our page content
                                 when(page) {
-                                    0 -> TaskList(taskList = profile.tasks, profile = profile)
+                                    0 -> TaskSchedule(taskList = profile.tasks)
                                     1 -> TaskList(taskList = profile.tasks, profile = profile)
                                     2 -> SkillList(skillList = profile.skills, profile = profile )
                                 }

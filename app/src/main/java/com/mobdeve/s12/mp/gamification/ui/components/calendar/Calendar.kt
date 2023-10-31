@@ -39,6 +39,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mobdeve.s12.mp.gamification.model.Event
+import com.mobdeve.s12.mp.gamification.model.EventsProvider
+import com.mobdeve.s12.mp.gamification.model.TaskEvent
+import com.mobdeve.s12.mp.gamification.model.TaskListHolder
+import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
+import com.mobdeve.s12.mp.gamification.model.getSampleEvents
+import com.mobdeve.s12.mp.gamification.model.getTaskEvent
 import com.mobdeve.s12.mp.gamification.ui.theme.WeekScheduleTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.body1
 import com.mobdeve.s12.mp.gamification.ui.theme.body2
@@ -53,14 +60,6 @@ import java.time.temporal.TemporalAccessor
 import java.time.temporal.TemporalAdjusters
 import java.util.*
 import kotlin.math.roundToInt
-
-data class Event(
-    val name: String,
-    val color: Color,
-    val start: LocalDateTime,
-    val end: LocalDateTime,
-    val description: String? = null,
-)
 
 inline class SplitType private constructor(val value: Int) {
     companion object {
@@ -140,61 +139,7 @@ fun BasicEvent(
     }
 }
 
-private val sampleEvents = listOf(
-    Event(
-        name = "Google I/O Keynote",
-        color = Color(0xFFAFBBF2),
-        start = LocalDateTime.parse("2021-05-18T09:00:00"),
-        end = LocalDateTime.parse("2021-05-18T11:00:00"),
-        description = "Tune in to find out about how we're furthering our mission to organize the world’s information and make it universally accessible and useful.",
-    ),
-    Event(
-        name = "Developer Keynote",
-        color = Color(0xFFAFBBF2),
-        start = LocalDateTime.parse("2021-05-18T09:00:00"),
-        end = LocalDateTime.parse("2021-05-18T10:00:00"),
-        description = "Learn about the latest updates to our developer products and platforms from Google Developers.",
-    ),
-    Event(
-        name = "What's new in Android",
-        color = Color(0xFF1B998B),
-        start = LocalDateTime.parse("2021-05-18T10:00:00"),
-        end = LocalDateTime.parse("2021-05-18T11:00:00"),
-        description = "In this Keynote, Chet Haase, Dan Sandler, and Romain Guy discuss the latest Android features and enhancements for developers.",
-    ),
-    Event(
-        name = "What's new in Material Design",
-        color = Color(0xFF6DD3CE),
-        start = LocalDateTime.parse("2021-05-18T11:00:00"),
-        end = LocalDateTime.parse("2021-05-18T11:45:00"),
-        description = "Learn about the latest design improvements to help you build personal dynamic experiences with Material Design.",
-    ),
-    Event(
-        name = "What's new in Machine Learning",
-        color = Color(0xFFF4BFDB),
-        start = LocalDateTime.parse("2021-05-18T10:00:00"),
-        end = LocalDateTime.parse("2021-05-18T11:00:00"),
-        description = "Learn about the latest and greatest in ML from Google. We’ll cover what’s available to developers when it comes to creating, understanding, and deploying models for a variety of different applications.",
-    ),
-    Event(
-        name = "What's new in Machine Learning",
-        color = Color(0xFFF4BFDB),
-        start = LocalDateTime.parse("2021-05-18T10:30:00"),
-        end = LocalDateTime.parse("2021-05-18T11:30:00"),
-        description = "Learn about the latest and greatest in ML from Google. We’ll cover what’s available to developers when it comes to creating, understanding, and deploying models for a variety of different applications.",
-    ),
-    Event(
-        name = "Jetpack Compose Basics",
-        color = Color(0xFF1B998B),
-        start = LocalDateTime.parse("2021-05-20T12:00:00"),
-        end = LocalDateTime.parse("2021-05-20T13:00:00"),
-        description = "This Workshop will take you through the basics of building your first app with Jetpack Compose, Android's new modern UI toolkit that simplifies and accelerates UI development on Android.",
-    ),
-)
 
-class EventsProvider : PreviewParameterProvider<Event> {
-    override val values = sampleEvents.asSequence()
-}
 
 @Preview(showBackground = true)
 @Composable
@@ -262,14 +207,10 @@ fun ScheduleHeader(
 @Preview(showBackground = true)
 @Composable
 fun ScheduleHeaderPreview() {
-
-    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
-    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
-    
     WeekScheduleTheme {
         ScheduleHeader(
-            minDate = startOfWeek,
-            maxDate = endOfWeek,
+            minDate = LocalDate.now(),
+            maxDate = LocalDate.now().plusDays(5),
             dayWidth = 256.dp,
         )
     }
@@ -448,13 +389,11 @@ fun Schedule(
     var sidebarWidth by remember { mutableStateOf(0) }
     var headerHeight by remember { mutableStateOf(0) }
     var displayedDate by remember { mutableStateOf(LocalDate.now()) }
-    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
-    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
     //val startOfWeek = displayedDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
     //val endOfWeek = displayedDate.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
-   // val displayedEvents = events.filter { event ->
+    // val displayedEvents = events.filter { event ->
     //    event.start.toLocalDate() == displayedDate
-   // }
+    // }
     BoxWithConstraints(modifier = modifier) {
         val dayWidth: Dp = when (daySize) {
             is ScheduleSize.FixedSize -> daySize.size
@@ -468,8 +407,8 @@ fun Schedule(
         }
         Column(modifier = modifier) {
             ScheduleHeader(
-                minDate = startOfWeek,
-                maxDate = endOfWeek,
+                minDate = minDate,
+                maxDate = maxDate,
                 dayWidth = dayWidth,
                 dayHeader = dayHeader,
                 modifier = Modifier
@@ -532,8 +471,6 @@ fun BasicSchedule(
     val isLight = !isSystemInDarkTheme()
     val dividerColor = if (isLight) Color.LightGray else Color.DarkGray
     val positionedEvents = remember(events) { arrangeEvents(splitEvents(events.sortedBy(Event::start))).filter { it.end > minTime && it.start < maxTime } }
-    val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
-    val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
     Layout(
         content = {
             positionedEvents.forEach { positionedEvent ->
@@ -587,35 +524,7 @@ fun BasicSchedule(
     }
 }
 
-/*data class TaskEvent(
-    val task: com.mobdeve.s12.mp.gamification.ui.components.calendar.Task,
-    val color: Color,
-    val description: String? = null
-)
 
-data class TaskList(
-    val tasks: List<com.mobdeve.s12.mp.gamification.ui.components.calendar.Task>
-)
-
-data class Task(
-    val title: String,
-    val description: String,
-    val isFinished: Boolean,
-    // Other task properties like timeInfo, rewards, etc.
-)
-
-fun TaskList.toTaskEvents(): List<TaskEvent> {
-    val taskEvents = mutableListOf<TaskEvent>()
-    for (task in this.tasks) {
-        // You can define the color and description as per your requirements
-        val eventColor = if (task.isFinished) Color.Gray else Color.Blue
-        val eventDescription = "Task Description: ${task.description}"
-
-        val taskEvent = TaskEvent(task, eventColor, eventDescription)
-        taskEvents.add(taskEvent)
-    }
-    return taskEvents
-}*/
 
 @Composable
 fun NextDayButton(
@@ -629,17 +538,17 @@ fun NextDayButton(
     }
 }
 
-/*@Composable
-fun TaskSchedule(taskList: TaskList) {
-    val taskEvents = taskList.toTaskEvents()
+@Composable
+fun TaskSchedule(taskList: TaskListHolder) {
+    val taskEvents = taskList.getTasks().map { task -> getTaskEvent(task, null)}
 
     val events = taskEvents.map { taskEvent ->
         Event(
             name = taskEvent.task.title,
             color = taskEvent.color,
-            start = LocalDateTime.now(), // Replace with the actual start time of the task
-            end = LocalDateTime.now(),   // Replace with the actual end time of the task
-            description = taskEvent.description
+            description = taskEvent.task.description,
+            start = taskEvent.dateFrom,
+            end = taskEvent.dateTo,
         )
     }
 
@@ -655,35 +564,18 @@ fun TaskSchedule(taskList: TaskList) {
     }
 }
 
-fun createSampleTaskList(): TaskList {
-    val tasks = listOf(
-        Task("Task 1", "Description for Task 1", false),
-        Task("Task 2", "Description for Task 2", true),
-        // Add more tasks as needed
-    )
-
-    return TaskList(tasks)
-}
-
 @Preview(showBackground = true)
 @Composable
 fun TaskSchedulePreview() {
-    val taskList = createSampleTaskList() // Replace with your actual task list
-    TaskSchedule(taskList)
-}*/
-
+    val taskList = createDefaultTaskList() // Replace with your actual task list
+    val taskListHolder = TaskListHolder(taskList)
+    TaskSchedule(taskListHolder)
+}
 
 @Preview(showBackground = true)
 @Composable
 fun SchedulePreview() {
     WeekScheduleTheme {
-        Schedule(sampleEvents)
+        Schedule(getSampleEvents())
     }
 }
-
-
-
-
-
-
-
