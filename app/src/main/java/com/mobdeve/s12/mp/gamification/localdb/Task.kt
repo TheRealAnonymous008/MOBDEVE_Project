@@ -52,6 +52,7 @@ fun getTaskEntity(task : Task) : TaskEntity{
 
 fun getTaskFromEntity(entry : TaskEntity) : Task{
     return Task (
+        id = entry.uid,
         title = entry.title,
         description = entry.description,
         timeInfo = TimeInfo(

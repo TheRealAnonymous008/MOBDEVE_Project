@@ -16,8 +16,6 @@ import java.sql.Timestamp
 @Entity(tableName = "skills")
 data class SkillEntity (
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
-    val skillId: Long = 0,
-
     val name: String,
     val description: String,
     val level: Int,
@@ -57,6 +55,7 @@ fun getSkillEntity(skill : Skill) : SkillEntity{
 
 fun getSkillFromEntity(entry : SkillEntity) : Skill{
     return Skill(
+        id = entry.uid,
         xp = entry.xp,
         imageId = entry.imageId,
         name = entry.name,
