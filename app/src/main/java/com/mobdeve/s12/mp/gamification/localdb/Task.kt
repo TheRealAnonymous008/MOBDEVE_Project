@@ -11,6 +11,7 @@ import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import java.sql.Timestamp
 
+// DB TabLE
 @Entity(tableName = "tasks")
 data class TaskEntity (
     @PrimaryKey(autoGenerate = true) val uid: Int = 0,
@@ -21,20 +22,23 @@ data class TaskEntity (
     val timeTo : Timestamp?
 )
 
+// Queries
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM tasks")
     fun getAll(): List<TaskEntity>
 
-    @Query("SELECT * FROM tasks WHERE uid IN (uid)")
+    @Query("SELECT * FROM tasks WHERE uid IN (:userIds)")
     fun loadAllByIds(userIds: IntArray): List<TaskEntity>
 
     @Insert
-    fun insertAll(vararg users: Task)
+    fun insertAll(vararg task: TaskEntity)
 
     @Delete
-    fun delete(user: Task)
+    fun delete(task: TaskEntity)
 }
+
+// Helper functions for converting to and from Entities
 
 fun getTaskEntity(task : Task) : TaskEntity{
     return TaskEntity(
