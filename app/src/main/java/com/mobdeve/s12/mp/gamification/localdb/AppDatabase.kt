@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun skillDao() : SkillDao
+    abstract fun taskSkillRewardDao() : TaskSkillRewardDao
 
     companion object {
         @Volatile
