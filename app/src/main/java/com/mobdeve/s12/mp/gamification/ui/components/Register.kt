@@ -252,11 +252,11 @@ fun Register(navController: NavController) {
 @Composable
 @Preview
 fun RegisterPreview() {
-    // Create a sample NavController to pass to the Register function
+
     val context = LocalContext.current
     val navController = NavController(context)
 
-    // Call the Register composable to show the preview
+
     Register(navController)
 }
 
