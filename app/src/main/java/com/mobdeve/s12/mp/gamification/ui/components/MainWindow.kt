@@ -58,6 +58,7 @@ import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.calendar.TaskSchedule
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
+import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkilLTreeWindow
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
@@ -115,7 +116,7 @@ fun MainWindow(profile : Profile) {
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
                                     1 -> TaskList(taskList = profile.tasks, profile = profile)
-                                    2 -> SkillList(skillList = profile.skills, profile = profile )
+                                    2 -> SkilLTreeWindow(skillList = profile.skills, profile = profile)
                                 }
                             }
                         }}
