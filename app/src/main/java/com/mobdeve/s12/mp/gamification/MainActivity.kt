@@ -43,4 +43,4 @@ fun navigatePage() {
             composable("register_page", content = { Register(navController = navController) })
         }
     )
-}
+}*/
