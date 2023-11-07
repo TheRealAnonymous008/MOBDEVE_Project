@@ -163,8 +163,8 @@ fun Register(navController: NavController) {
                         OutlinedTextField(
                             value = confirmPasswordVal.value,
                             onValueChange = { confirmPasswordVal.value = it },
-                            label = { Text(text = "Password", color = Black) },
-                            placeholder = { Text(text = "Password" , color = Black) },
+                            label = { Text(text = "Confirm Password", color = Black) },
+                            placeholder = { Text(text = "Confirm Password" , color = Black) },
                             singleLine = true,
                             modifier = Modifier.fillMaxWidth(0.8f),
                             colors = TextFieldDefaults.outlinedTextFieldColors(
