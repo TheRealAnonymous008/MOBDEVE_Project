@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
 import com.mobdeve.s12.mp.gamification.R
+import com.mobdeve.s12.mp.gamification.skilltree.createDefaultSkillList
 import java.io.Serializable
 
 class Profile (
