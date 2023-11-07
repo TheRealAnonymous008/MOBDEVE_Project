@@ -15,7 +15,7 @@ import java.sql.Timestamp
 // DB TabLE
 @Entity(tableName = "skills")
 data class SkillEntity (
-    @PrimaryKey(autoGenerate = true) val uid: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val description: String,
     val level: Int,
@@ -30,8 +30,8 @@ interface SkillDao {
     @Query("SELECT * FROM skills")
     fun getAll(): List<SkillEntity>
 
-    @Query("SELECT * FROM tasks WHERE uid IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<SkillEntity>
+    @Query("SELECT * FROM skills WHERE id IN (:ids)")
+    fun loadAllByIds(ids: IntArray): List<SkillEntity>
 
     @Insert
     fun insertAll(vararg users: SkillEntity)
@@ -55,7 +55,7 @@ fun getSkillEntity(skill : Skill) : SkillEntity{
 
 fun getSkillFromEntity(entry : SkillEntity) : Skill{
     return Skill(
-        id = entry.uid,
+        id = entry.id,
         xp = entry.xp,
         imageId = entry.imageId,
         name = entry.name,

@@ -25,7 +25,7 @@ data class TaskSkillRewardEntity (
 // Queries
 @Dao
 interface TaskSkillRewardDao {
-    @Query("SELECT * FROM skills")
+    @Query("SELECT * FROM task_skills")
     fun getAll(): List<TaskSkillRewardEntity>
 
     // TODO: Finish this
