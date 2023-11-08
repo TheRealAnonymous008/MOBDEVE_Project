@@ -84,7 +84,7 @@ fun createDefaultTaskList(pool : ArrayList<Skill> = ArrayList<Skill>()) : ArrayL
     val taskList : ArrayList<Task> = ArrayList<Task>()
 
     for(i in 1..10) {
-        taskList.add(createDefaultTask(pool, i = i))
+        taskList.add(createDefaultTask(pool, idx= i))
     }
     return taskList
 }
