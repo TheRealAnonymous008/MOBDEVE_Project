@@ -11,10 +11,6 @@ import com.mobdeve.s12.mp.gamification.SkillTreeLazyLayout
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.SkillListHolder
 import com.mobdeve.s12.mp.gamification.skilltree.SkillNode
-import com.mobdeve.s12.mp.gamification.skilltree.SkillTreeLazyLayoutItemProvider
-import com.mobdeve.s12.mp.gamification.skilltree.SkillTreeLazyLayoutState
-import com.mobdeve.s12.mp.gamification.skilltree.SkillTreeLazyListScope
-import com.mobdeve.s12.mp.gamification.skilltree.SkillTreeLazyListScopeImpl
 import com.mobdeve.s12.mp.gamification.skilltree.State
 import com.mobdeve.s12.mp.gamification.skilltree.rememberSkillTreeLazyLayoutState
 import com.mobdeve.s12.saquilayan.ethanjared.skilltreedemo.components.skillBox
@@ -34,7 +30,7 @@ fun getSkillNodes(skillList : SkillListHolder) : List<SkillNode>{
 }
 
 @Composable
-fun SkilLTreeWindow(skillList : SkillListHolder, profile : Profile){
+fun SkillTreeWindow(skillList : SkillListHolder, profile : Profile){
     val lazyLayoutState = rememberSkillTreeLazyLayoutState()
     val state = State(skills = getSkillNodes(skillList))
 

@@ -2,9 +2,6 @@ package com.mobdeve.s12.mp.gamification.ui.components
 
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -17,37 +14,25 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,10 +42,8 @@ import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.calendar.TaskSchedule
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
-import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
-import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkilLTreeWindow
+import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkillTreeWindow
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
-import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
@@ -71,7 +54,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @Composable
 fun MainWindow(profile : Profile) {
     val horizontalPagerState = rememberPagerState(
-        initialPage = 1,
+        initialPage = 2,
         initialPageOffsetFraction = 0f
     ) { 3 }
 
@@ -116,7 +99,7 @@ fun MainWindow(profile : Profile) {
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
                                     1 -> TaskList(taskList = profile.tasks, profile = profile)
-                                    2 -> SkilLTreeWindow(skillList = profile.skills, profile = profile)
+                                    2 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
                                 }
                             }
                         }}
