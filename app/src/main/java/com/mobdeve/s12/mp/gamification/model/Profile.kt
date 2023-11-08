@@ -23,10 +23,15 @@ fun generateDefaultProfile() : Profile{
         skill.imageId = R.drawable.download
     }
 
+    val taskListHolder = TaskListHolder()
+    for (task in taskList) {
+        taskListHolder.add(task)
+    }
+
     return Profile(
         profileDetails,
         SkillListHolder(skillList),
-        TaskListHolder(taskList),
+        taskListHolder,
         ArrayList<Cosmetic>()
     )
 }

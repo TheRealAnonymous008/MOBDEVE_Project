@@ -21,7 +21,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
-fun TaskDetailsLayout(task : Task, profile : Profile) {
+fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
     var title by remember { mutableStateOf(task.title)}
     var description by remember { mutableStateOf(task.description) }
 
@@ -96,18 +96,22 @@ fun TaskDetailsLayout(task : Task, profile : Profile) {
 
         Box(
             modifier = Modifier
-                .fillMaxHeight()
+                .fillMaxHeight(0.75f)
                 .fillMaxWidth(0.5f)
         ) {
             TaskRewardsList(rewards = task.rewards, profile = profile)
         }
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewTaskDetailsLayout() {
-    val t = createDefaultTask()
-    val p = generateDefaultProfile()
-    TaskDetailsLayout(t, p)
+        // Delete Button
+        Button(
+            onClick = {
+                onDelete()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        ) {
+            Text("Delete Task", fontWeight = FontWeight.Bold)
+        }
+    }
 }

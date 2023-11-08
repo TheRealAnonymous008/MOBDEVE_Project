@@ -35,7 +35,7 @@ import com.mobdeve.s12.mp.gamification.model.createEmptyTask
 fun TaskList(taskList : TaskListHolder, profile : Profile){
     var taskListState = remember { mutableStateListOf<Task>() }
 
-    for(t : Task in taskList.tasks){
+    for(t : Task in taskList.tasks) {
         taskListState.add(t)
     }
 
@@ -47,7 +47,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
         ) {
             items(taskListState) { task ->
                 if (!task.isFinished)
-                    TaskEntry(task, profile)
+                    TaskEntry(task, profile) { taskListState.remove(it) }
             }
 
             item {
@@ -56,7 +56,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
 
             items(taskListState) { task ->
                 if (task.isFinished)
-                    TaskEntry(task, profile)
+                    TaskEntry(task, profile) { taskListState.remove(it)}
             }
         }
 

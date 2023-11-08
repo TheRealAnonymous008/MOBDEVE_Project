@@ -15,6 +15,7 @@ data class Task(
     var isFinished : Boolean = false
 ) : Serializable {
     private var currentTimestamp = Timestamp(System.currentTimeMillis())
+
     fun finish() {
         isFinished = true
         // TODO: update skills
@@ -53,7 +54,7 @@ fun createEmptyTask() : Task {
     )
 }
 
-fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>()): Task {
+fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), i : Int = 0): Task {
     val rw = ArrayList<Reward>()
 
     for (i in 1 .. 3) {
@@ -67,8 +68,8 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>()): Task {
     }
 
     return Task(
-        1,
-        "Generic Task",
+        i,
+        "Generic Task $i",
         "Generic Description of the Task. This description task is to describe the task in a very descriptive manner",
         TimeInfo(
             Timestamp(System.currentTimeMillis()),
@@ -83,7 +84,7 @@ fun createDefaultTaskList(pool : ArrayList<Skill> = ArrayList<Skill>()) : ArrayL
     val taskList : ArrayList<Task> = ArrayList<Task>()
 
     for(i in 1..10) {
-        taskList.add(createDefaultTask(pool))
+        taskList.add(createDefaultTask(pool, i = i))
     }
     return taskList
 }

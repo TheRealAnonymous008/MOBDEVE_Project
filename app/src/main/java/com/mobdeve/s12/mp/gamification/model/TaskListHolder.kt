@@ -1,6 +1,10 @@
 package com.mobdeve.s12.mp.gamification.model
 
-class TaskListHolder(val tasks : ArrayList<Task>) {
+import android.util.Log
+
+class TaskListHolder() {
+    val tasks : ArrayList<Task> = ArrayList<Task>()
+
     fun get(str : String) : Task?{
         for (t in tasks){
             if(t.title == str){
@@ -18,8 +22,10 @@ class TaskListHolder(val tasks : ArrayList<Task>) {
         tasks.add(t)
     }
 
-    fun remove(pos : Int){
-        tasks.removeAt(pos)
+    fun remove(t : Task){
+        Log.e("Hello", t.title)
+        tasks.remove(t)
+        Log.e("Size", tasks.size.toString())
     }
 
     fun update(pos : Int, payload : Task){

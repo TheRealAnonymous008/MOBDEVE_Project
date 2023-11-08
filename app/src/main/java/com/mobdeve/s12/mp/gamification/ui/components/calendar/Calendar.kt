@@ -568,7 +568,9 @@ fun TaskSchedule(taskList: TaskListHolder) {
 @Composable
 fun TaskSchedulePreview() {
     val taskList = createDefaultTaskList() // Replace with your actual task list
-    val taskListHolder = TaskListHolder(taskList)
+    val taskListHolder = TaskListHolder()
+
+    taskList.forEach{taskListHolder.add(it)}
     TaskSchedule(taskListHolder)
 }
 
