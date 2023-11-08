@@ -23,9 +23,7 @@ class TaskListHolder() {
     }
 
     fun remove(t : Task){
-        Log.e("Hello", t.title)
         tasks.remove(t)
-        Log.e("Size", tasks.size.toString())
     }
 
     fun update(pos : Int, payload : Task){

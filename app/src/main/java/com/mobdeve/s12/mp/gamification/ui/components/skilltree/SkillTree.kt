@@ -15,19 +15,7 @@ import com.mobdeve.s12.mp.gamification.skilltree.State
 import com.mobdeve.s12.mp.gamification.skilltree.rememberSkillTreeLazyLayoutState
 import com.mobdeve.s12.saquilayan.ethanjared.skilltreedemo.components.skillBox
 
-fun getSkillNodes(skillList : SkillListHolder) : List<SkillNode>{
-    val arr = ArrayList<SkillNode>()
 
-    skillList.skills.forEach({
-        arr.add(SkillNode(
-            skill = it,
-            breadth = 1,
-            xPos = 1,
-            yPos = 1
-        ))
-    })
-    return arr.toList()
-}
 
 @Composable
 fun SkillTreeWindow(skillList : SkillListHolder, profile : Profile){

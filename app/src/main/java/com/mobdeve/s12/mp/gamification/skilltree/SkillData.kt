@@ -40,11 +40,9 @@ fun createDefaultSkillList() : ArrayList<Skill>{
     )
 
 
-    skill1.children = listOf(skill2, skill3)
-    skill2.parent = skill1
-    skill3.parent = skill2
-    skill3.children = listOf(skill4)
-    skill4.parent = skill3
+    skill1.addChild(skill2)
+    skill1.addChild(skill3)
+    skill3.addChild(skill4)
 
     skillList.add(skill1)
     skillList.add(skill2)

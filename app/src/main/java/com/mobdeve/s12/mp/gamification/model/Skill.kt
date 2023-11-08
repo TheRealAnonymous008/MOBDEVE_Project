@@ -18,9 +18,15 @@ data class Skill(
     var xp : Int = 0,
     var priority :SkillPriority = SkillPriority.NONE,
     var imageId : Int = -1,
-    var children : List<Skill>? = null,
+    var children : ArrayList<Skill> = ArrayList<Skill>(),
     var parent : Skill? = null
 ) {
+
+    fun addChild(sk : Skill) {
+        children.add(sk)
+        sk.parent = this
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other is Skill) {
             if (this.id == other.id)

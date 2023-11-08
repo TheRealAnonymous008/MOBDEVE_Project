@@ -54,7 +54,7 @@ fun createEmptyTask() : Task {
     )
 }
 
-fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), i : Int = 0): Task {
+fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Int = 0): Task {
     val rw = ArrayList<Reward>()
 
     for (i in 1 .. 3) {
@@ -68,8 +68,8 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), i : Int = 0)
     }
 
     return Task(
-        i,
-        "Generic Task $i",
+        idx,
+        "Generic Task $idx",
         "Generic Description of the Task. This description task is to describe the task in a very descriptive manner",
         TimeInfo(
             Timestamp(System.currentTimeMillis()),
