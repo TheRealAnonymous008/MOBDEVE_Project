@@ -39,16 +39,36 @@ fun createDefaultSkillList() : ArrayList<Skill>{
         SkillPriority.LOW
     )
 
+    var skill6: Skill = Skill(
+        4,
+        "Eigenvalues",
+        "Eigen Stuff",
+        0, 10,
+        SkillPriority.LOW
+    )
+
+    var skill7: Skill = Skill(
+        4,
+        "SVD",
+        "Eigen Stuff",
+        0, 10,
+        SkillPriority.LOW
+    )
+
 
     skill1.addChild(skill2)
     skill1.addChild(skill3)
     skill3.addChild(skill4)
+    skill3.addChild(skill6)
+    skill3.addChild(skill7)
 
     skillList.add(skill1)
+    skillList.add(skill5)
     skillList.add(skill2)
     skillList.add(skill3)
     skillList.add(skill4)
-    skillList.add(skill5)
+    skillList.add(skill6)
+    skillList.add(skill7)
 
     return skillList
 }

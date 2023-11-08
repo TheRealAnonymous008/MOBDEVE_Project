@@ -78,6 +78,7 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                     seenSkills.add(currSkill)
                     Log.d("RAN", "The node creation is run again for skill $currSkill")
                     positionHelper = getBreadth(currSkill)
+                    Log.d("RAN", "${positionHelper.breadth}")
                     screenHeight.value.maxHeight =
                         screenHeight.value.minHeight + (positionHelper.numNodes.max() * Y_DISTANCE)
 
@@ -85,8 +86,8 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                     val xPos = PARENT_X
                     val yPos = screenHeight.value.maxHeight / 2
                     val parentNode = mutableStateOf( SkillNode(
-                        currSkill, positionHelper.breadth, xPos, yPos
-                    )
+                            currSkill, positionHelper.breadth, xPos, yPos
+                        )
                     )
 
                     val childrenNodes = instantiateChildrenNodes(
