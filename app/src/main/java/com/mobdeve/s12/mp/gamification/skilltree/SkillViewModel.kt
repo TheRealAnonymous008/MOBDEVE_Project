@@ -36,7 +36,7 @@ data class ScreenHeight(
 
 // What this class is supposed to do is generate the items, but for this implementation, we don't need to update states or generate new items
 // so it will be used to map skills to nodes
-class SkillViewModel: ViewModel(), Actions {
+class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
     val state = MutableStateFlow(State())
     // store latest job (idk why we do this) they're like async calls
     private var skillViewGenerationJob: Job? = null
@@ -46,7 +46,7 @@ class SkillViewModel: ViewModel(), Actions {
         }
 
     init {
-        val skills = createDefaultSkillList()
+        Log.e("A", skills.size.toString())
         generateNodes(skills)
     }
 
