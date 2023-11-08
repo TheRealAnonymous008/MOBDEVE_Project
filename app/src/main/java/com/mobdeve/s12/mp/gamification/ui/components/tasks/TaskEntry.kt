@@ -31,7 +31,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.Offset
@@ -56,7 +55,6 @@ fun TaskEntry(task : Task,  profile : Profile) {
     var offsetX by remember { mutableStateOf(Offset.Zero) }
     var show by remember { mutableStateOf(true) }
     var dismissState by remember { mutableStateOf(false) }
-    var isPlaying by remember { mutableStateOf(false)}
     var isShowingTaskDetails by remember { mutableStateOf(false)}
 
     if (isShowingTaskDetails) {
@@ -141,42 +139,7 @@ fun TaskEntry(task : Task,  profile : Profile) {
                             color = TextColor
                         )
                     }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .align(Alignment.CenterVertically)
-                    ) {
-                        IconButton(
-                            modifier = Modifier
-                                .width(64.dp)
-                                .height(64.dp)
-                                .align(Alignment.Center),
-                            onClick = {
-                                isPlaying = !isPlaying
-                                if (isPlaying) {
-                                    task.play()
-                                } else {
-                                    task.pause()
-                                }
-                            },
-                        ) {
-                            if (isPlaying) {
-                                Icon(
-                                    painterResource(id = R.drawable.pause),
-                                    contentDescription = "Add FAB",
-                                    modifier = Modifier.size(32.dp, 32.dp),
-                                    tint = AccentColor
-                                )
-                            } else {
-                                Icon(
-                                    painterResource(id = R.drawable.play),
-                                    contentDescription = "Add FAB",
-                                    modifier = Modifier.size(32.dp, 32.dp),
-                                    tint = AccentColor
-                                )
-                            }
-                        }
-                    }
+                    TaskTimer(task = task)
                 }
             }
         }

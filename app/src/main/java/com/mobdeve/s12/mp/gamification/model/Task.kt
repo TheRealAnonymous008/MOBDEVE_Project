@@ -15,13 +15,21 @@ data class Task(
     var isFinished : Boolean = false
 ) : Serializable {
     private var currentTimestamp = Timestamp(System.currentTimeMillis())
-    private var records = ArrayList<Duration>()
     fun finish() {
         isFinished = true
+        // TODO: update skills
     }
 
     fun unfinish() {
         isFinished = false
+        // TODO: update skills
+    }
+
+    fun updateProgress()  {
+        timeInfo.addProgress(1)
+    }
+    fun getProgress() : Float {
+        return timeInfo.getNormalizedProgress()
     }
 
     fun play() {
@@ -30,8 +38,7 @@ data class Task(
     }
 
     fun pause() {
-        var thisTimeStamp = getCurrentTimeStamp()
-        records.add(Duration.ofMillis(thisTimeStamp.time - currentTimestamp.time))
+        // Do Nothing
     }
 }
 
@@ -66,7 +73,7 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>()): Task {
         TimeInfo(
             Timestamp(System.currentTimeMillis()),
             Timestamp(System.currentTimeMillis()),
-            Timestamp(System.currentTimeMillis() + 10000000)
+            Timestamp(System.currentTimeMillis() + 1000 * 10)
         ),
         rw
     )

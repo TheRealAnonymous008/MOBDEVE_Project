@@ -11,6 +11,8 @@ data class TimeInfo(
     var datetimeFrom: Timestamp? = null,
     var dateTimeTo: Timestamp? = null,
 ) : Serializable {
+    var progress : Long = 0;
+
     fun getDurationAsString(): String {
         if (datetimeFrom == null && dateTimeTo == null)
             return ""
@@ -27,6 +29,19 @@ data class TimeInfo(
 
     fun containsTo() : Boolean {
         return dateTimeTo != null
+    }
+    fun addProgress(x : Long) {
+        progress += x
+    }
+
+    fun getNormalizedProgress() : Float {
+        val to = dateTimeTo
+        val from = datetimeFrom
+
+        if (from != null && to != null) {
+            return 1000 *  progress / (1.0f * (to.time - from.time))
+        }
+        return 1.0f
     }
 
     private fun getTimeFormattedString() : String{
