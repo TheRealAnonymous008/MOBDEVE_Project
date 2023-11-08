@@ -130,7 +130,7 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
 
                     // This handles positioning TODO: Might need to fix it.
                     currentSkillNode.xPos = (depth) * 300
-                    currentSkillNode.yPos = (cumY) * 300
+                    currentSkillNode.yPos = (cumY - 1) * 300
 
                     // Do two things. First, add to the skil lstack and second, add children
                     current.children.forEach {child ->
