@@ -12,6 +12,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.util.LinkedList
+import java.util.Stack
 
 
 const val PARENT_X = 20
@@ -57,138 +58,90 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                 maxHeight = Y_DISTANCE
             )
             )
-            val resultNodes = ArrayList<SkillNode>()
-            val seenSkills = ArrayList<Skill>()
-            // Naive solution, just refactor it later
-            for ((parentsCount, skill) in skills.withIndex()) {
-                var positionHelper = PositionHelper(
-                    arrayListOf(1),
-                    0
-                )
-                var currSkill = skill
-                // make sure we're at parent
-                while(currSkill.parent != null) {
-                    currSkill = currSkill.parent!!
-                    if(!seenSkills.contains(currSkill))
-                        seenSkills.add(currSkill)
-                }
 
-                // Calculate parent position
-                if(!seenSkills.contains(currSkill)) {
-                    seenSkills.add(currSkill)
-                    Log.d("RAN", "The node creation is run again for skill $currSkill")
-                    positionHelper = getBreadth(currSkill)
-                    Log.d("RAN", "${positionHelper.breadth}")
-                    screenHeight.value.maxHeight =
-                        screenHeight.value.minHeight + (positionHelper.numNodes.max() * Y_DISTANCE)
+            // First pass. Convert all the skills to skill Nodes.
+            var resultNodes = convertToSkillNodes()
+            // Then add all children. At the same time, update the breadths and depths respectively
+            resultNodes = processChildren(resultNodes)
 
-                    // define parent node
-                    val xPos = PARENT_X
-                    val yPos = screenHeight.value.maxHeight / 2
-                    val parentNode = mutableStateOf( SkillNode(
-                            currSkill, positionHelper.breadth, xPos, yPos
-                        )
-                    )
-
-                    val childrenNodes = instantiateChildrenNodes(
-                        currSkill,
-                        parentNode,
-                        positionHelper,
-                        screenHeight,
-                        xPos
-                    )
-
-                    resultNodes.add(parentNode.value)
-                    resultNodes.addAll(childrenNodes)
-
-                    // update screen position
-                    screenHeight.value.minHeight += Y_DISTANCE * (positionHelper.numNodes.max() + SPACE_BETWEEN_PARENTS)
-
-                    Log.d("result nodes", resultNodes.toString())
-                }
+            resultNodes.forEach {
+                Log.d("Hello", "${it.xPos} ,${it.yPos} ${it.skill.name}")
             }
+
             state.value.skills = resultNodes
         }
     }
 
-    private fun instantiateChildrenNodes(
-        parentSkill: Skill,
-        parentNode: MutableState<SkillNode>,
-        positionHelper: PositionHelper,
-        screenHeight: MutableState<ScreenHeight>,
-        currentX : Int
-    ) : ArrayList<SkillNode> {
-        val result = ArrayList<SkillNode>()
-        val childrenNodes = ArrayList<SkillNode>()
+    private fun convertToSkillNodes() : ArrayList<SkillNode>{
+        var skillNodes = ArrayList<SkillNode>()
 
-
-        if (parentSkill.children != null) {
-            var size = parentSkill.children!!.size
-            for ((childCount, child) in parentSkill.children!!.withIndex()) {
-                val xPos = currentX + X_DISTANCE
-                val yPos = screenHeight.value.minHeight + (Y_DISTANCE * childCount)
-
-                val childNode = mutableStateOf(
-                    SkillNode(
-                    child,
-                    positionHelper.breadth--,
-                    xPos,
-                    yPos,
-                    parent = parentNode.value
-                )
-                )
-
-                if(child.children != null) {
-                    val children = instantiateChildrenNodes(
-                        child,
-                        childNode,
-                        PositionHelper(
-                            positionHelper.numNodes,
-                            positionHelper.breadth--
-                        ),
-                        screenHeight,
-                        xPos
-                    )
-
-                    childNode.value.children = children
-                    result.addAll(children)
-                }
-                childrenNodes.add(childNode.value)
-            }
-            parentNode.value.children = childrenNodes
+        // First get all nodes
+        skills.forEach { skill ->
+            val skillNode = SkillNode(
+                skill = skill,
+                breadth = 0,
+                yPos = 0,
+                xPos = 0
+            )
+            skillNodes.add(skillNode)
         }
-
-        result.addAll(childrenNodes)
-
-        return result
+        return skillNodes
     }
 
-    private fun getBreadth(skill: Skill): PositionHelper {
-        val positionHelper = PositionHelper(
-            arrayListOf(1),
-            0
-        )
-        val queue = LinkedList<Skill>()
-        var currParent : Skill? = null
-        var nodeCount = 0
-        queue.add(skill)
-        while(queue.isNotEmpty()) {
-            val curr = queue.poll()
-            nodeCount++
-            if (curr != null) {
-                if(currParent != curr.parent) {
-                    positionHelper.breadth++
-                    currParent = curr.parent
-                    positionHelper.numNodes.add(nodeCount)
-                    nodeCount = 0
-                }
-                if(curr.children != null)
-                    for (child in curr.children!!) {
-                        queue.add(child)
-                    }
+    private fun findRoots() : ArrayList<Skill> {
+        val roots = ArrayList<Skill>()
+
+        // Find all the root nodes
+        skills.forEach {
+            if (it.parent == null) {
+                roots.add(it)
             }
         }
-        return positionHelper
+        return roots
+    }
+
+    private fun processChildren(skillNodes : ArrayList<SkillNode>)  : ArrayList<SkillNode>{
+        // The map makes it convenient to access the skills
+        val skillNodesMap = skillNodes.associateBy { it.skill.id }
+        val roots = findRoots()
+
+        // Stack records skill and depth
+        val skillStack = Stack<Pair<Skill, Int>>()
+        var cumY = 0
+
+        roots.forEach {root ->
+            run {
+                skillStack.push(Pair(root, 0))
+                var currentDepth = 0
+
+                while (!skillStack.empty()) {
+                    // This indicates that we traversed up one depth level
+                    val frame = skillStack.pop()
+                    val current = frame.first
+                    val depth  = frame.second
+                    val currentSkillNode = skillNodes[current.id]
+
+                    if (currentDepth >= depth) {
+                        cumY ++
+                    }
+
+                    currentDepth = depth
+
+
+                    // This handles positioning TODO: Might need to fix it.
+                    currentSkillNode.xPos = (depth) * 300
+                    currentSkillNode.yPos = (cumY) * 300
+
+                    // Do two things. First, add to the skil lstack and second, add children
+                    current.children.forEach {child ->
+                        skillNodesMap[current.id]!!.addChild(skillNodesMap[child.id]!!)
+                        skillStack.push(Pair(child, depth + 1))
+                    }
+                }
+            }
+        }
+
+        return skillNodes
     }
 
     // update size if user pinches

@@ -12,11 +12,20 @@ data class SkillNode (
     var breadth : Int,
     var xPos : Int,
     var yPos : Int,
-    var children : List<SkillNode>? = null,
+    var children : ArrayList<SkillNode> = ArrayList<SkillNode>(),
     var parent : SkillNode? = null,
     var visible : SkillNodeVisibility = SkillNodeVisibility.OPEN
 ) {
     override fun toString(): String {
         return "$skill whose children are $children"
+    }
+
+    fun addChild(sk : SkillNode) {
+        if (sk.parent !== null) {
+            sk.parent!!.children.remove((sk))
+        }
+
+        sk.parent = this
+        this.children.add(sk)
     }
 }

@@ -24,6 +24,7 @@ fun createDefaultSkillList() : ArrayList<Skill>{
         "Trying to learn how to make 3D shapes",
         level = 0, xp=10,
         priority = SkillPriority.LOW)
+
     var skill4 : Skill = Skill(
         3,
         "Matrices",
@@ -40,7 +41,7 @@ fun createDefaultSkillList() : ArrayList<Skill>{
     )
 
     var skill6: Skill = Skill(
-        4,
+        5,
         "Eigenvalues",
         "Eigen Stuff",
         0, 10,
@@ -48,7 +49,7 @@ fun createDefaultSkillList() : ArrayList<Skill>{
     )
 
     var skill7: Skill = Skill(
-        4,
+        6,
         "SVD",
         "Eigen Stuff",
         0, 10,
@@ -63,10 +64,10 @@ fun createDefaultSkillList() : ArrayList<Skill>{
     skill3.addChild(skill7)
 
     skillList.add(skill1)
-    skillList.add(skill5)
     skillList.add(skill2)
     skillList.add(skill3)
     skillList.add(skill4)
+    skillList.add(skill5)
     skillList.add(skill6)
     skillList.add(skill7)
 
