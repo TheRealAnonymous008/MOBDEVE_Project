@@ -25,7 +25,6 @@ import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 
 @Composable
 fun SkillList(skillList : SkillListHolder, profile : Profile){
-
     Box() {
         LazyColumn(
             modifier = Modifier

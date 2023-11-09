@@ -82,6 +82,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
 
+    // Room Stuff
+
     val roomVersion = "2.6.0"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
@@ -106,4 +108,7 @@ dependencies {
 
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$roomVersion")
+
+    // Live Data related
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx: $roomVersion")
 }
