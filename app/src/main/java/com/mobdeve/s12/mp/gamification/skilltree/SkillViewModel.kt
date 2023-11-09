@@ -15,11 +15,10 @@ import java.util.LinkedList
 import java.util.Stack
 
 
-const val PARENT_X = 20
-const val X_DISTANCE = 400
+const val X_SCALE = 300
+const val Y_SCALE = 300
 const val Y_DISTANCE = 400
 const val INIT_HEIGHT = 300
-const val SPACE_BETWEEN_PARENTS = 3
 
 data class PositionHelper(
     var numNodes : ArrayList<Int>,
@@ -129,10 +128,10 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
 
 
                     // This handles positioning TODO: Might need to fix it.
-                    currentSkillNode.xPos = (depth) * 300
-                    currentSkillNode.yPos = (cumY - 1) * 300
+                    currentSkillNode.xPos = (depth) * X_SCALE
+                    currentSkillNode.yPos = (cumY - 1) * Y_SCALE
 
-                    // Do two things. First, add to the skil lstack and second, add children
+                    // Do two things. First, add to the skill stack and second, add children
                     current.children.forEach {child ->
                         skillNodesMap[current.id]!!.addChild(skillNodesMap[child.id]!!)
                         skillStack.push(Pair(child, depth + 1))
