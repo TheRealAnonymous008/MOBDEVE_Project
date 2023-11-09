@@ -25,9 +25,6 @@ fun generateDefaultProfile() : Profile{
     }
 
     val taskListHolder = TaskListHolder()
-    for (task in taskList) {
-        taskListHolder.add(task)
-    }
 
     val skillListHolder = SkillListHolder()
     for (skill in skillList) {

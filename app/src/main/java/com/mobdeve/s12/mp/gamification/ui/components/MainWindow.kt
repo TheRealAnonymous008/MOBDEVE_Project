@@ -200,10 +200,3 @@ fun MainWindow(profile : Profile) {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewMainWindow() {
-    val profile : Profile = generateDefaultProfile()
-    MainWindow(profile)
-}

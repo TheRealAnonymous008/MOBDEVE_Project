@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.localdb
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -32,6 +33,7 @@ abstract class AppDatabase : RoomDatabase() {
             // Delete all content here.
             dao.deleteAll()
             val dummy = createDefaultTaskList()
+
             dummy.forEach {
                 val t = getTaskEntity(it)
                 dao.insert(t)

@@ -1,6 +1,8 @@
 package com.mobdeve.s12.mp.gamification
 
 import android.app.Application
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
@@ -15,6 +17,12 @@ class MainApplication : Application() {
     val applicationScope = CoroutineScope(SupervisorJob())
 
     val database by lazy { AppDatabase.getInstance(this, applicationScope) }
-    val repository by lazy { TaskRepository(database.taskDao()) }
+    val taskRepository by lazy { TaskRepository(database.taskDao()) }
 
+    override fun onCreate() {
+        super.onCreate()
+
+        Log.e("Hello", "This ran")
+
+    }
 }
