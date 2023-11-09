@@ -33,7 +33,6 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
 class ProfileHeaderParameters {
-    // TODO: Add any parameters here. Preferably, anything involving sizing or padding
     companion object {
         val IMAGE_SIZE = 75.dp
         val HEADER_SIZE = 100.dp

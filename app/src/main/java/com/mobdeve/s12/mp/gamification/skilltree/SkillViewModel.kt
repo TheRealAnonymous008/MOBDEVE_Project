@@ -127,7 +127,7 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                     currentDepth = depth
 
 
-                    // This handles positioning TODO: Might need to fix it.
+                    // This handles positioning
                     currentSkillNode.xPos = (depth) * X_SCALE
                     currentSkillNode.yPos = (cumY - 1) * Y_SCALE
 

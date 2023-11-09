@@ -44,7 +44,6 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 class ImageSizeParameters {
-    // TODO: Add any parameters here. Preferably, anything involving sizing or padding
     companion object {
         val IMAGE_SIZE = 50.dp
         val BOX_SIZE = 100.dp
