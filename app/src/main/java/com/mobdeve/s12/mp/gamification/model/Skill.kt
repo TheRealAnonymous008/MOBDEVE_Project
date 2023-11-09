@@ -39,3 +39,10 @@ data class Skill(
         return "Skill Name: $name"
     }
 }
+
+fun createEmptySkill(id : Int = -1) : Skill {
+    return Skill(
+        id  =  id,
+        name = "",
+    )
+}

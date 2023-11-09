@@ -42,6 +42,7 @@ import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.calendar.TaskSchedule
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
+import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
 import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkillTreeWindow
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
@@ -54,9 +55,9 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @Composable
 fun MainWindow(profile : Profile) {
     val horizontalPagerState = rememberPagerState(
-        initialPage = 2,
+        initialPage = 1,
         initialPageOffsetFraction = 0f
-    ) { 3 }
+    ) { 4 }
 
     val cosmeticList = createDefaultCosmeticList()
     val isShopVisible = remember { mutableStateOf(false) }
@@ -99,7 +100,8 @@ fun MainWindow(profile : Profile) {
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
                                     1 -> TaskList(taskList = profile.tasks, profile = profile)
-                                    2 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
+                                    2 -> SkillList(skillList = profile.skills, profile = profile)
+                                    3 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
                                 }
                             }
                         }}
