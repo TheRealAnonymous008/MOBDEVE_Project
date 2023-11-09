@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHost
@@ -32,24 +33,27 @@ class MainActivity : AppCompatActivity() {
         TaskViewModelFactory((application as MainApplication).taskRepository)
     }
 
+    val profileState = mutableStateOf(generateDefaultProfile())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val profile: Profile = generateDefaultProfile()
-
         taskViewModel.allTasks.observe(this) {tasks ->
             tasks?.let {
+                val profile = profileState.value
                 for (task in tasks) {
                     profile.tasks.add(getTaskFromEntity(task))
+                }
+                profileState.value = profile
+                
+                setContent {
+                    MainWindow(profile = profileState.value)
                 }
             }
         }
 
-        // TODO:
-
         setContent {
-            MainWindow(profile = profile)
+            MainWindow(profile = profileState.value)
         }
     }
 }
