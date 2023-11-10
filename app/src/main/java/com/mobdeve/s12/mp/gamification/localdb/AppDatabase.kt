@@ -48,7 +48,7 @@ abstract class AppDatabase : RoomDatabase() {
             val dummy = createDefaultSkillList()
             dummy.forEach {
                 val t = getSkillEntity(it)
-                dao.insert(t)
+                dao.add(t)
             }
         }
     }

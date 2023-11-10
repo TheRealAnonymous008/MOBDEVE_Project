@@ -44,7 +44,7 @@ interface SkillDao {
     fun loadAllByIds(ids: IntArray): Flow<List<SkillEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(skill: SkillEntity)
+    suspend fun add(skill: SkillEntity) : Long
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun update(skill : SkillEntity)
@@ -62,9 +62,9 @@ class SkillRepository(private val dao : SkillDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(skill: Skill) {
+    suspend fun add(skill: Skill) : Long {
         val entity = getSkillEntity(skill)
-        dao.insert(entity)
+        return dao.add(entity)
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -87,7 +87,7 @@ class SkillViewModel(private val repository: SkillRepository) : ViewModel() {
     val allSkills: LiveData<List<SkillEntity>> = repository.allSkills.asLiveData()
 
     fun insert(skill : Skill) = viewModelScope.launch {
-        repository.insert(skill)
+        repository.add(skill)
     }
 
     fun update(skill : Skill) = viewModelScope.launch {
