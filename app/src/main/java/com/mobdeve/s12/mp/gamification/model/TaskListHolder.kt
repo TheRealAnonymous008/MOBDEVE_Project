@@ -29,4 +29,8 @@ class TaskListHolder() {
     fun update(pos : Int, payload : Task){
         tasks[pos] = payload
     }
+
+    fun clear() {
+        tasks.clear()
+    }
 }

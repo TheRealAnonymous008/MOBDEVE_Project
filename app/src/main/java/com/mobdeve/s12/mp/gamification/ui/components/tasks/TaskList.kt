@@ -27,17 +27,19 @@ import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import androidx.compose.runtime.getValue
+import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.getTaskEntity
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
 import com.mobdeve.s12.mp.gamification.model.createEmptyTask
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun TaskList(taskList : TaskListHolder, profile : Profile){
-    var taskListState = remember { mutableStateListOf<Task>() }
-
-    for(t : Task in taskList.tasks) {
-        taskListState.add(t)
-    }
+fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
+    val scope = CoroutineScope(Dispatchers.Main)
+    var taskListState = remember { mutableStateListOf(*taskList.tasks.toTypedArray())}
 
     Box() {
         LazyColumn(
@@ -47,7 +49,12 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
         ) {
             items(taskListState) { task ->
                 if (!task.isFinished)
-                    TaskEntry(task, profile) { taskListState.remove(it) }
+                    TaskEntry(task, profile) {
+                        taskListState.remove(it)
+                        scope.launch(Dispatchers.IO) {
+                            db.taskDao().delete(it.id)
+                        }
+                    }
             }
 
             item {
@@ -56,7 +63,12 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
 
             items(taskListState) { task ->
                 if (task.isFinished)
-                    TaskEntry(task, profile) { taskListState.remove(it)}
+                    TaskEntry(task, profile) {
+                        taskListState.remove(it)
+                        scope.launch(Dispatchers.IO) {
+                            db.taskDao().delete(it.id)
+                        }
+                    }
             }
         }
 
@@ -65,8 +77,12 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
                 .align(Alignment.BottomStart),
             onClick = {
                 val t : Task = createEmptyTask()
-                taskList.add(t)
-                taskListState.add(t)
+                scope.launch(Dispatchers.IO) {
+                    val id = db.taskDao().add(getTaskEntity(t))
+                    t.id = id
+                    taskList.add(t)
+                    taskListState.add(t)
+                }
             },
             containerColor = AccentColor,
             contentColor = Color.Black,
@@ -79,6 +95,4 @@ fun TaskList(taskList : TaskListHolder, profile : Profile){
             )
         }
     }
-
-
 }

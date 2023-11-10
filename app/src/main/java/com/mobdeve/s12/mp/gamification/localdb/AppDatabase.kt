@@ -38,7 +38,7 @@ abstract class AppDatabase : RoomDatabase() {
 
             dummy.forEach {
                 val t = getTaskEntity(it)
-                dao.insert(t)
+                dao.add(t)
             }
         }
 

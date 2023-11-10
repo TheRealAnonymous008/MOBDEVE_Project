@@ -46,7 +46,6 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
         }
 
     init {
-        Log.e("A", skills.size.toString())
         generateNodes(skills)
     }
 
@@ -63,10 +62,6 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
             // Then add all children. At the same time, update the breadths and depths respectively
             resultNodes = processChildren(resultNodes)
 
-            resultNodes.forEach {
-                Log.d("Hello", "${it.xPos} ,${it.yPos} ${it.skill.name}")
-            }
-
             state.value.skills = resultNodes
         }
     }
@@ -82,7 +77,6 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                 yPos = 0,
                 xPos = 0
             )
-            Log.e("YY", skillNode.skill.id.toString())
             skillNodes.add(skillNode)
         }
         return skillNodes

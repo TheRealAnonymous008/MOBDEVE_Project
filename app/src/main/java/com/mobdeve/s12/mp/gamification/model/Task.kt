@@ -7,7 +7,7 @@ import java.time.Duration
 import kotlin.random.Random
 
 data class Task(
-    var id : Int,
+    var id : Long,
     var title : String,
     var description: String,
     var timeInfo : TimeInfo,
@@ -35,7 +35,6 @@ data class Task(
 
     fun play() {
         currentTimestamp = getCurrentTimeStamp()
-        Log.e("E", "Hello")
     }
 
     fun pause() {
@@ -54,7 +53,7 @@ fun createEmptyTask() : Task {
     )
 }
 
-fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Int = 0): Task {
+fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Long = 0): Task {
     val rw = ArrayList<Reward>()
 
     for (i in 1 .. 3) {
@@ -84,7 +83,7 @@ fun createDefaultTaskList(pool : ArrayList<Skill> = ArrayList<Skill>()) : ArrayL
     val taskList : ArrayList<Task> = ArrayList<Task>()
 
     for(i in 1..10) {
-        taskList.add(createDefaultTask(pool, idx= i))
+        taskList.add(createDefaultTask(pool, idx= i.toLong()))
     }
     return taskList
 }

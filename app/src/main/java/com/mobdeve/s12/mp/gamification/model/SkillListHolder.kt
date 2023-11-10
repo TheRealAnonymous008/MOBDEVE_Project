@@ -22,4 +22,8 @@ class SkillListHolder() {
     fun update(pos : Int, payload : Skill){
         skills[pos] = payload
     }
+
+    fun clear() {
+        skills.clear()
+    }
 }

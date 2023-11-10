@@ -24,7 +24,6 @@ fun SkillTreeLazyLayoutActivity(state: State, actions: Actions) {
                 .background(Color.Gray),
             state = lazyLayoutState) {
             nodes(state.skills) {skillNode ->
-                Log.d("Printed Node",skillNode.toString())
                 skillBox(skillNode)
             }
         }

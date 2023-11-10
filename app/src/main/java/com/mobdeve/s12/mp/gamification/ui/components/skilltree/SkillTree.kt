@@ -35,7 +35,6 @@ fun SkillTreeWindow(skillList : SkillListHolder, profile : Profile){
                 .background(Color.Gray),
             state = lazyLayoutState) {
             nodes(state.skills) {skillNode ->
-                Log.d("Printed Node",skillNode.toString())
                 skillBox(skillNode)
             }
         }

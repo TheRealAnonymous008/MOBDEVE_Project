@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
@@ -53,7 +54,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun MainWindow(profile : Profile) {
+fun MainWindow(profile : Profile, db : AppDatabase) {
     val horizontalPagerState = rememberPagerState(
         initialPage = 2,
         initialPageOffsetFraction = 0f
@@ -99,7 +100,7 @@ fun MainWindow(profile : Profile) {
                                 // Our page content
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
-                                    1 -> TaskList(taskList = profile.tasks, profile = profile)
+                                    1 -> TaskList(taskList = profile.tasks, profile = profile, db = db)
                                     2 -> SkillList(skillList = profile.skills, profile = profile)
                                     3 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
                                 }

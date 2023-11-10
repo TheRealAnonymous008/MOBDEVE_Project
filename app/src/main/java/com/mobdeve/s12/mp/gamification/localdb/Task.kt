@@ -24,7 +24,7 @@ import java.sql.Timestamp
 // DB TabLE
 @Entity(tableName = "tasks")
 data class TaskEntity (
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val title: String,
     val description: String,
     val timeCreated : Long,
@@ -42,13 +42,13 @@ interface TaskDao {
     fun loadAllByIds(ids: IntArray): Flow<List<TaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(task: TaskEntity)
+    suspend fun add(task: TaskEntity) : Long
 
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun update(task : TaskEntity)
 
-    @Delete
-    suspend fun delete(task: TaskEntity)
+    @Query("DELETE FROM tasks where id = (:id)")
+    suspend fun delete(id : Long)
 
     @Query("DELETE FROM tasks")
     suspend fun deleteAll()
@@ -60,9 +60,9 @@ class TaskRepository(private val dao : TaskDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insert(task: Task) {
+    suspend fun insert(task: Task) : Long{
         val entity = getTaskEntity(task)
-        dao.insert(entity)
+        return dao.add(entity)
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -74,9 +74,8 @@ class TaskRepository(private val dao : TaskDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun delete(task: Task) {
-        val entity = getTaskEntity(task)
-        dao.delete(entity)
+    suspend fun delete(id: Long) {
+        dao.delete(id)
     }
 }
 
@@ -92,8 +91,8 @@ class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
         repository.update(task)
     }
 
-    fun delete(task : Task) = viewModelScope.launch {
-        repository.delete(task)
+    fun delete(id : Long) = viewModelScope.launch {
+        repository.delete(id)
     }
 }
 
