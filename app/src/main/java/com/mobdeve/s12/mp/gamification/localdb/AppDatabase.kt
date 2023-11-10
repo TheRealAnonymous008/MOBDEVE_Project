@@ -7,10 +7,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
+import com.mobdeve.s12.mp.gamification.skilltree.createDefaultSkillList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TaskEntity::class, SkillEntity::class, TaskSkillRewardEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun skillDao() : SkillDao
@@ -25,6 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
             INSTANCE?.let { database ->
                 scope.launch {
                     populateTasks(database.taskDao())
+                    populateSkills(database.skillDao())
                 }
             }
         }
@@ -38,7 +39,16 @@ abstract class AppDatabase : RoomDatabase() {
                 val t = getTaskEntity(it)
                 dao.insert(t)
             }
+        }
 
+        suspend fun populateSkills(dao : SkillDao) {
+            // Delete all content here.
+            dao.deleteAll()
+            val dummy = createDefaultSkillList()
+            dummy.forEach {
+                val t = getSkillEntity(it)
+                dao.insert(t)
+            }
         }
     }
 

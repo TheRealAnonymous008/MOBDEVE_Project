@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHost
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.SkillViewModel
+import com.mobdeve.s12.mp.gamification.localdb.SkillViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.TaskRepository
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModel
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModelFactory
+import com.mobdeve.s12.mp.gamification.localdb.getSkillFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
@@ -33,25 +36,49 @@ class MainActivity : AppCompatActivity() {
         TaskViewModelFactory((application as MainApplication).taskRepository)
     }
 
+    private val skillViewModel : SkillViewModel by viewModels {
+        SkillViewModelFactory((application as MainApplication).skillRepository)
+    }
+
     val profileState = mutableStateOf(generateDefaultProfile())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        taskViewModel.allTasks.observe(this) {tasks ->
+        fetchTasks()
+        fetchSkills()
+
+        update()
+    }
+
+    private fun fetchTasks() {
+        taskViewModel.allTasks.observe(this) { tasks ->
             tasks?.let {
                 val profile = profileState.value
                 for (task in tasks) {
                     profile.tasks.add(getTaskFromEntity(task))
                 }
                 profileState.value = profile
-                
-                setContent {
-                    MainWindow(profile = profileState.value)
-                }
+                update()
             }
         }
+    }
 
+
+    private fun fetchSkills() {
+        skillViewModel.allSkills.observe(this) { skills ->
+            skills?.let {
+                val profile = profileState.value
+                for (skill in skills) {
+                    profile.skills.add(getSkillFromEntity(skill))
+                }
+                profileState.value = profile
+                update()
+            }
+        }
+    }
+
+    private fun update() {
         setContent {
             MainWindow(profile = profileState.value)
         }

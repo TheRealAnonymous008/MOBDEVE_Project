@@ -55,7 +55,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @Composable
 fun MainWindow(profile : Profile) {
     val horizontalPagerState = rememberPagerState(
-        initialPage = 1,
+        initialPage = 2,
         initialPageOffsetFraction = 0f
     ) { 4 }
 

@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
 import android.util.Log
+import com.mobdeve.s12.mp.gamification.R
 import kotlin.reflect.typeOf
 
 enum class SkillPriority {
@@ -17,7 +18,7 @@ data class Skill(
     var level : Int = 0,
     var xp : Int = 0,
     var priority :SkillPriority = SkillPriority.NONE,
-    var imageId : Int = -1,
+    var imageId : Int = R.drawable.potato,
     var children : ArrayList<Skill> = ArrayList<Skill>(),
     var parent : Skill? = null
 ) {

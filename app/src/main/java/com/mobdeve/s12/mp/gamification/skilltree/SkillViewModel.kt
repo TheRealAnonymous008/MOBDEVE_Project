@@ -82,6 +82,7 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                 yPos = 0,
                 xPos = 0
             )
+            Log.e("YY", skillNode.skill.id.toString())
             skillNodes.add(skillNode)
         }
         return skillNodes
@@ -118,7 +119,7 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                     val frame = skillStack.pop()
                     val current = frame.first
                     val depth  = frame.second
-                    val currentSkillNode = skillNodes[current.id]
+                    val currentSkillNode = skillNodesMap[current.id]!!
 
                     if (currentDepth >= depth) {
                         cumY ++

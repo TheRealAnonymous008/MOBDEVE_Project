@@ -17,19 +17,8 @@ fun generateDefaultProfile() : Profile{
         "Generic Description",
         R.drawable.download, currency = 10)
 
-    val skillList = createDefaultSkillList()
-    val taskList = createDefaultTaskList(skillList)
-
-    for(skill in skillList){
-        skill.imageId = R.drawable.download
-    }
-
     val taskListHolder = TaskListHolder()
-
     val skillListHolder = SkillListHolder()
-    for (skill in skillList) {
-        skillListHolder.add(skill)
-    }
 
     return Profile(
         profileDetails,
