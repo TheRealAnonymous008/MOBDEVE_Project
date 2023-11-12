@@ -13,8 +13,8 @@ enum class SkillPriority {
 
 data class Skill(
     var id : Long,
-    var name : String = "Empty Skill",
-    var description : String = "Empty Description",
+    var name : String,
+    var description : String = "",
     var level : Int = 0,
     var xp : Int = 0,
     var priority :SkillPriority = SkillPriority.NONE,
@@ -45,5 +45,6 @@ fun createEmptySkill(id : Long = -1) : Skill {
     return Skill(
         id  =  id,
         name = "",
+        description = ""
     )
 }

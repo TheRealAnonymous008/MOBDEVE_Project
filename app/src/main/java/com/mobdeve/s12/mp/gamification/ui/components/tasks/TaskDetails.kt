@@ -31,7 +31,6 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Title of the Task
         BasicTextField(
             value = title,
             onValueChange = {
@@ -45,10 +44,31 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
             ),
             modifier = Modifier
                 .background(Color.Transparent)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .fillMaxWidth()
+                ) {
+                    if (title.isBlank()) {
+                        Text(
+                            text = "Untitled Task",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.LightGray
+                        )
+                    }
+                    innerTextField()
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        if (description.isBlank()) {
+            description= "Description"
+        }
 
         // Description
         BasicTextField(
@@ -63,7 +83,24 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
             ),
             modifier = Modifier
                 .background(Color.Transparent)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .fillMaxWidth()
+                ) {
+                    if (description.isBlank()) {
+                        Text(
+                            text = "Blank Description",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.LightGray
+                        )
+                    }
+                    innerTextField()
+                }
+            }
 
         )
 

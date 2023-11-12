@@ -57,7 +57,24 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
             ),
             modifier = Modifier
                 .background(Color.Transparent)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .fillMaxWidth()
+                ) {
+                    if (title.isEmpty()) {
+                        Text(
+                            text = "Untitled Skill",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.LightGray
+                        )
+                    }
+                    innerTextField()
+                }
+            }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -75,7 +92,24 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
             ),
             modifier = Modifier
                 .background(Color.Transparent)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                        .fillMaxWidth()
+                ) {
+                    if (description.isEmpty()) {
+                        Text(
+                            text = "Blank Description",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Normal,
+                            color = Color.LightGray
+                        )
+                    }
+                    innerTextField()
+                }
+            }
 
         )
 

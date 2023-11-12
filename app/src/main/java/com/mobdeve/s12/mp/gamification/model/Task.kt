@@ -45,8 +45,8 @@ data class Task(
 fun createEmptyTask() : Task {
     return Task(
         -1,
-        "Title",
-        "Description",
+        "",
+        "",
         TimeInfo(
             getCurrentTimeStamp()
         )

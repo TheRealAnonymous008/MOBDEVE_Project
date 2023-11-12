@@ -121,8 +121,12 @@ fun TaskEntry(task : Task,  profile : Profile, onUpdate : (t : Task) -> Unit) {
                             .padding(start = 10.dp),
                     ) {
                         // Task name
+                        var title = task.title
+                        if (title.isBlank())
+                            title = "Untitled Task"
+
                         Text(
-                            text = task.title,
+                            text = title,
                             color = TextColor,
                             modifier = Modifier.padding(top = 10.dp)
                         )

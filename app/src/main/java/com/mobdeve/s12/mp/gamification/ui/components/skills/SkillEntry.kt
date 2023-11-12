@@ -88,8 +88,11 @@ fun SkillEntry(skill : Skill, profile : Profile, onUpdate : (s : Skill) -> Unit)
                     modifier = Modifier
                         .fillMaxHeight()
                 ) {
+                    var name = skill.name
+                    if (name.isBlank())
+                        name = "Untitled Skill"
                     Text(
-                        text = skill.name,
+                        text = name,
                         modifier = Modifier
                             .fillMaxWidth(0.7f)
                             .padding(bottom = 4.dp),
