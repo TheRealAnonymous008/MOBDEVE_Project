@@ -25,7 +25,7 @@ import java.sql.Timestamp
 // DB TabLE
 @Entity(tableName = "skills")
 data class SkillEntity (
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
     val description: String,
     val level: Int,

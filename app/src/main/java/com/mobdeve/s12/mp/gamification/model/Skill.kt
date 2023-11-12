@@ -12,7 +12,7 @@ enum class SkillPriority {
 }
 
 data class Skill(
-    val id : Int,
+    var id : Long,
     var name : String,
     var description : String = "",
     var level : Int = 0,
@@ -41,7 +41,7 @@ data class Skill(
     }
 }
 
-fun createEmptySkill(id : Int = -1) : Skill {
+fun createEmptySkill(id : Long = -1) : Skill {
     return Skill(
         id  =  id,
         name = "",

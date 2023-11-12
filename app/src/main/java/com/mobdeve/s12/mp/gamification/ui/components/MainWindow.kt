@@ -101,7 +101,7 @@ fun MainWindow(profile : Profile, db : AppDatabase) {
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
                                     1 -> TaskList(taskList = profile.tasks, profile = profile, db = db)
-                                    2 -> SkillList(skillList = profile.skills, profile = profile)
+                                    2 -> SkillList(skillList = profile.skills, profile = profile, db = db)
                                     3 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
                                 }
                             }

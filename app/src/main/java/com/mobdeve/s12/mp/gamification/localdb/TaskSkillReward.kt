@@ -17,7 +17,7 @@ import java.sql.Timestamp
 @Entity(tableName = "task_skills", primaryKeys = ["taskId", "skillId"])
 data class TaskSkillRewardEntity (
     @ColumnInfo(name = "taskId") val taskId: Long, // Foreign key referencing the task
-    @ColumnInfo(name = "skillId") val skillId: Int, // Foreign key referencing the skill
+    @ColumnInfo(name = "skillId") val skillId: Long, // Foreign key referencing the skill
 
     val reward: Float
 )
