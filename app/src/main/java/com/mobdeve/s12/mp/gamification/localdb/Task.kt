@@ -24,7 +24,7 @@ import java.sql.Timestamp
 // DB TabLE
 @Entity(tableName = "tasks")
 data class TaskEntity (
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     val title: String,
     val description: String,
     val timeCreated : Long,
@@ -44,7 +44,7 @@ interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun add(task: TaskEntity) : Long
 
-    @Update(onConflict = OnConflictStrategy.IGNORE)
+    @Update
     suspend fun update(task : TaskEntity)
 
     @Query("DELETE FROM tasks where id = (:id)")

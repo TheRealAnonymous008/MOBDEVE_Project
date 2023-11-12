@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
@@ -35,7 +36,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskEntry(task : Task, profile : Profile, onDelete : (t : Task) -> Unit) {
+fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onDelete : (t : Task) -> Unit) {
 
     var offsetX by remember { mutableStateOf(Offset.Zero) }
     var show by remember { mutableStateOf(true) }
@@ -44,12 +45,16 @@ fun TaskEntry(task : Task, profile : Profile, onDelete : (t : Task) -> Unit) {
 
     if (isShowingTaskDetails) {
         Dialog(onDismissRequest = { isShowingTaskDetails = false }) {
-            TaskDetailsLayout(task = task, profile = profile, onDelete = {
-                isShowingTaskDetails = false
-                profile.tasks.remove(task)
-                onDelete(task)
-            })
+            TaskDetailsLayout(task = task, profile = profile,
+                onDelete = {
+                    isShowingTaskDetails = false
+                    profile.tasks.remove(task)
+                    onDelete(task)
+                }
+            )
         }
+    } else {
+        onUpdate(task)
     }
 
     if (show) {

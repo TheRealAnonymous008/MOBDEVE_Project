@@ -66,10 +66,6 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        if (description.isBlank()) {
-            description= "Description"
-        }
-
         // Description
         BasicTextField(
             value = description,

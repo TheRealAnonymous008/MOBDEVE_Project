@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.padding
@@ -49,12 +50,20 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
         ) {
             items(taskListState) { task ->
                 if (!task.isFinished)
-                    TaskEntry(task, profile) {
-                        taskListState.remove(it)
+                    TaskEntry(task, profile,
+                    onUpdate = {
+                        val taskEntity = getTaskEntity(it)
+                        taskEntity.id = it.id
+                        scope.launch(Dispatchers.IO) {
+                            db.taskDao().update(taskEntity)
+                        }
+                    },
+                    onDelete={
+                    taskListState.remove(it)
                         scope.launch(Dispatchers.IO) {
                             db.taskDao().delete(it.id)
                         }
-                    }
+                    })
             }
 
             item {
@@ -62,13 +71,22 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
             }
 
             items(taskListState) { task ->
-                if (task.isFinished)
-                    TaskEntry(task, profile) {
+                if (task.isFinished) {
+                    TaskEntry(task, profile,
+                    onUpdate = {
+                        val taskEntity = getTaskEntity(it)
+                        taskEntity.id = it.id
+                        scope.launch(Dispatchers.IO) {
+                            db.taskDao().update(taskEntity)
+                        }
+                    },
+                    onDelete = {
                         taskListState.remove(it)
                         scope.launch(Dispatchers.IO) {
                             db.taskDao().delete(it.id)
                         }
-                    }
+                    })
+                }
             }
         }
 
