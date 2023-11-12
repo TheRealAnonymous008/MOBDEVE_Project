@@ -15,8 +15,8 @@ class SkillListHolder() {
         skills.add(s)
     }
 
-    fun remove(pos : Int){
-        skills.removeAt(pos)
+    fun remove(s : Skill){
+        skills.remove(s)
     }
 
     fun update(pos : Int, payload : Skill){

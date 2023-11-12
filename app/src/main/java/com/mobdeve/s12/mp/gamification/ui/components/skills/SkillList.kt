@@ -45,7 +45,12 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, db : AppDatabase){
 
         ) {
             items(skillList.skills) { skill ->
-                SkillEntry(skill)
+                SkillEntry(skill, profile) {
+                    skillListState.remove(it)
+                    scope.launch(Dispatchers.IO) {
+                        db.skillDao().delete(it.id)
+                    }
+                }
             }
         }
 

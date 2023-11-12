@@ -14,27 +14,51 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskDetailsLayout
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SkillEntry(skill : Skill){
+fun SkillEntry(skill : Skill, profile : Profile, onUpdate : (s : Skill) -> Unit){
+    var isShowingTaskDetails by remember { mutableStateOf(false) }
+
+    if (isShowingTaskDetails) {
+        Dialog(onDismissRequest = { isShowingTaskDetails = false }) {
+            SkillDetailsLaoyut(skill = skill , profile = profile, onDelete = {
+                isShowingTaskDetails = false
+                profile.skills.remove(skill)
+                onUpdate(skill)
+            })
+        }
+    }
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = PrimaryColor
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 16.dp)
+            .padding(bottom = 16.dp),
+        onClick = {
+            isShowingTaskDetails = true
+        }
 
     ) {
         // Skill Title, Priority, and Image

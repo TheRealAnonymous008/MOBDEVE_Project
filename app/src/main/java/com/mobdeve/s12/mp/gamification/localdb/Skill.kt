@@ -49,8 +49,8 @@ interface SkillDao {
     @Update(onConflict = OnConflictStrategy.IGNORE)
     suspend fun update(skill : SkillEntity)
 
-    @Delete
-    suspend fun delete(skill: SkillEntity)
+    @Query("DELETE FROM skills where id = (:id)")
+    suspend fun delete(id : Long)
 
     @Query("DELETE FROM skills")
     suspend fun deleteAll()
@@ -76,9 +76,8 @@ class SkillRepository(private val dao : SkillDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun delete(skill : Skill) {
-        val entity = getSkillEntity(skill)
-        dao.delete(entity)
+    suspend fun delete(id: Long) {
+        dao.delete(id)
     }
 }
 
@@ -94,8 +93,8 @@ class SkillViewModel(private val repository: SkillRepository) : ViewModel() {
         repository.update(skill)
     }
 
-    fun delete(skill : Skill) = viewModelScope.launch {
-        repository.delete(skill)
+    fun delete(id : Long) = viewModelScope.launch {
+        repository.delete(id)
     }
 }
 
