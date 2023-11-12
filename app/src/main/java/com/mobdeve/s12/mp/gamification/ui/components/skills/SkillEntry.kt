@@ -30,13 +30,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Skill
-import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskDetailsLayout
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SkillEntry(skill : Skill, profile : Profile, onUpdate : (s : Skill) -> Unit){
+fun SkillEntry(skill : Skill, profile : Profile, onDelete : (s : Skill) -> Unit){
     var isShowingTaskDetails by remember { mutableStateOf(false) }
 
     if (isShowingTaskDetails) {
@@ -44,7 +43,7 @@ fun SkillEntry(skill : Skill, profile : Profile, onUpdate : (s : Skill) -> Unit)
             SkillDetailsLaoyut(skill = skill , profile = profile, onDelete = {
                 isShowingTaskDetails = false
                 profile.skills.remove(skill)
-                onUpdate(skill)
+                onDelete(skill)
             })
         }
     }
