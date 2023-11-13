@@ -11,6 +11,14 @@ class SkillListHolder() {
         return null
     }
 
+    fun find(id : Long) : Skill? {
+        for (sk in skills) {
+            if (sk.id == id)
+                return sk
+        }
+        return null
+    }
+
     fun add(s: Skill){
         skills.add(s)
     }
