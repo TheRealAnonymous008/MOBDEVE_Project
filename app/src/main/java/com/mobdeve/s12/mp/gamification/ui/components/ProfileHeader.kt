@@ -63,7 +63,6 @@ fun ProfileHeader(profileDetails : ProfileDetails){
                 .background(PrimaryColor)
 
         ){
-            profileDetails.
             Image(painter = painterResource(profileDetails.avatarId),
                 contentDescription = "Profile Avatar",
                 modifier = Modifier
