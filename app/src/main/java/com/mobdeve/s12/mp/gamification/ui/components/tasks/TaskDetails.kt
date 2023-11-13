@@ -130,7 +130,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
         Box(
             modifier = Modifier
                 .fillMaxHeight(0.75f)
-                .fillMaxWidth(0.5f)
+                .fillMaxWidth()
         ) {
             TaskRewardsList(rewards = task.rewards, profile = profile)
         }
