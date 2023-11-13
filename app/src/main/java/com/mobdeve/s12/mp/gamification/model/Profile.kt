@@ -9,7 +9,8 @@ class Profile (
     var profileDetails: ProfileDetails,
     var skills : SkillListHolder,
     var tasks: TaskListHolder,
-    var cosmetics : ArrayList<Cosmetic>
+    var cosmetics : ArrayList<Cosmetic>,
+    var avatar: Avatar
 ) : Serializable {}
 
 fun generateDefaultProfile() : Profile{
@@ -19,11 +20,12 @@ fun generateDefaultProfile() : Profile{
 
     val taskListHolder = TaskListHolder()
     val skillListHolder = SkillListHolder()
-
+    var avatar = Avatar()
     return Profile(
         profileDetails,
         skillListHolder,
         taskListHolder,
-        ArrayList<Cosmetic>()
+        ArrayList<Cosmetic>(),
+        avatar,
     )
 }
