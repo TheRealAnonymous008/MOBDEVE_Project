@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
 import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
@@ -21,7 +22,10 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
 @Composable
-fun CosmeticRow(cosmeticList: ArrayList<out Cosmetic>) {
+fun CosmeticRow(
+    cosmeticList: ArrayList<out Cosmetic>,
+    cosmeticContainer: @Composable (cosmetic : Cosmetic) -> Unit
+) {
     Row(
         modifier = Modifier
             .padding(1.dp)
@@ -31,9 +35,8 @@ fun CosmeticRow(cosmeticList: ArrayList<out Cosmetic>) {
                 .fillMaxWidth(),
         ) {
             items(cosmeticList) {cosmetic ->
-                CosmeticEntry(cosmetic)
+                cosmeticContainer(cosmetic)
             }
-
         }
     }
 
@@ -72,13 +75,13 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
         modifier = Modifier.fillMaxSize()
     ) {
         CosmeticRowHeader(text = "HEAD")
-        CosmeticRow(headList)
+        CosmeticRow(headList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
         CosmeticRowHeader(text = "TORSO")
-        CosmeticRow(torsoList)
+        CosmeticRow(torsoList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
         CosmeticRowHeader(text = "LEGS")
-        CosmeticRow(legsList)
+        CosmeticRow(legsList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
         CosmeticRowHeader(text = "FEET")
-        CosmeticRow(feetList)
+        CosmeticRow(feetList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
     }
 }
 

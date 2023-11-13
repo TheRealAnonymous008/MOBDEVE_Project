@@ -1,6 +1,5 @@
 package com.mobdeve.s12.mp.gamification.ui.components.cosmetics
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,7 +29,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,7 +50,9 @@ class ImageSizeParameters {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CosmeticEntry(cosmetic : Cosmetic) {
+fun CosmeticEntry(
+    cosmetic : Cosmetic
+) {
     val showDialog = remember { mutableStateOf(false) }
 
     if(showDialog.value) {
@@ -67,7 +67,9 @@ fun CosmeticEntry(cosmetic : Cosmetic) {
 }
 
 @Composable
-fun CosmeticContainer(cosmetic : Cosmetic, onClick: () -> Unit) {
+fun CosmeticContainer(
+    cosmetic : Cosmetic,
+    onClick: () -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally

@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                 MainWindow(profile = profileState.value, db = database!!, navController = navController)
             }
             composable(Routes.AVATAR_WINDOW) {
-                AvatarEditWindow(profileState.value.cosmetics, profileState.value.avatar, navController)
+                AvatarEditWindow(profileState.value.cosmetics, profileState.value.profileDetails.avatar, navController)
             }
         }
     }
