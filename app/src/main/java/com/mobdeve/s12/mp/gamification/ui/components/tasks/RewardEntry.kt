@@ -22,7 +22,7 @@ fun RewardEntry(reward : Reward) {
         Text(
             text = reward.skill.name,
             modifier = Modifier
-                .weight(1f),
+                .weight(2f),
             color = TextColor,
         )
 
@@ -30,7 +30,7 @@ fun RewardEntry(reward : Reward) {
         Text(
             text = reward.xp.toString(),
             modifier = Modifier
-                .weight(0.25f),
+                .weight(1f),
             color = TextColor,
         )
     }
