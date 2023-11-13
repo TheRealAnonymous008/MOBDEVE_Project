@@ -581,3 +581,26 @@ fun SchedulePreview() {
         Schedule(getSampleEvents())
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun BasicEventPreview() {
+    val sampleEvent = Event(
+        name = "Sample Event",
+        color = Color.Blue,
+        start = LocalDateTime.now(),
+        end = LocalDateTime.now().plusHours(2)
+    )
+
+    val positionedEvent = PositionedEvent(
+        event = sampleEvent,
+        splitType = SplitType.None,
+        date = sampleEvent.start.toLocalDate(),
+        start = sampleEvent.start.toLocalTime(),
+        end = sampleEvent.end.toLocalTime()
+    )
+
+    WeekScheduleTheme {
+        BasicEvent(positionedEvent = positionedEvent)
+    }
+}
