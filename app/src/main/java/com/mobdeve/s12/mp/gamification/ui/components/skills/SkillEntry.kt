@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.skills
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -35,11 +36,15 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SkillEntry(skill : Skill, profile : Profile, onDelete : (s : Skill) -> Unit){
+fun SkillEntry(skill : Skill, profile : Profile, onUpdate: (s : Skill) -> Unit, onDelete : (s : Skill) -> Unit){
     var isShowingTaskDetails by remember { mutableStateOf(false) }
 
     if (isShowingTaskDetails) {
-        Dialog(onDismissRequest = { isShowingTaskDetails = false }) {
+        Dialog(
+            onDismissRequest = {
+                isShowingTaskDetails = false
+                onUpdate(skill)
+            }) {
             SkillDetailsLaoyut(skill = skill , profile = profile, onDelete = {
                 isShowingTaskDetails = false
                 profile.skills.remove(skill)

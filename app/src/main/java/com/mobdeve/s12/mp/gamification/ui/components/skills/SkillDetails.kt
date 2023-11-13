@@ -1,10 +1,10 @@
 package com.mobdeve.s12.mp.gamification.ui.components.skills
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,10 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Skill
-import com.mobdeve.s12.mp.gamification.model.Task
-import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskRewardsList
-import com.mobdeve.s12.mp.gamification.ui.components.tasks.TimeInfoDetails
-import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
@@ -43,7 +39,7 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // Title of the Task
+        // Title of the Skill
         BasicTextField(
             value = title,
             onValueChange = {
@@ -124,7 +120,7 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
                 .fillMaxWidth()
                 .padding(8.dp),
         ) {
-            Text("Delete Task", fontWeight = FontWeight.Bold)
+            Text("Delete Skill", fontWeight = FontWeight.Bold)
         }
     }
 }

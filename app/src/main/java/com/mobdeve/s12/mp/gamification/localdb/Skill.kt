@@ -25,7 +25,7 @@ import java.sql.Timestamp
 // DB TabLE
 @Entity(tableName = "skills")
 data class SkillEntity (
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     val name: String,
     val description: String,
     val level: Int,
@@ -46,7 +46,7 @@ interface SkillDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun add(skill: SkillEntity) : Long
 
-    @Update(onConflict = OnConflictStrategy.IGNORE)
+    @Update
     suspend fun update(skill : SkillEntity)
 
     @Query("DELETE FROM skills where id = (:id)")

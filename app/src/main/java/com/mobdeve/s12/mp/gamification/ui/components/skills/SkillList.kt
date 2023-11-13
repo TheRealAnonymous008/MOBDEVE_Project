@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.skills
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -45,12 +46,20 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, db : AppDatabase){
 
         ) {
             items(skillList.skills) { skill ->
-                SkillEntry(skill, profile) {
+                SkillEntry(skill, profile,
+                    onUpdate = {
+                        val skillEntity = getSkillEntity(it)
+                        skillEntity.id = it.id
+                        scope.launch(Dispatchers.IO) {
+                            db.skillDao().update(skillEntity)
+                        }
+                    },
+                    onDelete = {
                     skillListState.remove(it)
                     scope.launch(Dispatchers.IO) {
                         db.skillDao().delete(it.id)
                     }
-                }
+                })
             }
         }
 

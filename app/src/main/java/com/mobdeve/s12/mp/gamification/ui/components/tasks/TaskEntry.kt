@@ -44,7 +44,12 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
     var isShowingTaskDetails by remember { mutableStateOf(false)}
 
     if (isShowingTaskDetails) {
-        Dialog(onDismissRequest = { isShowingTaskDetails = false }) {
+        Dialog(
+            onDismissRequest = {
+                isShowingTaskDetails = false
+                onUpdate(task)
+            })
+        {
             TaskDetailsLayout(task = task, profile = profile,
                 onDelete = {
                     isShowingTaskDetails = false
@@ -53,8 +58,6 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                 }
             )
         }
-    } else {
-        onUpdate(task)
     }
 
     if (show) {
