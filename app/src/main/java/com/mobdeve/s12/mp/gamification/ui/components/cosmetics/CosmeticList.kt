@@ -19,6 +19,37 @@ import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
 import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
+
+@Composable
+fun CosmeticRow(cosmeticList: ArrayList<out Cosmetic>) {
+    Row(
+        modifier = Modifier
+            .padding(1.dp)
+    ) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            items(cosmeticList) {cosmetic ->
+                CosmeticEntry(cosmetic)
+            }
+
+        }
+    }
+
+}
+
+@Composable
+fun CosmeticRowHeader(text : String) {
+    Text(
+        text = text,
+        modifier = Modifier
+            .padding(top = 10.dp, start = 10.dp),
+        color = TextColor,
+        fontSize = 20.sp
+    )
+}
+
 @Composable
 fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
     val headList : ArrayList<HeadCosmetic> = ArrayList()
@@ -40,91 +71,14 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "HEAD",
-            modifier = Modifier
-                .padding(top = 10.dp, start = 10.dp),
-            color = TextColor,
-            fontSize = 20.sp
-        )
-
-        Row(
-            modifier = Modifier
-                .padding(1.dp)
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                items(headList) {head ->
-                    CosmeticEntry(head)
-                }
-
-            }
-        }
-
-
-        Text(
-            text = "TORSO",
-            modifier = Modifier
-                .padding(top = 10.dp, start = 10.dp),
-            color = TextColor,
-            fontSize = 20.sp
-        )
-        Row(
-            modifier = Modifier
-                .padding(1.dp)
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                items(torsoList) {torso ->
-                    CosmeticEntry(torso)
-                }
-            }
-        }
-        Text(
-            text = "LEGS",
-            modifier = Modifier
-                .padding(top = 10.dp, start = 10.dp),
-            color = TextColor,
-            fontSize = 20.sp
-        )
-        Row(
-            modifier = Modifier
-                .padding(1.dp)
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                items(legsList) {legs ->
-                    CosmeticEntry(legs)
-                }
-            }
-        }
-
-        Text(
-            text = "FEET",
-            modifier = Modifier
-                .padding(top = 10.dp, start = 10.dp),
-            color = TextColor,
-            fontSize = 20.sp
-        )
-        Row(
-            modifier = Modifier
-                .padding(1.dp)
-        ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                items(feetList) {feet ->
-                    CosmeticEntry(feet)
-                }
-            }
-        }
-
+        CosmeticRowHeader(text = "HEAD")
+        CosmeticRow(headList)
+        CosmeticRowHeader(text = "TORSO")
+        CosmeticRow(torsoList)
+        CosmeticRowHeader(text = "LEGS")
+        CosmeticRow(legsList)
+        CosmeticRowHeader(text = "FEET")
+        CosmeticRow(feetList)
     }
 }
+

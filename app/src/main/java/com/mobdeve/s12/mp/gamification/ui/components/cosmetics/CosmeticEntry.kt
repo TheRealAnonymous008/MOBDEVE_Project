@@ -3,6 +3,7 @@ package com.mobdeve.s12.mp.gamification.ui.components.cosmetics
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,6 +61,13 @@ fun CosmeticEntry(cosmetic : Cosmetic) {
             showState = showDialog.value,
             onDismissRequest = {showDialog.value = false})
     }
+    CosmeticContainer(cosmetic) {
+        showDialog.value = !showDialog.value
+    }
+}
+
+@Composable
+fun CosmeticContainer(cosmetic : Cosmetic, onClick: () -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -80,15 +88,13 @@ fun CosmeticEntry(cosmetic : Cosmetic) {
                 modifier = Modifier
                     .background(PrimaryColor)
                     .fillMaxSize(),
-                onClick = {
-                    showDialog.value = !showDialog.value
-                }
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .width(ImageSizeParameters.BOX_SIZE)
                         .height(ImageSizeParameters.BOX_SIZE)
+                        .clickable(onClick = onClick)
                 ) {
                     cosmetic.ViewCosmetic(
                         modifier = Modifier
@@ -104,8 +110,6 @@ fun CosmeticEntry(cosmetic : Cosmetic) {
             color = TextColor,
         )
     }
-
-
 }
 
 @Composable
