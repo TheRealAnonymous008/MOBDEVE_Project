@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                 MainWindow(profile = profileState.value, db = database!!)
             }
             composable("about") {
-                AboutScreen()
+
             }
         }
     }
