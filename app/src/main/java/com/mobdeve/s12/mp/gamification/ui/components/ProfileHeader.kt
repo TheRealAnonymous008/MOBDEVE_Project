@@ -1,7 +1,9 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +25,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.mobdeve.s12.mp.gamification.MainActivity
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
@@ -40,7 +44,7 @@ class ProfileHeaderParameters {
 }
 
 @Composable
-fun ProfileHeader(profileDetails : ProfileDetails){
+fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController){
     Row  (
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp)
@@ -63,7 +67,9 @@ fun ProfileHeader(profileDetails : ProfileDetails){
                 .width(ProfileHeaderParameters.HEADER_SIZE)
                 .fillMaxHeight()
                 .background(PrimaryColor)
-
+                .clickable {
+                    navController.navigate(MainActivity.AVATAR_WINDOW)
+                }
         ){
             profileDetails.avatar.ConstructAvatar(
                 modifier = Modifier

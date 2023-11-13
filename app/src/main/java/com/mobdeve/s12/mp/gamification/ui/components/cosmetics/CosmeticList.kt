@@ -13,12 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.FeetCosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.HeadCosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.LegsCosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.TorsoCosmetic
+import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
+import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
+import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
+import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
-import kotlin.reflect.typeOf
 
 @Composable
 fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {

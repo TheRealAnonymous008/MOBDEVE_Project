@@ -1,7 +1,5 @@
-package com.mobdeve.s12.mp.gamification.model.cosmetics
+package com.mobdeve.s12.mp.gamification.model
 
-
-import com.mobdeve.s12.mp.gamification.model.Cosmetic
 
 class HeadCosmetic(
     id: Int,

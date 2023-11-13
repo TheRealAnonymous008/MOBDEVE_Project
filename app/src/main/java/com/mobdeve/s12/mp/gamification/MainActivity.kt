@@ -2,34 +2,34 @@ package com.mobdeve.s12.mp.gamification
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.SkillViewModel
 import com.mobdeve.s12.mp.gamification.localdb.SkillViewModelFactory
-import com.mobdeve.s12.mp.gamification.localdb.TaskRepository
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModel
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.getSkillFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
-import com.mobdeve.s12.mp.gamification.ui.components.LoginPage
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
-import com.mobdeve.s12.mp.gamification.ui.components.Register
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
+import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
+
+
 
 
 class MainActivity : AppCompatActivity() {
+    companion object Routes {
+        val MAIN_WINDOW = "main_window"
+        val AVATAR_WINDOW = "avatar_window"
+    }
+
     private val REQUEST_CODE = 1
 
     private var database : AppDatabase? = null
@@ -88,10 +88,28 @@ class MainActivity : AppCompatActivity() {
             database = ((application as MainApplication)).database
         }
         setContent {
-            MainWindow(profile = profileState.value, db = database!!)
+            navigation()
+        }
+    }
+
+    @Composable
+    fun navigation() {
+        val navController = rememberNavController()
+
+        NavHost(navController, startDestination = Routes.MAIN_WINDOW) {
+            composable(Routes.MAIN_WINDOW) {
+                MainWindow(profile = profileState.value, db = database!!, navController = navController)
+            }
+            composable(Routes.AVATAR_WINDOW) {
+                AvatarEditWindow(profileState.value.cosmetics, profileState.value.avatar, navController)
+            }
         }
     }
 }
+
+
+
+
 
 /*@Composable
 fun navigatePage() {
