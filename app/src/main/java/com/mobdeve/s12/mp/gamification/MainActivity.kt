@@ -19,10 +19,17 @@ import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
+import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
+
 
 
 
 class MainActivity : AppCompatActivity() {
+    companion object Routes {
+        val MAIN_WINDOW = "main_window"
+        val AVATAR_WINDOW = "avatar_window"
+    }
+
     private val REQUEST_CODE = 1
 
     private var database : AppDatabase? = null
@@ -81,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             database = ((application as MainApplication)).database
         }
         setContent {
-            MainWindow(profile = profileState.value, db = database!!)
+            navigation()
         }
     }
 
@@ -89,12 +96,12 @@ class MainActivity : AppCompatActivity() {
     fun navigation() {
         val navController = rememberNavController()
 
-        NavHost(navController, startDestination = "home") {
-            composable("home") {
-                MainWindow(profile = profileState.value, db = database!!)
+        NavHost(navController, startDestination = Routes.MAIN_WINDOW) {
+            composable(Routes.MAIN_WINDOW) {
+                MainWindow(profile = profileState.value, db = database!!, navController = navController)
             }
-            composable("about") {
-
+            composable(Routes.AVATAR_WINDOW) {
+                AvatarEditWindow(profileState.value.cosmetics, profileState.value.avatar, navController)
             }
         }
     }

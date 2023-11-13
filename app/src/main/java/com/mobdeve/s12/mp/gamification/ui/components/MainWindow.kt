@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
@@ -54,7 +55,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun MainWindow(profile : Profile, db : AppDatabase) {
+fun MainWindow(profile : Profile, db : AppDatabase, navController: NavController) {
     val horizontalPagerState = rememberPagerState(
         initialPage = 2,
         initialPageOffsetFraction = 0f
@@ -77,7 +78,7 @@ fun MainWindow(profile : Profile, db : AppDatabase) {
             ) {
                 AnimatedVisibility(visible = isTaskVisible.value) {
                     Column {
-                        ProfileHeader(profile.profileDetails)
+                        ProfileHeader(profile.profileDetails, navController)
                         Card (
                             modifier = Modifier
                                 .padding(10.dp)

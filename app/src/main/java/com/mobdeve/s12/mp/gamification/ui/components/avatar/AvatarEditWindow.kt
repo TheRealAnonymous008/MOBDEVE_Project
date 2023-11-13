@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.model.Avatar
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
@@ -17,7 +18,7 @@ import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 const val AVATAR_SIZE = 120
 
 @Composable
-fun AvatarSelectionWindow(ownedCosmetics : ArrayList<Cosmetic>, avatar : Avatar) {
+fun AvatarEditWindow(ownedCosmetics : ArrayList<Cosmetic>, avatar : Avatar, navController: NavController?) {
     Box {
         Row (
             modifier = Modifier.height(intrinsicSize = IntrinsicSize.Max)
@@ -51,5 +52,5 @@ fun AvatarSelectionWindow(ownedCosmetics : ArrayList<Cosmetic>, avatar : Avatar)
 fun PreviewAvatarSelection() {
     val ownedCosmetics = createDefaultCosmeticList()
     val avatar = Avatar()
-    AvatarSelectionWindow(ownedCosmetics = ownedCosmetics, avatar = avatar)
+    AvatarEditWindow(ownedCosmetics = ownedCosmetics, avatar = avatar, null)
 }
