@@ -81,9 +81,13 @@ fun WeekScheduleTheme(
     content: @Composable() () -> Unit
 ) {
     val colorScheme = if (darkTheme) {
-        DarkColorScheme
+        DarkColorScheme.copy(
+            background = Color.White // Set the background color to white in dark theme
+        )
     } else {
-        LightColorScheme
+        LightColorScheme.copy(
+            background = Color.White // Set the background color to white in light theme
+        )
     }
 
     MaterialTheme(

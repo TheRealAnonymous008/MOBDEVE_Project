@@ -445,12 +445,12 @@ fun Schedule(
             }
         }
     }
-    NextDayButton(
+    /*NextDayButton(
         onClick = {
 
             displayedDate = displayedDate.plusDays(1)
         }
-    )
+    )*/
 }
 
 @Composable
@@ -526,17 +526,17 @@ fun BasicSchedule(
 
 
 
-@Composable
+/*@Composable
 fun NextDayButton(
     onClick: () -> Unit
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(2.dp)
     ) {
         Text("Next Day")
     }
-}
+}*/
 
 @Composable
 fun TaskSchedule(taskList: TaskListHolder) {
@@ -556,13 +556,23 @@ fun TaskSchedule(taskList: TaskListHolder) {
     val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
 
     WeekScheduleTheme {
-        Schedule(
-            events,
-            minDate = startOfWeek, // Set the start of the week
-            maxDate = endOfWeek   // Set the end of the week
-        )
+        Surface(
+            color = MaterialTheme.colorScheme.background, // Set the background color to the theme's background color
+            modifier = Modifier.fillMaxSize() // Occupy the entire available space
+        ) {
+            Schedule(
+                events,
+                minDate = startOfWeek, // Set the start of the week
+                maxDate = endOfWeek,   // Set the end of the week
+
+                dayHeader = { BasicDayHeader(day = it, modifier = Modifier.background(MaterialTheme.colorScheme.background)) },
+                timeLabel = { BasicSidebarLabel(time = it, modifier = Modifier.background(MaterialTheme.colorScheme.background)) },
+                eventContent = { BasicEvent(positionedEvent = it, modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
+            )
+        }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
