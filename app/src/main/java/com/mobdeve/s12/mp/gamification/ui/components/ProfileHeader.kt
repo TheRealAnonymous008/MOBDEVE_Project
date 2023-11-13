@@ -53,25 +53,23 @@ fun ProfileHeader(profileDetails : ProfileDetails){
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .padding(top = 10.dp)
-                .advancedShadow(Color.Black,
+                .advancedShadow(
+                    Color.Black,
                     offsetX = 5.dp,
                     offsetY = 5.dp,
                     spread = 4.dp,
-                    blurRadius = 5.dp)
+                    blurRadius = 5.dp
+                )
                 .width(ProfileHeaderParameters.HEADER_SIZE)
                 .fillMaxHeight()
                 .background(PrimaryColor)
 
         ){
-            Image(painter = painterResource(profileDetails.avatarId),
-                contentDescription = "Profile Avatar",
+            profileDetails.avatar.ConstructAvatar(
                 modifier = Modifier
                     .width(ProfileHeaderParameters.IMAGE_SIZE)
-                    .height(ProfileHeaderParameters.IMAGE_SIZE)
-                    .background(SecondaryColor)
-                    .size(ProfileHeaderParameters.IMAGE_SIZE, ProfileHeaderParameters.IMAGE_SIZE),
-                alignment = Alignment.Center,
-                contentScale = ContentScale.FillBounds
+                    .height(ProfileHeaderParameters.IMAGE_SIZE),
+                background = SecondaryColor
             )
         }
 

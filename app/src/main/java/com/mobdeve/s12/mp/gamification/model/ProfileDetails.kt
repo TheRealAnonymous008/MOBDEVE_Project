@@ -5,7 +5,7 @@ import java.io.Serializable
 data class ProfileDetails(
     var name : String,
     var description : String,
-    var avatarId  : Int,
+    var avatar : Avatar,
     var currency : Int
 ) : Serializable {}
 

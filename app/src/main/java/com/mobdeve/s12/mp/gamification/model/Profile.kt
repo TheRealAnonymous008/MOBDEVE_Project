@@ -16,7 +16,7 @@ class Profile (
 fun generateDefaultProfile() : Profile{
     val profileDetails = ProfileDetails("Hello",
         "Generic Description",
-        R.drawable.download, currency = 10)
+        Avatar(), currency = 10)
 
     val taskListHolder = TaskListHolder()
     val skillListHolder = SkillListHolder()

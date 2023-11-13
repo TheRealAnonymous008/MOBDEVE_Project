@@ -1,8 +1,11 @@
 package com.mobdeve.s12.mp.gamification.model
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.cosmetics.FeetCosmetic
@@ -50,13 +53,24 @@ class Avatar(
 
     @Composable
     fun ConstructAvatar(
-        modifier : Modifier = Modifier
+        modifier : Modifier = Modifier,
+        background : Color = Color.Transparent
     ) {
-        Box {
-            Head.ViewCosmetic()
-            Torso.ViewCosmetic()
-            Legs.ViewCosmetic()
-            Feet.ViewCosmetic()
+        Box(
+            Modifier.background(background)
+        ) {
+            Head.ViewCosmetic(
+                modifier = modifier
+            )
+            Torso.ViewCosmetic(
+                modifier = modifier
+            )
+            Legs.ViewCosmetic(
+                modifier = modifier
+            )
+            Feet.ViewCosmetic(
+                modifier = modifier
+            )
         }
     }
 

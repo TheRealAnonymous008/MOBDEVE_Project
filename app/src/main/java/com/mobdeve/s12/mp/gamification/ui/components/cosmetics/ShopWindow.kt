@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.R
+import com.mobdeve.s12.mp.gamification.model.Avatar
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
@@ -78,7 +79,7 @@ fun ShopWindow(
 fun PreviewShopWindow() {
     val profileDetails = ProfileDetails("Hello",
         "Generic Description",
-        R.drawable.download, currency = 10)
+        Avatar(), currency = 10)
 
     val cosmeticList = createDefaultCosmeticList()
 
