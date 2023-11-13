@@ -3,6 +3,7 @@ package com.mobdeve.s12.mp.gamification.ui.components.calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -540,7 +541,7 @@ fun NextDayButton(
 
 @Composable
 fun TaskSchedule(taskList: TaskListHolder) {
-    val taskEvents = taskList.getTasks().map { task -> getTaskEvent(task, null)}
+    val taskEvents = taskList.getTasks().map { task -> getTaskEvent(task, null) }
 
     val events = taskEvents.map { taskEvent ->
         Event(
@@ -555,23 +556,68 @@ fun TaskSchedule(taskList: TaskListHolder) {
     val startOfWeek = LocalDate.now().with(DayOfWeek.MONDAY) // Get the start of the week
     val endOfWeek = startOfWeek.plusDays(6) // Calculate the end of the week
 
+    var scrollState by remember { mutableStateOf(0) }
+
     WeekScheduleTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background, // Set the background color to the theme's background color
-            modifier = Modifier.fillMaxSize() // Occupy the entire available space
+            color = MaterialTheme.colorScheme.background,
+            modifier = Modifier.fillMaxSize()
         ) {
-            Schedule(
-                events,
-                minDate = startOfWeek, // Set the start of the week
-                maxDate = endOfWeek,   // Set the end of the week
+            Column {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    // Your existing content
+                    Schedule(
+                        events,
+                        minDate = startOfWeek, // Set the start of the week
+                        maxDate = endOfWeek,   // Set the end of the week
+                        dayHeader = {
+                            BasicDayHeader(
+                                day = it,
+                                modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                            )
+                        },
+                        timeLabel = {
+                            BasicSidebarLabel(
+                                time = it,
+                                modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                            )
+                        },
+                        eventContent = {
+                            BasicEvent(
+                                positionedEvent = it,
+                                modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                            )
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 16.dp) // Add padding to the Schedule
+                            .onGloballyPositioned {
+                                scrollState = it.size.width
+                            }
+                    )
 
-                dayHeader = { BasicDayHeader(day = it, modifier = Modifier.background(MaterialTheme.colorScheme.background)) },
-                timeLabel = { BasicSidebarLabel(time = it, modifier = Modifier.background(MaterialTheme.colorScheme.background)) },
-                eventContent = { BasicEvent(positionedEvent = it, modifier = Modifier.background(MaterialTheme.colorScheme.background)) }
-            )
+                    // Button to scroll to the right
+                    Button(
+                        onClick = {
+                            scrollState += 100 // adjust the scroll distance
+                        },
+                        modifier = Modifier
+                            .height(48.dp)
+                            .padding(start = 10.dp)
+                    ) {
+                        Text("Scroll Right")
+                    }
+                }
+            }
         }
     }
 }
+
+
 
 
 @Preview(showBackground = true)
