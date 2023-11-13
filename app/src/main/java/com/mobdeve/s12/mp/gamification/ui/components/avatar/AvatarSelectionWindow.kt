@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,7 +14,7 @@ import com.mobdeve.s12.mp.gamification.model.Avatar
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 
-const val OBJECT_SIZE = 120
+const val AVATAR_SIZE = 120
 
 @Composable
 fun AvatarSelectionWindow(ownedCosmetics : ArrayList<Cosmetic>, avatar : Avatar) {
@@ -26,23 +24,23 @@ fun AvatarSelectionWindow(ownedCosmetics : ArrayList<Cosmetic>, avatar : Avatar)
         ) {
             Column (
             ){
-                var mod = Modifier.size((OBJECT_SIZE / 4).dp)
+                var mod = Modifier.size((AVATAR_SIZE / 4).dp)
                 Row {
-                    avatar.Head.ViewCosmetic(mod)
+                    avatar.head.ViewCosmetic(mod)
                 }
                 Row {
-                    avatar.Torso.ViewCosmetic(mod)
+                    avatar.torso.ViewCosmetic(mod)
                 }
                 Row {
-                    avatar.Legs.ViewCosmetic(mod)
+                    avatar.legs.ViewCosmetic(mod)
                 }
                 Row {
-                    avatar.Feet.ViewCosmetic(mod)
+                    avatar.feet.ViewCosmetic(mod)
                 }
             }
             avatar.ConstructAvatar(
                 modifier = Modifier
-                    .size(OBJECT_SIZE.dp)
+                    .size(AVATAR_SIZE.dp)
             )
         }
     }

@@ -2,16 +2,11 @@ package com.mobdeve.s12.mp.gamification.model
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.mobdeve.s12.mp.gamification.R
-import com.mobdeve.s12.mp.gamification.model.cosmetics.FeetCosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.HeadCosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.LegsCosmetic
-import com.mobdeve.s12.mp.gamification.model.cosmetics.TorsoCosmetic
 
 var default_head = HeadCosmetic(
     id = 0,
@@ -46,10 +41,10 @@ var default_feet = FeetCosmetic(
 )
 
 class Avatar(
-    var Head : HeadCosmetic = default_head,
-    var Torso : TorsoCosmetic = default_torso,
-    var Legs : LegsCosmetic = default_legs,
-    var Feet : FeetCosmetic = default_feet) {
+    var head : HeadCosmetic = default_head,
+    var torso : TorsoCosmetic = default_torso,
+    var legs : LegsCosmetic = default_legs,
+    var feet : FeetCosmetic = default_feet) {
 
     @Composable
     fun ConstructAvatar(
@@ -59,16 +54,16 @@ class Avatar(
         Box(
             Modifier.background(background)
         ) {
-            Head.ViewCosmetic(
+            head.ViewCosmetic(
                 modifier = modifier
             )
-            Torso.ViewCosmetic(
+            torso.ViewCosmetic(
                 modifier = modifier
             )
-            Legs.ViewCosmetic(
+            legs.ViewCosmetic(
                 modifier = modifier
             )
-            Feet.ViewCosmetic(
+            feet.ViewCosmetic(
                 modifier = modifier
             )
         }
