@@ -90,13 +90,10 @@ fun CosmeticEntry(cosmetic : Cosmetic) {
                         .width(ImageSizeParameters.BOX_SIZE)
                         .height(ImageSizeParameters.BOX_SIZE)
                 ) {
-                    Image(
-                        painter = painterResource(cosmetic.image),
-                        contentDescription = "Cosmetic Image",
+                    cosmetic.ViewCosmetic(
                         modifier = Modifier
                             .width(ImageSizeParameters.IMAGE_SIZE)
-                            .height(ImageSizeParameters.IMAGE_SIZE),
-                        alignment = Alignment.Center,
+                            .height(ImageSizeParameters.IMAGE_SIZE)
                     )
                 }
             }
@@ -154,11 +151,7 @@ fun CosmeticDialog( cosmetic: Cosmetic, showState : Boolean, onDismissRequest: (
                             .padding(10.dp)
                             .border(1.dp, Color.Black)
                     ) {
-                        Image(
-                            painter = painterResource(id = cosmetic.image),
-                            contentDescription = "Cosmetic Image",
-                            modifier = Modifier
-                                .size(100.dp))
+                        cosmetic.ViewCosmetic(modifier = Modifier.size(100.dp))
                     }
 
                     Text(

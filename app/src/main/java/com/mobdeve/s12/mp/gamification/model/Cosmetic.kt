@@ -1,40 +1,65 @@
 package com.mobdeve.s12.mp.gamification.model
 
-import android.media.Image
+
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import com.mobdeve.s12.mp.gamification.R
-import java.io.Serializable
+import com.mobdeve.s12.mp.gamification.model.cosmetics.FeetCosmetic
+import com.mobdeve.s12.mp.gamification.model.cosmetics.HeadCosmetic
+import com.mobdeve.s12.mp.gamification.model.cosmetics.LegsCosmetic
+import com.mobdeve.s12.mp.gamification.model.cosmetics.TorsoCosmetic
 
-enum class CosmeticType {
-    HAT, TOP, BOTTOM, FOOTWEAR
+abstract class Cosmetic(
+    val id: Int,
+    val name: String,
+    val cost: Int,
+    val image: Int,
+    val description: String) {
+
+    @Composable
+    fun ViewCosmetic(
+        modifier: Modifier = Modifier
+    ) {
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = "cosmetic_object",
+            modifier = modifier)
+    }
+
 }
-
-data class Cosmetic (
-    var name : String,
-    var cost : Int,
-    var image : Int,
-    var description : String,
-    var cosmeticType : Enum<CosmeticType>
-) : Serializable
-
 fun createDefaultCosmeticList() : ArrayList<Cosmetic> {
     val cosmeticList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
 
-    cosmeticList.add(Cosmetic("Fedora", 10, R.drawable.potato, "This is a potato",CosmeticType.HAT))
-    cosmeticList.add(Cosmetic("Hutao Hat", 100000, R.drawable.hutaohat,"This is Hutao's hat from hit game Genshin Impact", CosmeticType.HAT))
-    cosmeticList.add(Cosmetic("Joaquin Face Hat", 51, R.drawable.potato,"This is a potato", CosmeticType.HAT))
-    cosmeticList.add(Cosmetic("Jared Face Hat", 51, R.drawable.potato,"This is a potato", CosmeticType.HAT))
-
-    cosmeticList.add(Cosmetic("Gray Polo Shirt", 10, R.drawable.potato,"This is a potato", CosmeticType.TOP))
-    cosmeticList.add(Cosmetic("Red Polo Shirt", 10, R.drawable.potato,"This is a potato", CosmeticType.TOP))
-    cosmeticList.add(Cosmetic("Blue Polo Shirt", 10, R.drawable.potato,"This is a potato", CosmeticType.TOP))
-
-    cosmeticList.add(Cosmetic("Red Shorts", 10, R.drawable.potato,"This is a potato", CosmeticType.BOTTOM))
-    cosmeticList.add(Cosmetic("Blue Shorts", 10, R.drawable.potato,"This is a potato", CosmeticType.BOTTOM))
-    cosmeticList.add(Cosmetic("Green Shorts", 10, R.drawable.potato,"This is a potato", CosmeticType.BOTTOM))
-
-    cosmeticList.add(Cosmetic("Red Slippers", 10, R.drawable.potato,"This is a potato", CosmeticType.FOOTWEAR))
-    cosmeticList.add(Cosmetic("Blue Slippers", 10, R.drawable.potato,"This is a potato", CosmeticType.FOOTWEAR))
-    cosmeticList.add(Cosmetic("Green Slippers", 10, R.drawable.potato,"This is a potato", CosmeticType.FOOTWEAR))
+    cosmeticList.add(HeadCosmetic(
+        id = 0,
+        name = "Default Head",
+        cost = 0,
+        image = R.drawable.cosmetic_default_head,
+        description = "The default head"
+    ))
+    cosmeticList.add(TorsoCosmetic(
+        id = 0,
+        name = "Default Torso",
+        cost = 0,
+        image = R.drawable.cosmetic_default_torso,
+        description = "The default torso"
+    ))
+    cosmeticList.add(LegsCosmetic(
+        id = 0,
+        name = "Default Legs",
+        cost = 0,
+        image = R.drawable.cosmetic_default_legs,
+        description = "The default legs"
+    ))
+    cosmeticList.add(FeetCosmetic(
+        id = 0,
+        name = "Default Feet",
+        cost = 0,
+        image = R.drawable.cosmetic_default_feet,
+        description = "The default feet"
+    ))
 
     return cosmeticList
 }

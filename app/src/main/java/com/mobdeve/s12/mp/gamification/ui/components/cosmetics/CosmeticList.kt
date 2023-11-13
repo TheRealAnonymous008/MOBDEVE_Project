@@ -13,30 +13,36 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
-import com.mobdeve.s12.mp.gamification.model.CosmeticType
+import com.mobdeve.s12.mp.gamification.model.cosmetics.FeetCosmetic
+import com.mobdeve.s12.mp.gamification.model.cosmetics.HeadCosmetic
+import com.mobdeve.s12.mp.gamification.model.cosmetics.LegsCosmetic
+import com.mobdeve.s12.mp.gamification.model.cosmetics.TorsoCosmetic
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
+import kotlin.reflect.typeOf
 
 @Composable
 fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
-    val hatsList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
-    val topList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
-    val bottomList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
-    val footwearList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
+    val headList : ArrayList<HeadCosmetic> = ArrayList()
+    val torsoList : ArrayList<TorsoCosmetic> = ArrayList()
+    val legsList : ArrayList<LegsCosmetic> = ArrayList()
+    val feetList : ArrayList<FeetCosmetic> = ArrayList()
 
     for (i in cosmeticList) {
-        when(i.cosmeticType) {
-            CosmeticType.HAT -> hatsList.add(i)
-            CosmeticType.TOP -> topList.add(i)
-            CosmeticType.BOTTOM -> bottomList.add(i)
-            CosmeticType.FOOTWEAR -> footwearList.add(i)
-        }
+        if (i is HeadCosmetic)
+            headList.add(i)
+        if (i is TorsoCosmetic)
+            torsoList.add(i)
+        if (i is LegsCosmetic)
+            legsList.add(i)
+        if (i is FeetCosmetic)
+            feetList.add(i)
     }
 
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "HAT",
+            text = "HEAD",
             modifier = Modifier
                 .padding(top = 10.dp, start = 10.dp),
             color = TextColor,
@@ -51,8 +57,8 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                items(hatsList) {hat ->
-                    CosmeticEntry(hat)
+                items(headList) {head ->
+                    CosmeticEntry(head)
                 }
 
             }
@@ -60,7 +66,7 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
 
 
         Text(
-            text = "TOP",
+            text = "TORSO",
             modifier = Modifier
                 .padding(top = 10.dp, start = 10.dp),
             color = TextColor,
@@ -74,13 +80,13 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                items(topList) {top ->
-                    CosmeticEntry(top)
+                items(torsoList) {torso ->
+                    CosmeticEntry(torso)
                 }
             }
         }
         Text(
-            text = "BOTTOM",
+            text = "LEGS",
             modifier = Modifier
                 .padding(top = 10.dp, start = 10.dp),
             color = TextColor,
@@ -94,14 +100,14 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                items(bottomList) {bottom ->
-                    CosmeticEntry(bottom)
+                items(legsList) {legs ->
+                    CosmeticEntry(legs)
                 }
             }
         }
 
         Text(
-            text = "FOOTWEAR",
+            text = "FEET",
             modifier = Modifier
                 .padding(top = 10.dp, start = 10.dp),
             color = TextColor,
@@ -115,8 +121,8 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                items(footwearList) {footwear ->
-                    CosmeticEntry(footwear)
+                items(feetList) {feet ->
+                    CosmeticEntry(feet)
                 }
             }
         }

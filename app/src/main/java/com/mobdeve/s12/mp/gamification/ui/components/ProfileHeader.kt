@@ -41,8 +41,6 @@ class ProfileHeaderParameters {
 
 @Composable
 fun ProfileHeader(profileDetails : ProfileDetails){
-
-
     Row  (
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp)
@@ -65,6 +63,7 @@ fun ProfileHeader(profileDetails : ProfileDetails){
                 .background(PrimaryColor)
 
         ){
+            profileDetails.
             Image(painter = painterResource(profileDetails.avatarId),
                 contentDescription = "Profile Avatar",
                 modifier = Modifier
