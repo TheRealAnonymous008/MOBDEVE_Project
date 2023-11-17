@@ -11,14 +11,35 @@ data class Task(
     var title : String,
     var description: String,
     var timeInfo : TimeInfo,
-    var rewards : ArrayList<Reward> = ArrayList<Reward>(),
     var isFinished : Boolean = false
 ) : Serializable {
     private var currentTimestamp = Timestamp(System.currentTimeMillis())
+    private val rewards : ArrayList<Reward> = ArrayList<Reward>()
+
+    fun addReward (reward : Reward) {
+        rewards.add(reward)
+    }
+
+    fun deleteReward(reward : Reward) {
+        rewards.remove(reward)
+    }
+
+    fun clearRewards() {
+        rewards.clear()
+    }
+    fun setRewards(other : ArrayList<Reward>) {
+        rewards.clear()
+        for (reward in other) {
+            rewards.add(reward)
+        }
+
+    }
+    fun getRewards() : ArrayList<Reward> {
+        return rewards
+    }
 
     fun finish() {
         isFinished = true
-        // TODO: update skills
     }
 
     fun unfinish() {
@@ -76,7 +97,7 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Long =
             rw.add(createDefaultSkillReward(task))
         }
     }
-    task.rewards = rw
+    task.setRewards(rw)
 
     return task
 }

@@ -139,7 +139,7 @@ class RewardViewModelFactory(private val repository: RewardRepository) : ViewMod
 fun getTaskSkillRewards(task: Task) : List<RewardEntity>{
     var rewards : ArrayList<RewardEntity> = ArrayList<RewardEntity>()
 
-    task.rewards.forEach {
+    task.getRewards().forEach {
         rewards.add(
             RewardEntity(
                 taskId = task.id,

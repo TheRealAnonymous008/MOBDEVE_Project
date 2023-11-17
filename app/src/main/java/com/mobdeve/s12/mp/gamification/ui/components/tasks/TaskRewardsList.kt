@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
-    val rewards = task.rewards
+    val rewards = task.getRewards()
     var rewardListState = remember { mutableStateListOf(*rewards.toTypedArray()) }
 
     Column(
@@ -64,21 +64,23 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
                     scope.launch {
                         repo.rewardRepository.delete(reward.task.id, reward.skill.id)
                     }
+                    task.deleteReward(reward)
                 }
             }
         }
 
-        AddReward(task, rewards, profile) {
+        AddReward(task, profile) {
             rewardListState.add(it)
             scope.launch {
                 repo.rewardRepository.insert(it)
             }
+            task.addReward(it)
         }
     }
 }
 
 @Composable
-fun AddReward(task: Task, rewards: ArrayList<Reward>, profile: Profile, onUpdate: (it: Reward) -> Unit){
+fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
     var selectedSkill: Skill? by remember { mutableStateOf(null) }
     var amount by remember { mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
@@ -160,7 +162,7 @@ fun AddReward(task: Task, rewards: ArrayList<Reward>, profile: Profile, onUpdate
             onClick = {
                 if (selectedSkill != null) {
                     val r = Reward(task, selectedSkill!!, amount.toFloat())
-                    rewards.add(r)
+                    task.addReward(r)
                     onUpdate(r)
                     amount = ""
                 }

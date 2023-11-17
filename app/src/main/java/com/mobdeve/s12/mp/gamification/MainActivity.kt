@@ -122,14 +122,14 @@ class MainActivity : AppCompatActivity() {
         val tasks = holder.tasks
 
         for (task in tasks) {
-            task.rewards.clear()
+            task.clearRewards()
             rewardViewModel.getRewardWithTask(task).observe(this) {
                 it?.let {rl ->
                     for (r in rl) {
                         val sk  = skills.find(r.skillId)
                         if (sk !== null){
                             val reward : Reward = Reward(task, sk, r.reward)
-                            task.rewards.add(reward)
+                            task.addReward(reward)
                         } else {
                             Log.e("X", r.skillId.toString())
                         }

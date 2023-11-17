@@ -65,7 +65,7 @@ abstract class AppDatabase : RoomDatabase() {
             val rewards = ArrayList<Reward>()
             dao.deleteAll()
             tasks.forEach {task ->
-                task.rewards.forEach {
+                task.getRewards().forEach {
                     dao.add(getTaskSkillReward(it))
                     rewards.add(it)
                 }
