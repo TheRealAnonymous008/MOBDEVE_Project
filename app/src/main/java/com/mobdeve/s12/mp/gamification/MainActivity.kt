@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         fetchTasks().observe(this) { tasks ->
             fetchSkills().observe(this) { skills ->
                 fetchRewards(tasks, skills)
-                fetchEdges(skills)
             }
         }
 
@@ -80,11 +79,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchTasks(): LiveData<TaskListHolder> {
         val tasksLiveData = MutableLiveData<TaskListHolder>()
-        val profile = profileState.value
-        profile.tasks.clear()
 
         taskViewModel.allTasks.observe(this) { tasks ->
             tasks?.let {
+                val profile = profileState.value
+                profile.tasks.clear()
+
                 for (task in it) {
                     val task = getTaskFromEntity(task)
                     profile.tasks.add(task)
@@ -100,10 +100,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchSkills(): LiveData<SkillListHolder> {
         val skillsLiveData = MutableLiveData<SkillListHolder>()
-        val profile = profileState.value
-        profile.skills.clear()
-
         skillViewModel.allSkills.observe(this) { skills ->
+            val profile = profileState.value
+            profile.skills.clear()
+
             skills?.let {
                 for (skill in it) {
                     profile.skills.add(getSkillFromEntity(skill))
