@@ -126,13 +126,14 @@ class MainActivity : AppCompatActivity() {
                             Log.e("X", r.skillId.toString())
                         }
                     }
+
+                    profile.tasks = tasks
+                    profileState.value = profile
+                    update()
                 }
             }
         }
 
-        profile.tasks = tasks
-        profileState.value = profile
-        update()
     }
 
     private fun update() {
