@@ -31,14 +31,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.getTaskSkillReward
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
-fun TaskRewardsList(rewards: ArrayList<Reward> , profile : Profile){
+fun TaskRewardsList(task: Task , profile : Profile, db : AppDatabase){
+    val scope = CoroutineScope(Dispatchers.Main)
+    val rewards = task.rewards
     var rewardListState = remember { mutableStateListOf(*rewards.toTypedArray()) }
 
     Column(
@@ -54,14 +62,17 @@ fun TaskRewardsList(rewards: ArrayList<Reward> , profile : Profile){
             }
         }
 
-        AddReward(rewards, profile) {
+        AddReward(task, rewards, profile) {
             rewardListState.add(it)
+            scope.launch {
+                db.rewardDao().add(getTaskSkillReward(it))
+            }
         }
     }
 }
 
 @Composable
-fun AddReward(rewards: ArrayList<Reward>, profile: Profile, onUpdate: (it: Reward) -> Unit){
+fun AddReward(task: Task, rewards: ArrayList<Reward>, profile: Profile, onUpdate: (it: Reward) -> Unit){
     var selectedSkill: Skill? by remember { mutableStateOf(null) }
     var amount by remember { mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
@@ -142,7 +153,7 @@ fun AddReward(rewards: ArrayList<Reward>, profile: Profile, onUpdate: (it: Rewar
         Button(
             onClick = {
                 if (selectedSkill != null) {
-                    val r = Reward(selectedSkill!!, amount.toFloat())
+                    val r = Reward(task, selectedSkill!!, amount.toFloat())
                     rewards.add(r)
                     onUpdate(r)
                     amount = ""

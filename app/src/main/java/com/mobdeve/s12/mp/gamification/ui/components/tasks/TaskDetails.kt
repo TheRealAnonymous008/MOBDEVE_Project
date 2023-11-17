@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
@@ -21,7 +22,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
-fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
+fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, db: AppDatabase) {
     var title by remember { mutableStateOf(task.title)}
     var description by remember { mutableStateOf(task.description) }
 
@@ -132,7 +133,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit) {
                 .fillMaxHeight(0.75f)
                 .fillMaxWidth()
         ) {
-            TaskRewardsList(rewards = task.rewards, profile = profile)
+            TaskRewardsList(task = task, profile = profile, db = db)
         }
 
         // Delete Button

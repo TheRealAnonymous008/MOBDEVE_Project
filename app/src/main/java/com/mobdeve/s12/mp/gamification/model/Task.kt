@@ -55,18 +55,7 @@ fun createEmptyTask() : Task {
 
 fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Long = 0): Task {
     val rw = ArrayList<Reward>()
-
-    for (i in 1 .. 3) {
-        if(pool.size < 0) {
-            val sk = pool[Random.nextInt(pool.size)];
-            rw.add(createDefaultSkillReward(sk))
-        }
-        else {
-            rw.add(createDefaultSkillReward())
-        }
-    }
-
-    return Task(
+    val task = Task(
         idx,
         "Generic Task $idx",
         "Generic Description of the Task. This description task is to describe the task in a very descriptive manner",
@@ -74,9 +63,21 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Long =
             Timestamp(System.currentTimeMillis()),
             Timestamp(System.currentTimeMillis()),
             Timestamp(System.currentTimeMillis() + 1000 * 10)
-        ),
-        rw
+        )
     )
+
+    for (i in 1 .. 3) {
+        if(pool.size < 0) {
+            val sk = pool[Random.nextInt(pool.size)];
+            rw.add(createDefaultSkillReward(task, sk))
+        }
+        else {
+            rw.add(createDefaultSkillReward(task))
+        }
+    }
+    task.rewards = rw
+
+    return task
 }
 
 fun createDefaultTaskList(pool : ArrayList<Skill> = ArrayList<Skill>()) : ArrayList<Task>{

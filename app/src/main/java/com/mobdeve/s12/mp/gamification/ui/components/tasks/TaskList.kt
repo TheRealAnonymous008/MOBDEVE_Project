@@ -63,7 +63,9 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
                         scope.launch(Dispatchers.IO) {
                             db.taskDao().delete(it.id)
                         }
-                    })
+                    },
+                        db
+                    )
             }
 
             item {
@@ -85,7 +87,9 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
                         scope.launch(Dispatchers.IO) {
                             db.taskDao().delete(it.id)
                         }
-                    })
+                    },
+                        db
+                    )
                 }
             }
         }

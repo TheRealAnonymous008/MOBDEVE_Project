@@ -10,6 +10,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RewardViewModel
+import com.mobdeve.s12.mp.gamification.localdb.RewardViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.SkillViewModel
 import com.mobdeve.s12.mp.gamification.localdb.SkillViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModel
@@ -35,18 +37,22 @@ class MainActivity : AppCompatActivity() {
     private var database : AppDatabase? = null
 
     private val taskViewModel: TaskViewModel by viewModels {
-        TaskViewModelFactory((application as MainApplication).taskRepository)
+        TaskViewModelFactory((application as MainApplication).repositoryHolder.taskRepository)
     }
 
     private val skillViewModel : SkillViewModel by viewModels {
-        SkillViewModelFactory((application as MainApplication).skillRepository)
+        SkillViewModelFactory((application as MainApplication).repositoryHolder.skillRepository)
+    }
+
+    private val rewardViewModel : RewardViewModel by viewModels {
+        RewardViewModelFactory((application as MainApplication).repositoryHolder.rewardRepository)
     }
 
     val profileState = mutableStateOf(generateDefaultProfile())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        database = ((application as MainApplication)).database
+        database = ((application as MainApplication)).repositoryHolder.database
 
         fetchTasks()
         fetchSkills()
@@ -83,9 +89,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private suspend fun fetchRewards() {
+        val tasks = profileState.value.tasks.tasks
+
+        // TODO: Finish
+    }
+
     private fun update() {
         if (database === null) {
-            database = ((application as MainApplication)).database
+            database = ((application as MainApplication)).repositoryHolder.database
         }
         setContent {
             navigation()

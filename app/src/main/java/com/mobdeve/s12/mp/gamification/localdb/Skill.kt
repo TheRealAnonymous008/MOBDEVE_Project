@@ -21,6 +21,8 @@ import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.sql.Timestamp
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 // DB TabLE
 @Entity(tableName = "skills")
@@ -40,8 +42,8 @@ interface SkillDao {
     @Query("SELECT * FROM skills")
     fun getAll(): Flow<List<SkillEntity>>
 
-    @Query("SELECT * FROM skills WHERE id IN (:ids)")
-    fun loadAllByIds(ids: IntArray): Flow<List<SkillEntity>>
+    @Query("SELECT * FROM skills WHERE id =(:id)")
+    fun get(id: Long): SkillEntity
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun add(skill: SkillEntity) : Long
@@ -59,6 +61,13 @@ interface SkillDao {
 // Repository
 class SkillRepository(private val dao : SkillDao) {
     val allSkills: Flow<List<SkillEntity>> = dao.getAll()
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun get(id: Long) : Skill {
+        val entity = dao.get(id)
+        return getSkillFromEntity(entity)
+    }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -84,6 +93,17 @@ class SkillRepository(private val dao : SkillDao) {
 // View Model
 class SkillViewModel(private val repository: SkillRepository) : ViewModel() {
     val allSkills: LiveData<List<SkillEntity>> = repository.allSkills.asLiveData()
+
+    suspend fun get(id: Long): Result<Skill> = suspendCoroutine { continuation ->
+        viewModelScope.launch {
+            try {
+                val skill = repository.get(id)
+                continuation.resume(Result.success(skill))
+            } catch (e: Exception) {
+                continuation.resume(Result.failure(e))
+            }
+        }
+    }
 
     fun insert(skill : Skill) = viewModelScope.launch {
         repository.add(skill)
