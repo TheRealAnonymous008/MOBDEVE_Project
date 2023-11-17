@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.localdb.RewardViewModel
 import com.mobdeve.s12.mp.gamification.localdb.RewardViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.SkillViewModel
@@ -33,8 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val REQUEST_CODE = 1
-
-    private var database : AppDatabase? = null
+    private lateinit var repositoryHolder : RepositoryHolder
 
     private val taskViewModel: TaskViewModel by viewModels {
         TaskViewModelFactory((application as MainApplication).repositoryHolder.taskRepository)
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        database = ((application as MainApplication)).repositoryHolder.database
+        repositoryHolder = ((application as MainApplication)).repositoryHolder
 
         fetchTasks()
         fetchSkills()
@@ -96,9 +96,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun update() {
-        if (database === null) {
-            database = ((application as MainApplication)).repositoryHolder.database
-        }
         setContent {
             navigation()
         }
@@ -110,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
         NavHost(navController, startDestination = Routes.MAIN_WINDOW) {
             composable(Routes.MAIN_WINDOW) {
-                MainWindow(profile = profileState.value, db = database!!, navController = navController)
+                MainWindow(profile = profileState.value, repositoryHolder , navController = navController)
             }
             composable(Routes.AVATAR_WINDOW) {
                 AvatarEditWindow(profileState.value.cosmetics, profileState.value.profileDetails.avatar, navController)

@@ -69,6 +69,7 @@ class TaskRepository(private val dao : TaskDao) {
     @WorkerThread
     suspend fun update(task: Task) {
         val entity = getTaskEntity(task)
+        entity.id = task.id
         dao.update(entity)
     }
 

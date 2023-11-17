@@ -80,6 +80,7 @@ class SkillRepository(private val dao : SkillDao) {
     @WorkerThread
     suspend fun update(skill: Skill) {
         val entity = getSkillEntity(skill)
+        entity.id = skill.id
         dao.update(entity)
     }
 

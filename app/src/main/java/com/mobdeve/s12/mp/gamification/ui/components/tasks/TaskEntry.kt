@@ -28,6 +28,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
@@ -37,7 +38,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onDelete : (t : Task) -> Unit, db: AppDatabase) {
+fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onDelete : (t : Task) -> Unit, repo : RepositoryHolder) {
 
     var offsetX by remember { mutableStateOf(Offset.Zero) }
     var show by remember { mutableStateOf(true) }
@@ -57,7 +58,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                     profile.tasks.remove(task)
                     onDelete(task)
                 },
-                db = db
+                repo = repo
             )
         }
     }

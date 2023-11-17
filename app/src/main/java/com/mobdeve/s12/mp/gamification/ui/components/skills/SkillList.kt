@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.localdb.getSkillEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskEntity
 import com.mobdeve.s12.mp.gamification.model.Profile
@@ -33,7 +34,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun SkillList(skillList : SkillListHolder, profile : Profile, db : AppDatabase){
+fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
     var skillListState = remember { mutableStateListOf(*skillList.skills.toTypedArray()) }
 
@@ -48,16 +49,14 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, db : AppDatabase){
             items(skillList.skills) { skill ->
                 SkillEntry(skill, profile,
                     onUpdate = {
-                        val skillEntity = getSkillEntity(it)
-                        skillEntity.id = it.id
                         scope.launch(Dispatchers.IO) {
-                            db.skillDao().update(skillEntity)
+                            repo.skillRepository.update(it)
                         }
                     },
                     onDelete = {
                     skillListState.remove(it)
                     scope.launch(Dispatchers.IO) {
-                        db.skillDao().delete(it.id)
+                        repo.skillRepository.delete(it.id)
                     }
                 })
             }
@@ -69,7 +68,7 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, db : AppDatabase){
             onClick = {
                 val s: Skill = createEmptySkill(-1)
                 scope.launch(Dispatchers.IO) {
-                    val id = db.skillDao().add(getSkillEntity(s))
+                    val id = repo.skillRepository.add(s)
                     s.id = id
                     skillList.add(s)
                     skillListState.add(s)

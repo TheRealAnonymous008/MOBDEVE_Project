@@ -29,6 +29,7 @@ import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import androidx.compose.runtime.getValue
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.localdb.getTaskEntity
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
 import com.mobdeve.s12.mp.gamification.model.createEmptyTask
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
+fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
     var taskListState = remember { mutableStateListOf(*taskList.tasks.toTypedArray())}
 
@@ -52,19 +53,17 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
                 if (!task.isFinished)
                     TaskEntry(task, profile,
                     onUpdate = {
-                        val taskEntity = getTaskEntity(it)
-                        taskEntity.id = it.id
                         scope.launch(Dispatchers.IO) {
-                            db.taskDao().update(taskEntity)
+                            repo.taskRepository.update(it)
                         }
                     },
                     onDelete={
                     taskListState.remove(it)
                         scope.launch(Dispatchers.IO) {
-                            db.taskDao().delete(it.id)
+                            repo.taskRepository.delete(it.id)
                         }
                     },
-                        db
+                        repo
                     )
             }
 
@@ -76,19 +75,16 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
                 if (task.isFinished) {
                     TaskEntry(task, profile,
                     onUpdate = {
-                        val taskEntity = getTaskEntity(it)
-                        taskEntity.id = it.id
                         scope.launch(Dispatchers.IO) {
-                            db.taskDao().update(taskEntity)
+                            repo.taskRepository.update(it)
                         }
                     },
                     onDelete = {
-                        taskListState.remove(it)
                         scope.launch(Dispatchers.IO) {
-                            db.taskDao().delete(it.id)
+                            repo.taskRepository.update(it)
                         }
                     },
-                        db
+                        repo
                     )
                 }
             }
@@ -100,7 +96,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, db : AppDatabase){
             onClick = {
                 val t : Task = createEmptyTask()
                 scope.launch(Dispatchers.IO) {
-                    val id = db.taskDao().add(getTaskEntity(t))
+                    val id = repo.taskRepository.insert(t)
                     t.id = id
                     taskList.add(t)
                     taskListState.add(t)

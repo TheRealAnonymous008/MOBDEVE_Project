@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
@@ -55,7 +56,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun MainWindow(profile : Profile, db : AppDatabase, navController: NavController) {
+fun MainWindow(profile : Profile, repo: RepositoryHolder, navController: NavController) {
     val horizontalPagerState = rememberPagerState(
         initialPage = 2,
         initialPageOffsetFraction = 0f
@@ -101,8 +102,8 @@ fun MainWindow(profile : Profile, db : AppDatabase, navController: NavController
                                 // Our page content
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
-                                    1 -> TaskList(taskList = profile.tasks, profile = profile, db = db)
-                                    2 -> SkillList(skillList = profile.skills, profile = profile, db = db)
+                                    1 -> TaskList(taskList = profile.tasks, profile = profile, repo = repo)
+                                    2 -> SkillList(skillList = profile.skills, profile = profile, repo = repo)
                                     3 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
                                 }
                             }

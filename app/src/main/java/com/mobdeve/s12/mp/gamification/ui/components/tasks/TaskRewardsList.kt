@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.localdb.getTaskSkillReward
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Reward
@@ -44,7 +45,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun TaskRewardsList(task: Task , profile : Profile, db : AppDatabase){
+fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
     val rewards = task.rewards
     var rewardListState = remember { mutableStateListOf(*rewards.toTypedArray()) }
@@ -65,7 +66,8 @@ fun TaskRewardsList(task: Task , profile : Profile, db : AppDatabase){
         AddReward(task, rewards, profile) {
             rewardListState.add(it)
             scope.launch {
-                db.rewardDao().add(getTaskSkillReward(it))
+                // TODO: Modigy
+//                db.rewardDao().add(getTaskSkillReward(it))
             }
         }
     }
