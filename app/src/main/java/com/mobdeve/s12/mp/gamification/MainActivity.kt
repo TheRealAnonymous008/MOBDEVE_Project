@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         fetchTasks().observe(this) { tasks ->
             fetchSkills().observe(this) { skills ->
                 fetchRewards(tasks, skills)
+                fetchEdges(skills)
             }
         }
 
@@ -122,9 +123,9 @@ class MainActivity : AppCompatActivity() {
         val tasks = holder.tasks
 
         for (task in tasks) {
-            task.clearRewards()
             rewardViewModel.getRewardWithTask(task).observe(this) {
                 it?.let {rl ->
+                    task.clearRewards()
                     for (r in rl) {
                         val sk  = skills.find(r.skillId)
                         if (sk !== null){
