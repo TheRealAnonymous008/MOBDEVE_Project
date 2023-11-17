@@ -98,6 +98,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                                     } else {
                                         dismissState = true
                                         task.finish()
+                                        onUpdate(task)
                                         show = false
                                         offsetX = Offset(300f, 0f)
                                     }

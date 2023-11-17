@@ -29,7 +29,8 @@ data class TaskEntity (
     val description: String,
     val timeCreated : Long,
     val timeFrom : Long?,
-    val timeTo : Long?
+    val timeTo : Long?,
+    val isFinished : Boolean
 )
 
 // Queries
@@ -128,7 +129,8 @@ fun getTaskEntity(task : Task) : TaskEntity{
         description = task.description,
         timeCreated = task.timeInfo.datetimeCreated.time,
         timeFrom = timeFrom,
-        timeTo = timeTo
+        timeTo = timeTo,
+        isFinished = task.isFinished
     )
 }
 
@@ -151,7 +153,8 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
             datetimeCreated =  dateTimeCreated,
             datetimeFrom = dateTimeFrom,
             dateTimeTo = dateTimeTo
-        )
+        ),
+        isFinished = entry.isFinished
     )
 }
 
