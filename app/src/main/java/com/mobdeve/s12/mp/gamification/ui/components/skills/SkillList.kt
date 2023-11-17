@@ -57,6 +57,7 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryH
                     skillListState.remove(it)
                     scope.launch(Dispatchers.IO) {
                         repo.skillRepository.delete(it.id)
+                        repo.rewardRepository.deleteWithSkill(it.id)
                     }
                 })
             }

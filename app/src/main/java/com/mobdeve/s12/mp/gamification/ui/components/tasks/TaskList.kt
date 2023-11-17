@@ -61,6 +61,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     taskListState.remove(it)
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.delete(it.id)
+                            repo.rewardRepository.deleteWithTask(it.id)
                         }
                     },
                         repo
@@ -82,6 +83,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     onDelete = {
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.update(it)
+                            repo.rewardRepository.deleteWithTask(it.id)
                         }
                     },
                         repo
