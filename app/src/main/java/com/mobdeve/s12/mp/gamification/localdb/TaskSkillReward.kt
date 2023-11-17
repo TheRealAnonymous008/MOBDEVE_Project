@@ -32,7 +32,7 @@ interface RewardDao {
     fun getAll(): Flow<List<RewardEntity>>
 
     @Query("SELECT * FROM task_skills where taskId = (:id)")
-    fun getForTask(id : Long): List<RewardEntity>
+    fun getForTask(id : Long): Flow<List<RewardEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun add(reward: RewardEntity) : Long
@@ -53,10 +53,8 @@ interface RewardDao {
 class RewardRepository(private val dao : RewardDao) {
     val allRewards: Flow<List<RewardEntity>> = dao.getAll()
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun getWithTask(task: Task ): Flow<List<RewardEntity>> {
-        return getWithTask(task)
+    fun getWithTask(task: Task ): Flow<List<RewardEntity>> {
+        return dao.getForTask(task.id)
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -91,7 +89,7 @@ class RewardViewModel(private val repository: RewardRepository) : ViewModel() {
 
     val allRewards: LiveData<List<RewardEntity>> = repository.allRewards.asLiveData()
 
-    suspend fun getRewardWithTask(task: Task): LiveData<List<RewardEntity>> {
+    fun getRewardWithTask(task: Task): LiveData<List<RewardEntity>> {
         return repository.getWithTask(task).asLiveData()
     }
 
@@ -115,7 +113,7 @@ class RewardViewModel(private val repository: RewardRepository) : ViewModel() {
 // ViewModel Factory
 class RewardViewModelFactory(private val repository: RewardRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(RewardViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return RewardViewModel(repository) as T
         }

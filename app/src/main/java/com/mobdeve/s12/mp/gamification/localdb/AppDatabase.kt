@@ -1,10 +1,14 @@
 package com.mobdeve.s12.mp.gamification.localdb
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.mobdeve.s12.mp.gamification.model.Reward
+import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.skilltree.createDefaultSkillList
 import kotlinx.coroutines.CoroutineScope
@@ -24,24 +28,26 @@ abstract class AppDatabase : RoomDatabase() {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateTasks(database.taskDao())
-                    populateSkills(database.skillDao())
+                    val skills = populateSkills(database.skillDao())
+                    val tasks = populateTasks(database.taskDao(), skills)
+                    val rewards = populateRewards(database.rewardDao(), tasks)
                 }
             }
         }
 
-        suspend fun populateTasks(dao : TaskDao) {
+        suspend fun populateTasks(dao : TaskDao, skills : ArrayList<Skill>) : ArrayList<Task>{
             // Delete all content here.
             dao.deleteAll()
-            val dummy = createDefaultTaskList()
+            val dummy = createDefaultTaskList(skills)
 
             dummy.forEach {
                 val t = getTaskEntity(it)
                 dao.add(t)
             }
+            return dummy
         }
 
-        suspend fun populateSkills(dao : SkillDao) {
+        suspend fun populateSkills(dao : SkillDao) : ArrayList<Skill>{
             // Delete all content here.
             dao.deleteAll()
             val dummy = createDefaultSkillList()
@@ -49,6 +55,20 @@ abstract class AppDatabase : RoomDatabase() {
                 val t = getSkillEntity(it)
                 dao.add(t)
             }
+            return dummy
+        }
+
+        suspend fun populateRewards(dao : RewardDao, tasks : ArrayList<Task>) : ArrayList<Reward>{
+            // Delete all content here.
+            val rewards = ArrayList<Reward>()
+            dao.deleteAll()
+            tasks.forEach {task ->
+                task.rewards.forEach {
+                    dao.add(getTaskSkillReward(it))
+                    rewards.add(it)
+                }
+            }
+            return rewards
         }
     }
 

@@ -3,7 +3,7 @@ package com.mobdeve.s12.mp.gamification.model
 import android.util.Log
 
 class TaskListHolder() {
-    val tasks : ArrayList<Task> = ArrayList<Task>()
+    var tasks : ArrayList<Task> = ArrayList<Task>()
 
     fun get(str : String) : Task?{
         for (t in tasks){

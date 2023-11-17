@@ -2,10 +2,13 @@ package com.mobdeve.s12.mp.gamification
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,6 +23,11 @@ import com.mobdeve.s12.mp.gamification.localdb.TaskViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.getSkillFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
 import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.Reward
+import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.SkillListHolder
+import com.mobdeve.s12.mp.gamification.model.Task
+import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
@@ -54,45 +62,77 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         repositoryHolder = ((application as MainApplication)).repositoryHolder
 
-        fetchTasks()
-        fetchSkills()
+        fetchTasks().observe(this) { tasks ->
+            fetchSkills().observe(this) { skills ->
+                fetchRewards(tasks, skills)
+            }
+        }
 
         update()
     }
 
-    private fun fetchTasks() {
+    private fun fetchTasks(): LiveData<TaskListHolder> {
+        val tasksLiveData = MutableLiveData<TaskListHolder>()
+        val profile = profileState.value
+        profile.tasks.clear()
+
         taskViewModel.allTasks.observe(this) { tasks ->
             tasks?.let {
-                val profile = profileState.value
-                profile.tasks.clear()
-                for (task in tasks) {
-                    profile.tasks.add(getTaskFromEntity(task))
+                for (task in it) {
+                    val task = getTaskFromEntity(task)
+                    profile.tasks.add(task)
                 }
                 profileState.value = profile
+                tasksLiveData.value = profile.tasks
                 update()
             }
         }
+        return tasksLiveData
     }
 
 
-    private fun fetchSkills() {
+    private fun fetchSkills(): LiveData<SkillListHolder> {
+        val skillsLiveData = MutableLiveData<SkillListHolder>()
+        val profile = profileState.value
+        profile.skills.clear()
+
         skillViewModel.allSkills.observe(this) { skills ->
             skills?.let {
-                val profile = profileState.value
-                profile.skills.clear()
-                for (skill in skills) {
+                for (skill in it) {
                     profile.skills.add(getSkillFromEntity(skill))
                 }
                 profileState.value = profile
+                skillsLiveData.value = profile.skills
                 update()
+
             }
         }
+        return skillsLiveData
     }
 
-    private suspend fun fetchRewards() {
-        val tasks = profileState.value.tasks.tasks
+    private fun fetchRewards(tasks: TaskListHolder, skills: SkillListHolder) {
+        val profile = profileState.value
 
-        // TODO: Finish
+        for (task in tasks.tasks) {
+            task.rewards.clear()
+            rewardViewModel.getRewardWithTask(task).observe(this) {
+                it?.let {r ->
+                    for (r in r) {
+                        val sk  = skills.find(r.skillId)
+                        if (sk !== null){
+                            val reward : Reward = Reward(task, sk, r.reward)
+                            task.rewards.add(reward)
+                        } else {
+                            Log.e("X", r.skillId.toString())
+                        }
+                    }
+                }
+            }
+        }
+
+        profile.tasks = tasks
+        profileState.value = profile
+        update()
     }
 
     private fun update() {

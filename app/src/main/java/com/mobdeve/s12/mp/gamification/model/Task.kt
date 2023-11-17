@@ -67,8 +67,9 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Long =
     )
 
     for (i in 1 .. 3) {
-        if(pool.size < 0) {
-            val sk = pool[Random.nextInt(pool.size)];
+        if(pool.size > 0) {
+            val skidx =Random.nextInt(pool.size)
+            val sk = pool[skidx];
             rw.add(createDefaultSkillReward(task, sk))
         }
         else {
