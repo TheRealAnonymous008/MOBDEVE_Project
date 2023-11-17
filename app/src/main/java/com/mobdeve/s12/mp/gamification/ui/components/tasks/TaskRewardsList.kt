@@ -66,8 +66,7 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
         AddReward(task, rewards, profile) {
             rewardListState.add(it)
             scope.launch {
-                // TODO: Modigy
-//                db.rewardDao().add(getTaskSkillReward(it))
+                repo.rewardRepository.insert(it)
             }
         }
     }
