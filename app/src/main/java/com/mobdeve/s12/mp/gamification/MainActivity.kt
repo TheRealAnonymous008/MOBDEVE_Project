@@ -151,9 +151,9 @@ class MainActivity : AppCompatActivity() {
         val skills = holder.skills
 
         for (skill in skills) {
-            skill.children.clear()
             edgeViewModel.getChildren(skill).observe(this) {
                 it?.let {sl ->
+                    skill.children.clear()
                     for (s in sl) {
                         val sk  = holder.find(s.child)
                         if (sk !== null){
