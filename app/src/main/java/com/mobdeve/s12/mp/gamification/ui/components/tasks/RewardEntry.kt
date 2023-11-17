@@ -3,6 +3,10 @@ package com.mobdeve.s12.mp.gamification.ui.components.tasks
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +16,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
 @Composable
-fun RewardEntry(reward : Reward) {
+fun RewardEntry(reward : Reward, onDelete : () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,5 +37,10 @@ fun RewardEntry(reward : Reward) {
                 .weight(1f),
             color = TextColor,
         )
+
+        // Delete Button
+        IconButton(onClick = { onDelete() }) {
+            Icon(Icons.Default.Delete, contentDescription = "Delete")
+        }
     }
 }

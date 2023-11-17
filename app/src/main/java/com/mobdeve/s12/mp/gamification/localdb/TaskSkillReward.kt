@@ -46,6 +46,9 @@ interface RewardDao {
     @Query("DELETE FROM task_skills where  skillId = (:id)")
     suspend fun deleteWithSkill(id : Long)
 
+    @Query("DELETE FROM task_skills where  skillId = (:skill) AND taskId = (:task)")
+    suspend fun delete(task : Long, skill : Long)
+
     @Query("DELETE FROM task_skills")
     suspend fun deleteAll()
 }
@@ -82,6 +85,12 @@ class RewardRepository(private val dao : RewardDao) {
     suspend fun deleteWithSkill(id: Long) {
         dao.deleteWithSkill(id)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun delete(task: Long, skill: Long) {
+        dao.delete(task, skill)
+    }
 }
 
 // ViewModel
@@ -107,6 +116,10 @@ class RewardViewModel(private val repository: RewardRepository) : ViewModel() {
 
     suspend fun deleteWithSkill(id: Long) {
         repository.deleteWithSkill(id)
+    }
+
+    suspend fun delete(task : Long, skill : Long) {
+        repository.delete(task, skill)
     }
 }
 

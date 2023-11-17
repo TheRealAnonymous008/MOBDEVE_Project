@@ -59,7 +59,12 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
 
         ) {
             items(rewardListState) { reward ->
-                RewardEntry(reward)
+                RewardEntry(reward) {
+                    rewardListState.remove(reward)
+                    scope.launch {
+                        repo.rewardRepository.delete(reward.task.id, reward.skill.id)
+                    }
+                }
             }
         }
 
