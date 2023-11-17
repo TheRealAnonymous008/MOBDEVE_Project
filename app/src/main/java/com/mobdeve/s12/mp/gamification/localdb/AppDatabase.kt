@@ -14,11 +14,12 @@ import com.mobdeve.s12.mp.gamification.skilltree.createDefaultSkillList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities=[TaskEntity::class, SkillEntity::class, RewardEntity::class], version = 1)
+@Database(entities=[TaskEntity::class, SkillEntity::class, RewardEntity::class, SkillEdge::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
     abstract fun skillDao() : SkillDao
     abstract fun rewardDao() : RewardDao
+    abstract fun edgeDao() : SkillEdgeDao
 
     private class AppDBCallback(
         private val scope: CoroutineScope
@@ -31,6 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
                     val skills = populateSkills(database.skillDao())
                     val tasks = populateTasks(database.taskDao(), skills)
                     val rewards = populateRewards(database.rewardDao(), tasks)
+                    populateEdges(database.edgeDao(), skills)
                 }
             }
         }
@@ -70,6 +72,16 @@ abstract class AppDatabase : RoomDatabase() {
             }
             return rewards
         }
+
+        suspend fun populateEdges(dao : SkillEdgeDao, skills: ArrayList<Skill>) {
+            dao.deleteAll()
+            skills.forEach {skill ->
+                skill.children.forEach {child ->
+                    dao.add(SkillEdge(skill.id, child.id))
+                }
+            }
+        }
+
     }
 
     companion object {

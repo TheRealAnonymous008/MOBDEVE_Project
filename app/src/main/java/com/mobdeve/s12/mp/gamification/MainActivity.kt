@@ -13,6 +13,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.EdgeViewModel
+import com.mobdeve.s12.mp.gamification.localdb.EdgeViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.localdb.RewardViewModel
 import com.mobdeve.s12.mp.gamification.localdb.RewardViewModelFactory
@@ -56,6 +58,10 @@ class MainActivity : AppCompatActivity() {
         RewardViewModelFactory((application as MainApplication).repositoryHolder.rewardRepository)
     }
 
+    private val edgeViewModel : EdgeViewModel by viewModels {
+        EdgeViewModelFactory((application as MainApplication).repositoryHolder.edgeRepository)
+    }
+
     val profileState = mutableStateOf(generateDefaultProfile())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         fetchTasks().observe(this) { tasks ->
             fetchSkills().observe(this) { skills ->
                 fetchRewards(tasks, skills)
+                fetchEdges(skills)
             }
         }
 
@@ -110,14 +117,15 @@ class MainActivity : AppCompatActivity() {
         return skillsLiveData
     }
 
-    private fun fetchRewards(tasks: TaskListHolder, skills: SkillListHolder) {
+    private fun fetchRewards(holder: TaskListHolder, skills: SkillListHolder) {
         val profile = profileState.value
+        val tasks = holder.tasks
 
-        for (task in tasks.tasks) {
+        for (task in tasks) {
             task.rewards.clear()
             rewardViewModel.getRewardWithTask(task).observe(this) {
-                it?.let {r ->
-                    for (r in r) {
+                it?.let {rl ->
+                    for (r in rl) {
                         val sk  = skills.find(r.skillId)
                         if (sk !== null){
                             val reward : Reward = Reward(task, sk, r.reward)
@@ -127,13 +135,40 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
-                    profile.tasks = tasks
+                    holder.tasks = tasks
+                    profile.tasks = holder
                     profileState.value = profile
                     update()
                 }
             }
         }
 
+    }
+
+    private fun fetchEdges(holder : SkillListHolder) {
+        val profile = profileState.value
+        val skills = holder.skills
+
+        for (skill in skills) {
+            skill.children.clear()
+            edgeViewModel.getChildren(skill).observe(this) {
+                it?.let {sl ->
+                    for (s in sl) {
+                        val sk  = holder.find(s.child)
+                        if (sk !== null){
+                            skill.addChild(sk)
+                        } else {
+                            Log.e("X", s.child.toString())
+                        }
+                    }
+
+                    holder.skills = skills
+                    profile.skills = holder
+                    profileState.value = profile
+                    update()
+                }
+            }
+        }
     }
 
     private fun update() {
