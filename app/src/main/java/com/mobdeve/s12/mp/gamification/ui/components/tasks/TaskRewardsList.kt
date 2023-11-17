@@ -161,7 +161,7 @@ fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
         Button(
             onClick = {
                 if (selectedSkill != null) {
-                    val r = Reward(task, selectedSkill!!, amount.toFloat())
+                    val r = Reward(task, selectedSkill!!, amount.toInt())
                     task.addReward(r)
                     onUpdate(r)
                     amount = ""

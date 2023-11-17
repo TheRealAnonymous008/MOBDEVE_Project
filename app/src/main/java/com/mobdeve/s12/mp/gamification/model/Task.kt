@@ -18,6 +18,10 @@ data class Task(
 
     fun addReward (reward : Reward) {
         rewards.add(reward)
+        // When adding a reward check if the task is finished and if it is, update skill accordingly
+        if (isFinished) {
+            reward.skill.levelUp(reward.xp)
+        }
     }
 
     fun deleteReward(reward : Reward) {
@@ -39,12 +43,17 @@ data class Task(
     }
 
     fun finish() {
+        for (reward in rewards) {
+            reward.skill.levelUp(reward.xp)
+        }
         isFinished = true
     }
 
     fun unfinish() {
+        for (reward in rewards) {
+            reward.skill.levelDown(reward.xp)
+        }
         isFinished = false
-        // TODO: update skills
     }
 
     fun updateProgress()  {

@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.Flow
 data class RewardEntity (
     @ColumnInfo(name = "taskId") val taskId: Long, // Foreign key referencing the task
     @ColumnInfo(name = "skillId") val skillId: Long, // Foreign key referencing the skill
-    val reward: Float
+    val reward: Int
 )
 
 // Queries
