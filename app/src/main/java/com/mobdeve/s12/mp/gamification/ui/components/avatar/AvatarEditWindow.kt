@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.model.Avatar
@@ -71,6 +70,7 @@ fun AvatarEditWindow(
                 }
                 AvatarEdit(
                     ownedCosmetics = ownedCosmetics,
+                    avatar,
                     avatarState = avatarState.value,
                     onAvatarStateChange = { avatarState.value = it })
             }
@@ -109,6 +109,7 @@ fun AvatarView(avatar_size: Int, avatarState: Avatar, onAvatarStateChange: (Avat
 @Composable
 fun AvatarEdit(
     ownedCosmetics: ArrayList<Cosmetic>,
+    avatar: Avatar,
     avatarState: Avatar,
     onAvatarStateChange: (Avatar) -> Unit
 ) {
@@ -134,32 +135,42 @@ fun AvatarEdit(
     CosmeticRow(headList) { cosmetic: Cosmetic ->
         CosmeticContainer(cosmetic)
         {
-            if (cosmetic is HeadCosmetic)
+            if (cosmetic is HeadCosmetic) {
                 avatar_holder.head = cosmetic
+                avatar.head = cosmetic
+            }
+
             onAvatarStateChange(avatar_holder)
         }
     }
     CosmeticRow(torsoList) { cosmetic: Cosmetic ->
         CosmeticContainer(cosmetic)
         {
-            if (cosmetic is TorsoCosmetic)
+            if (cosmetic is TorsoCosmetic) {
                 avatar_holder.torso = cosmetic
+                avatar.torso = cosmetic
+            }
             onAvatarStateChange(avatar_holder)
         }
     }
     CosmeticRow(legsList) { cosmetic: Cosmetic ->
         CosmeticContainer(cosmetic)
         {
-            if (cosmetic is LegsCosmetic)
+            if (cosmetic is LegsCosmetic) {
                 avatar_holder.legs = cosmetic
+                avatar.legs = cosmetic
+            }
             onAvatarStateChange(avatar_holder)
         }
     }
     CosmeticRow(feetList) { cosmetic: Cosmetic ->
         CosmeticContainer(cosmetic)
         {
-            if (cosmetic is FeetCosmetic)
+            if (cosmetic is FeetCosmetic) {
                 avatar_holder.feet = cosmetic
+                avatar.feet = cosmetic
+            }
+
             onAvatarStateChange(avatar_holder)
         }
     }

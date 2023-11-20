@@ -122,7 +122,7 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ){
-                    Button( onClick = { TODO("PAIN") },
+                    Button( onClick = { navController.navigate(SKILLTREE_WINDOW) },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         shape = CircleShape,
                         modifier = Modifier
