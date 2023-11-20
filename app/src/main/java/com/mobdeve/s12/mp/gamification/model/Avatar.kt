@@ -3,6 +3,10 @@ package com.mobdeve.s12.mp.gamification.model
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.mapSaver
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,9 +73,15 @@ class Avatar(
         }
     }
 
-
+    override fun toString(): String {
+        return "HEAD: ${this.head} \n" +
+                " TORSO: ${this.torso} \n" +
+                " LEGS: ${this.legs} \n" +
+                " FEET: ${this.feet}"
+    }
 
 }
+
 
 @Composable
 @Preview

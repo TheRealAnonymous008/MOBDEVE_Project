@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.avatar
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,19 +37,86 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
 const val AVATAR_DISPLAY_SCALER = 3
+
 @Composable
 fun AvatarEditWindow(
     ownedCosmetics: ArrayList<Cosmetic>,
     avatar: Avatar,
     navController: NavController?
 ) {
-    var AVATAR_SIZE = LocalConfiguration.current.screenHeightDp / AVATAR_DISPLAY_SCALER
+    val AVATAR_SIZE = LocalConfiguration.current.screenHeightDp / AVATAR_DISPLAY_SCALER
+
+    val avatarState = remember {mutableStateOf(avatar)}
+
+    key(avatarState.value) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(SecondaryColor),
+            contentAlignment = Alignment.TopCenter,
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                Log.d("Avatar", avatarState.value.toString())
+                Row(
+                    modifier = Modifier
+                        .height(intrinsicSize = IntrinsicSize.Max)
+                        .padding(5.dp, 5.dp)
+                ) {
+                    AvatarView(
+                        AVATAR_SIZE,
+                        avatarState = avatarState.value,
+                        onAvatarStateChange = { avatarState.value = it })
+                }
+                AvatarEdit(
+                    ownedCosmetics = ownedCosmetics,
+                    avatarState = avatarState.value,
+                    onAvatarStateChange = { avatarState.value = it })
+            }
+        }
+    }
+}
+
+@Composable
+fun AvatarView(avatar_size: Int, avatarState: Avatar, onAvatarStateChange: (Avatar) -> Unit) {
+    Column {
+        val mod = Modifier
+            .size((avatar_size / 4).dp)
+            .border(1.dp, Color.Black)
+
+        Row {
+            avatarState.head.ViewCosmetic(mod)
+        }
+        Row {
+            avatarState.torso.ViewCosmetic(mod)
+        }
+        Row {
+            avatarState.legs.ViewCosmetic(mod)
+        }
+        Row {
+            avatarState.feet.ViewCosmetic(mod)
+        }
+    }
+    avatarState.ConstructAvatar(
+        modifier = Modifier
+            .size(avatar_size.dp)
+            .border(BorderStroke(1.dp, Color.Black))
+            .offset(x = -1.dp) // hide left side of border
+    )
+}
+
+@Composable
+fun AvatarEdit(
+    ownedCosmetics: ArrayList<Cosmetic>,
+    avatarState: Avatar,
+    onAvatarStateChange: (Avatar) -> Unit
+) {
     val headList: ArrayList<HeadCosmetic> = ArrayList()
     val torsoList: ArrayList<TorsoCosmetic> = ArrayList()
     val legsList: ArrayList<LegsCosmetic> = ArrayList()
     val feetList: ArrayList<FeetCosmetic> = ArrayList()
-
-    var avatar_state = remember { mutableStateOf(avatar) }
 
     for (i in ownedCosmetics) {
         if (i is HeadCosmetic)
@@ -59,75 +128,43 @@ fun AvatarEditWindow(
         if (i is FeetCosmetic)
             feetList.add(i)
     }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(SecondaryColor),
-        contentAlignment = Alignment.TopCenter,
-    ) {
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            Row(
-                modifier = Modifier
-                    .height(intrinsicSize = IntrinsicSize.Max)
-                    .padding(5.dp, 5.dp)
-            ) {
-                Column {
-                    var mod = Modifier
-                        .size((AVATAR_SIZE / 4).dp)
-                        .border(1.dp, Color.Black)
 
-                    Row {
-                        avatar.head.ViewCosmetic(mod)
-                    }
-                    Row {
-                        avatar.torso.ViewCosmetic(mod)
-                    }
-                    Row {
-                        avatar.legs.ViewCosmetic(mod)
-                    }
-                    Row {
-                        avatar.feet.ViewCosmetic(mod)
-                    }
-                }
-                avatar.ConstructAvatar(
-                    modifier = Modifier
-                        .size(AVATAR_SIZE.dp)
-                        .border(BorderStroke(1.dp, Color.Black))
-                        .offset(x = -1.dp) // hide left side of border
-                )
-            }
-            
-            CosmeticRow(headList) { cosmetic: Cosmetic ->
-                CosmeticContainer(cosmetic)
-                {
-                    equipCosmetic(cosmetic, avatar_state.value)
-                }
-            }
-            CosmeticRow(torsoList) { cosmetic: Cosmetic ->
-                CosmeticContainer(cosmetic)
-                {
-                    equipCosmetic(cosmetic, avatar_state.value)
-                }
-            }
-            CosmeticRow(legsList) { cosmetic: Cosmetic ->
-                CosmeticContainer(cosmetic)
-                {
-                    equipCosmetic(cosmetic, avatar_state.value)
-                }
-            }
-            CosmeticRow(feetList) { cosmetic: Cosmetic ->
-                CosmeticContainer(cosmetic)
-                {
-                    equipCosmetic(cosmetic, avatar_state.value)
-                }
-            }
+    val avatar_holder =
+        Avatar(avatarState.head, avatarState.torso, avatarState.legs, avatarState.feet)
+
+    CosmeticRow(headList) { cosmetic: Cosmetic ->
+        CosmeticContainer(cosmetic)
+        {
+            if (cosmetic is HeadCosmetic)
+                avatar_holder.head = cosmetic
+            onAvatarStateChange(avatar_holder)
         }
-
+    }
+    CosmeticRow(torsoList) { cosmetic: Cosmetic ->
+        CosmeticContainer(cosmetic)
+        {
+            if (cosmetic is TorsoCosmetic)
+                avatar_holder.torso = cosmetic
+            onAvatarStateChange(avatar_holder)
+        }
+    }
+    CosmeticRow(legsList) { cosmetic: Cosmetic ->
+        CosmeticContainer(cosmetic)
+        {
+            if (cosmetic is LegsCosmetic)
+                avatar_holder.legs = cosmetic
+            onAvatarStateChange(avatar_holder)
+        }
+    }
+    CosmeticRow(feetList) { cosmetic: Cosmetic ->
+        CosmeticContainer(cosmetic)
+        {
+            if (cosmetic is FeetCosmetic)
+                avatar_holder.feet = cosmetic
+            onAvatarStateChange(avatar_holder)
+        }
     }
 }
-
 
 @Composable
 @Preview
@@ -135,15 +172,4 @@ fun PreviewAvatarSelection() {
     val ownedCosmetics = createDefaultCosmeticList()
     val avatar = Avatar()
     AvatarEditWindow(ownedCosmetics = ownedCosmetics, avatar = avatar, null)
-}
-
-fun equipCosmetic(cosmetic : Cosmetic, avatar : Avatar) {
-    if(cosmetic is HeadCosmetic)
-        avatar.head = cosmetic
-    if(cosmetic is TorsoCosmetic)
-        avatar.torso = cosmetic
-    if(cosmetic is LegsCosmetic)
-        avatar.legs = cosmetic
-    if(cosmetic is FeetCosmetic)
-        avatar.feet = cosmetic
 }
