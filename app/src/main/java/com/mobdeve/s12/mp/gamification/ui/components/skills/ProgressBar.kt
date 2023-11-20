@@ -32,13 +32,13 @@ fun ProgressBar(min : Float, max : Float, value : Float){
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(top = 5.dp, end = 10.dp),
         contentAlignment = Alignment.Center
     ) {
         LinearProgressIndicator(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(8.dp),
+                .height(16.dp),
             progress = progressValue,
             trackColor = Color.White,
             strokeCap = StrokeCap.Round,
@@ -46,8 +46,8 @@ fun ProgressBar(min : Float, max : Float, value : Float){
         )
         Spacer(modifier = Modifier.height(height = 0.dp))
         Text (
-            text = progressPercentage.toString() + "%",
-            fontSize = 8.sp,
+            text = "$progressPercentage%",
+            fontSize = 16.sp,
             color = Color.Black,
             modifier = Modifier
                 .background(Color.Transparent),
