@@ -3,6 +3,7 @@ package com.mobdeve.s12.mp.gamification.ui.components.skills
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -95,19 +96,25 @@ fun SkillEntry(skill : Skill, profile : Profile, onUpdate: (s : Skill) -> Unit, 
                     var name = skill.name
                     if (name.isBlank())
                         name = "Untitled Skill"
+                    name += " \t lvl. ${skill.level}"
                     Text(
                         text = name,
                         modifier = Modifier
+                            .weight(1f)
                             .fillMaxWidth(0.7f)
                             .padding(bottom = 4.dp),
                         color = TextColor
                     )
 
-                    PriorityIndicator(
-                        priority = skill.priority
-
-                    )
+                    Box(
+                        modifier = Modifier.weight(0.7f)
+                    ) {
+                        PriorityIndicator(
+                            priority = skill.priority
+                        )
+                    }
                 }
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Progress Bar
