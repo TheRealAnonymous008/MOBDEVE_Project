@@ -14,6 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModel
+import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.EdgeViewModel
 import com.mobdeve.s12.mp.gamification.localdb.EdgeViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
@@ -23,8 +25,11 @@ import com.mobdeve.s12.mp.gamification.localdb.SkillViewModel
 import com.mobdeve.s12.mp.gamification.localdb.SkillViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModel
 import com.mobdeve.s12.mp.gamification.localdb.TaskViewModelFactory
+import com.mobdeve.s12.mp.gamification.localdb.getCosmeticFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getSkillFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
+import com.mobdeve.s12.mp.gamification.model.Cosmetic
+import com.mobdeve.s12.mp.gamification.model.CosmeticHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.Skill
@@ -34,6 +39,7 @@ import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
+import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkillTreeWindow
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -43,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     companion object Routes {
         val MAIN_WINDOW = "main_window"
         val AVATAR_WINDOW = "avatar_window"
+        val SKILLTREE_WINDOW = "skilltree_window"
     }
 
     private val REQUEST_CODE = 1
@@ -64,7 +71,12 @@ class MainActivity : AppCompatActivity() {
         EdgeViewModelFactory((application as MainApplication).repositoryHolder.edgeRepository)
     }
 
+    private val cosmeticViewModel: CosmeticViewModel by viewModels {
+        CosmeticViewModelFactory((application as MainApplication).repositoryHolder.cosmeticRepository)
+    }
+
     val profileState = mutableStateOf(generateDefaultProfile())
+    lateinit var cosmetics : CosmeticHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,9 +88,11 @@ class MainActivity : AppCompatActivity() {
                 fetchEdges(skills)
             }
         }
+        cosmetics = fetchCosmetics()
 
         update()
     }
+
 
     private fun fetchTasks(): LiveData<TaskListHolder> {
         val tasksLiveData = MutableLiveData<TaskListHolder>()
@@ -174,6 +188,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun fetchCosmetics() : CosmeticHolder {
+        val cosmeticsHolder : CosmeticHolder = CosmeticHolder()
+        cosmeticViewModel.allCosmetics.observe(this) { cosmetics ->
+            val profile = profileState.value
+            profile.skills.clear()
+
+            for (cosmeticEntity in cosmetics) {
+                val cosmetic = getCosmeticFromEntity(cosmeticEntity)
+                profile.cosmetics.add(cosmetic) // change this
+                cosmeticsHolder.add(cosmetic)
+                Log.d("Cosmetic_Value", cosmetic.toString())
+            }
+            profileState.value = profile
+            update()
+
+        }
+        return cosmeticsHolder
+    }
+
     private fun update() {
         setContent {
             navigation()
@@ -183,13 +216,15 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun navigation() {
         val navController = rememberNavController()
-
         NavHost(navController, startDestination = Routes.MAIN_WINDOW) {
             composable(Routes.MAIN_WINDOW) {
-                MainWindow(profile = profileState.value, repositoryHolder , navController = navController)
+                MainWindow(profile = profileState.value, cosmetics.cosmetics, repositoryHolder , navController = navController)
             }
             composable(Routes.AVATAR_WINDOW) {
-                AvatarEditWindow(profileState.value.cosmetics, profileState.value.profileDetails.avatar, navController)
+                AvatarEditWindow(profileState.value.cosmetics.cosmetics, profileState.value.profileDetails.avatar, navController)
+            }
+            composable(Routes.SKILLTREE_WINDOW) {
+                SkillTreeWindow(skillList = profileState.value.skills, profile = profileState.value)
             }
         }
     }

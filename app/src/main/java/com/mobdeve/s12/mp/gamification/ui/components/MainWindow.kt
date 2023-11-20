@@ -1,6 +1,8 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
 
+import android.content.res.Resources
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -33,14 +35,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.mobdeve.s12.mp.gamification.BuildConfig
+import com.mobdeve.s12.mp.gamification.MainActivity.Routes.SKILLTREE_WINDOW
+import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
+import com.mobdeve.s12.mp.gamification.model.Cosmetic
+import com.mobdeve.s12.mp.gamification.model.CosmeticHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
-import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.calendar.TaskSchedule
@@ -56,13 +63,12 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun MainWindow(profile : Profile, repo: RepositoryHolder, navController: NavController) {
+fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: RepositoryHolder, navController: NavController) {
     val horizontalPagerState = rememberPagerState(
         initialPage = 2,
         initialPageOffsetFraction = 0f
     ) { 4 }
-
-    val cosmeticList = createDefaultCosmeticList()
+    val cosmeticList = cosmetics
     val isShopVisible = remember { mutableStateOf(false) }
     val isTaskVisible = remember {mutableStateOf(true)}
 
@@ -116,7 +122,7 @@ fun MainWindow(profile : Profile, repo: RepositoryHolder, navController: NavCont
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ){
-                    Button( onClick = { TODO("Settings Button") },
+                    Button( onClick = { TODO("PAIN") },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         shape = CircleShape,
                         modifier = Modifier
@@ -134,14 +140,14 @@ fun MainWindow(profile : Profile, repo: RepositoryHolder, navController: NavCont
                         contentPadding = PaddingValues(0.dp)
                     )
                     {
-                        Icon(Icons.Default.Settings, contentDescription = "settings button", tint = Color.White)
+                        Icon(painterResource(id = R.drawable.tree3), contentDescription = "settings button", tint = Color.White)
                     }
                     Button( onClick = {
                         isTaskVisible.value = !isTaskVisible.value
                         isShopVisible.value = !isShopVisible.value
                     },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
-                        modifier = Modifier
+                    modifier = Modifier
                             .size(50.dp)
                             .fillMaxHeight()
                             .weight(2F)
@@ -198,7 +204,6 @@ fun MainWindow(profile : Profile, repo: RepositoryHolder, navController: NavCont
                         cosmeticsList = cosmeticList,
                         modifier = Modifier.fillMaxHeight())
                 }
-
             }
         }
     }

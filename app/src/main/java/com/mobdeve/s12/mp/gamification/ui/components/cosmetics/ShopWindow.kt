@@ -22,7 +22,6 @@ import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.Avatar
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
-import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.CosmeticList
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
@@ -72,16 +71,4 @@ fun ShopWindow(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewShopWindow() {
-    val profileDetails = ProfileDetails("Hello",
-        "Generic Description",
-        Avatar(), currency = 10)
-
-    val cosmeticList = createDefaultCosmeticList()
-
-    ShopWindow(profileDetails, cosmeticList, modifier = Modifier)
 }

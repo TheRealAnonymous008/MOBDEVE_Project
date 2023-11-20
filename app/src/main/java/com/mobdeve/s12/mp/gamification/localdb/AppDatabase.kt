@@ -16,11 +16,13 @@ import com.mobdeve.s12.mp.gamification.BuildConfig
 import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.CosmeticTypes
+import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
 import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
+import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
 import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.Task
-import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
+import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
 import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.skilltree.createDefaultSkillList
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -39,6 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun cosmeticDao() : CosmeticDao
 
     private class AppDBCallback(
+        private val context: Context,
         private val scope: CoroutineScope
     ) : RoomDatabase.Callback() {
 
@@ -48,7 +51,7 @@ abstract class AppDatabase : RoomDatabase() {
                 scope.launch {
                     val skills = populateSkills(database.skillDao())
                     val tasks = populateTasks(database.taskDao(), skills)
-                    val cosmetics = populateCosmetics(database.cosmeticDao())
+                    val cosmetics = populateCosmetics(database.cosmeticDao(), context)
                     val rewards = populateRewards(database.rewardDao(), tasks)
                     populateEdges(database.edgeDao(), skills)
                 }
@@ -100,11 +103,86 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
-        suspend fun populateCosmetics(dao: CosmeticDao) {
+        suspend fun populateCosmetics(dao: CosmeticDao, context: Context) {
             dao.deleteAll()
-            val dummy = createDefaultCosmeticList()
+            val cosmeticList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
 
-            dummy.forEach {
+            cosmeticList.add(
+                HeadCosmetic(
+                    id = 0,
+                    name = "Default Head",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_default_head),
+                    description = "The default head"
+                )
+            )
+            cosmeticList.add(
+                TorsoCosmetic(
+                    id = 0,
+                    name = "Default Torso",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_default_torso),
+                    description = "The default torso"
+                )
+            )
+            cosmeticList.add(
+                LegsCosmetic(
+                    id = 0,
+                    name = "Default Legs",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_default_legs),
+                    description = "The default legs"
+                )
+            )
+            cosmeticList.add(
+                FeetCosmetic(
+                    id = 0,
+                    name = "Default Feet",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_default_feet),
+                    description = "The default feet"
+                )
+            )
+            cosmeticList.add(
+                HeadCosmetic(
+                    id = 0,
+                    name = "Stark's Hair",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_stark_head),
+                    description = "Short red hair with a dark contrasting black in the center."
+                )
+            )
+            cosmeticList.add(
+                TorsoCosmetic(
+                    id = 0,
+                    name = "Stark's Coat",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_stark_torso),
+                    description = "Stark's coat"
+                )
+            )
+            cosmeticList.add(
+                LegsCosmetic(
+                    id = 0,
+                    name = "Stark's Pants",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_stark_legs),
+                    description = "Stark's pants"
+                )
+            )
+            cosmeticList.add(
+                FeetCosmetic(
+                    id = 0,
+                    name = "Stark's Shoes",
+                    cost = 0,
+                    image = context.resources.getResourceName(R.drawable.cosmetic_stark_feet),
+                    description = "Stark's shoes"
+                )
+            )
+
+
+
+            cosmeticList.forEach {
                 val t = getCosmeticEntity(it)
                 dao.add(t)
             }
@@ -141,7 +219,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "app_database"
                 )
-                    .addCallback(AppDBCallback(scope))
+                    .addCallback(AppDBCallback(context, scope))
                     .build()
                 INSTANCE = instance
                 instance

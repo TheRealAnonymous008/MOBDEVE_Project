@@ -30,7 +30,6 @@ import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
 import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
 import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
 import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
-import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.CosmeticContainer
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.CosmeticRow
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -164,12 +163,4 @@ fun AvatarEdit(
             onAvatarStateChange(avatar_holder)
         }
     }
-}
-
-@Composable
-@Preview
-fun PreviewAvatarSelection() {
-    val ownedCosmetics = createDefaultCosmeticList()
-    val avatar = Avatar()
-    AvatarEditWindow(ownedCosmetics = ownedCosmetics, avatar = avatar, null)
 }

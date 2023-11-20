@@ -6,21 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mobdeve.s12.mp.gamification.model.Avatar
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
-import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 
 class ShopWindowCompose : ComponentActivity() {
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewShopWindow() {
-    val profileDetails = ProfileDetails("Hello",
-        "Generic Description",
-        Avatar(), currency = 10)
-
-    val cosmeticList = createDefaultCosmeticList()
-
-    ShopWindow(profileDetails, cosmeticList, modifier = Modifier)
 }

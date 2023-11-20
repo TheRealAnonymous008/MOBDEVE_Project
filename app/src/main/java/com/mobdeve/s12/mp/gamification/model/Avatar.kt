@@ -4,20 +4,17 @@ import android.content.res.Resources
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.listSaver
-import androidx.compose.runtime.saveable.mapSaver
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.mobdeve.s12.mp.gamification.R
 
+
 var default_head = HeadCosmetic(
     id = 0,
     name = "Default Head",
     cost = 0,
-    image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_head),
+    image = "com.mobdeve.s12.mp.gamification:drawable/cosmetic_default_head",
     description = "The default head"
 )
 
@@ -25,7 +22,7 @@ var default_torso = TorsoCosmetic(
     id = 0,
     name = "Default Torso",
     cost = 0,
-    image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_torso),
+    image = "cosmetic_default_torso",
     description = "The default torso"
 )
 
@@ -33,7 +30,7 @@ var default_legs = LegsCosmetic(
     id = 0,
     name = "Default Legs",
     cost = 0,
-    image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_legs),
+    image = "cosmetic_default_legs",
     description = "The default legs"
 )
 
@@ -41,7 +38,7 @@ var default_feet = FeetCosmetic(
     id = 0,
     name = "Default Feet",
     cost = 0,
-    image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_feet),
+    image = "cosmetic_default_feet",
     description = "The default feet"
 )
 

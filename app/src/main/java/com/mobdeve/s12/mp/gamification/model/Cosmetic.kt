@@ -1,14 +1,18 @@
 package com.mobdeve.s12.mp.gamification.model
 
 
+import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.core.content.res.ResourcesCompat
 import com.mobdeve.s12.mp.gamification.BuildConfig
 import com.mobdeve.s12.mp.gamification.R
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 enum class CosmeticTypes {
     HEAD, TORSO, LEGS, FEET
@@ -26,8 +30,10 @@ abstract class Cosmetic(
     fun ViewCosmetic(
         modifier: Modifier = Modifier
     ) {
+        Log.d("THE VALUE", image)
+        Log.d("THE VALUE TEST", Resources.getSystem().getIdentifier("cosmetic_default_feet", "drawable", BuildConfig.APPLICATION_ID).toString())
         Image(
-            painter = painterResource(id = Resources.getSystem().getIdentifier(image, "drawable", BuildConfig.APPLICATION_ID)),
+            painter = painterResource(id = LocalContext.current.resources.getIdentifier(image, "drawable", BuildConfig.APPLICATION_ID)),
             contentDescription = "cosmetic_object",
             modifier = modifier)
     }
@@ -37,80 +43,40 @@ abstract class Cosmetic(
     }
 
 }
-fun createDefaultCosmeticList() : ArrayList<Cosmetic> {
-    val cosmeticList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
 
-    cosmeticList.add(
-        HeadCosmetic(
-        id = 0,
-        name = "Default Head",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_head),
-        description = "The default head"
-    )
-    )
-    cosmeticList.add(
-        TorsoCosmetic(
-        id = 0,
-        name = "Default Torso",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_torso),
-        description = "The default torso"
-    )
-    )
-    cosmeticList.add(
-        LegsCosmetic(
-        id = 0,
-        name = "Default Legs",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_legs),
-        description = "The default legs"
-    )
-    )
-    cosmeticList.add(
-        FeetCosmetic(
-        id = 0,
-        name = "Default Feet",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_default_feet),
-        description = "The default feet"
-    )
-    )
-    cosmeticList.add(
-        HeadCosmetic(
-        id = 0,
-        name = "Stark's Hair",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_stark_head),
-        description = "Short red hair with a dark contrasting black in the center."
-    )
-    )
-    cosmeticList.add(
-        TorsoCosmetic(
-        id = 0,
-        name = "Stark's Coat",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_stark_torso),
-        description = "Stark's coat"
-    )
-    )
-    cosmeticList.add(
-        LegsCosmetic(
-        id = 0,
-        name = "Stark's Pants",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_stark_legs),
-        description = "Stark's pants"
-    )
-    )
-    cosmeticList.add(
-        FeetCosmetic(
-        id = 0,
-        name = "Stark's Shoes",
-        cost = 0,
-        image = Resources.getSystem().getResourceName(R.drawable.cosmetic_stark_feet),
-        description = "Stark's shoes"
-    )
-    )
-    return cosmeticList
+class CosmeticHolder() {
+    var cosmetics : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
+
+    fun get(str : String) : Cosmetic?{
+        for (c in cosmetics){
+            if(c.name == str){
+                return c
+            }
+        }
+        return null
+    }
+
+    fun getCosmetics() : List<Cosmetic>{
+        return cosmetics.toList()
+    }
+
+    fun add(t: Cosmetic){
+        cosmetics.add(t)
+    }
+
+    fun remove(t : Cosmetic){
+        cosmetics.remove(t)
+    }
+
+    fun update(pos : Int, payload : Cosmetic){
+        cosmetics[pos] = payload
+    }
+
+    fun clear() {
+        cosmetics.clear()
+    }
+
+    fun getSorted() : List<Cosmetic>{
+        return cosmetics.sortedBy { it.name }
+    }
 }

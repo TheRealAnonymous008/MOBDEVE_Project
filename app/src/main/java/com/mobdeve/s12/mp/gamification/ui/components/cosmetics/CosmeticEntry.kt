@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
-import com.mobdeve.s12.mp.gamification.model.createDefaultCosmeticList
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -182,11 +181,4 @@ fun CosmeticDialog( cosmetic: Cosmetic, showState : Boolean, onDismissRequest: (
         }
     }
 
-}
-
-@Composable
-@Preview
-fun CosmeticDialogPreview() {
-    val cosmetics = createDefaultCosmeticList()
-    CosmeticDialog( cosmetic = cosmetics.get(2), true, onDismissRequest = {})
 }
