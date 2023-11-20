@@ -56,13 +56,20 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
             .fillMaxSize()
     ) {
         items(rewardListState) { reward ->
-            RewardEntry(reward) {
+            RewardEntry(reward
+            ,onDelete = {
                 rewardListState.remove(reward)
                 scope.launch {
                     repo.rewardRepository.delete(reward.task.id, reward.skill.id)
                 }
                 task.deleteReward(reward)
-            }
+            },
+            onUpdate = {
+                scope.launch {
+                    repo.rewardRepository.update(reward)
+                }
+                reward.xp = it
+            })
         }
 
         item {
