@@ -29,6 +29,7 @@ import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.window.Dialog
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.localdb.getTaskEntity
@@ -96,17 +97,40 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
             }
         }
 
+
+        var isShowingTaskDetails = remember { mutableStateOf(false)}
+        var taskInserted = remember { mutableStateOf<Task?>(null)}
+
+        TaskDialog(
+            isVisible = isShowingTaskDetails,
+            task = taskInserted.value,
+            profile = profile,
+            onUpdate = {
+                scope.launch(Dispatchers.IO) {
+                    val id = repo.taskRepository.insert(it)
+                    it.id = id
+                    taskList.add(it)
+                    taskListState.add(it)
+                }
+            },
+            onDelete = {
+                scope.launch(Dispatchers.IO) {
+                    repo.taskRepository.update(it)
+                    repo.rewardRepository.deleteWithTask(it.id)
+                }
+                it.unfinish()
+            },
+
+            repo = repo
+        )
+
+
         LargeFloatingActionButton(
             modifier = Modifier
                 .align(Alignment.BottomStart),
             onClick = {
-                val t : Task = createEmptyTask()
-                scope.launch(Dispatchers.IO) {
-                    val id = repo.taskRepository.insert(t)
-                    t.id = id
-                    taskList.add(t)
-                    taskListState.add(t)
-                }
+                taskInserted.value = createEmptyTask()
+                isShowingTaskDetails.value = true
             },
             containerColor = AccentColor,
             contentColor = Color.Black,

@@ -43,25 +43,16 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
     var offsetX by remember { mutableStateOf(Offset.Zero) }
     var show by remember { mutableStateOf(true) }
     var dismissState by remember { mutableStateOf(false) }
-    var isShowingTaskDetails by remember { mutableStateOf(false)}
 
-    if (isShowingTaskDetails) {
-        Dialog(
-            onDismissRequest = {
-                isShowingTaskDetails = false
-                onUpdate(task)
-            })
-        {
-            TaskDetailsLayout(task = task, profile = profile,
-                onDelete = {
-                    isShowingTaskDetails = false
-                    profile.tasks.remove(task)
-                    onDelete(task)
-                },
-                repo = repo
-            )
-        }
-    }
+    var isShowingTaskDetails = remember { mutableStateOf(false)}
+    TaskDialog(
+        isVisible = isShowingTaskDetails,
+        task = task,
+        profile = profile,
+        onUpdate = onUpdate,
+        onDelete = onDelete,
+        repo = repo
+    )
 
     if (show) {
         Card(
@@ -72,7 +63,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                 .offset(offsetX.x.dp, 0.dp),
 
             onClick = {
-                isShowingTaskDetails = true
+                isShowingTaskDetails.value = true
             }
         ) {
             // Show the task details as needed
