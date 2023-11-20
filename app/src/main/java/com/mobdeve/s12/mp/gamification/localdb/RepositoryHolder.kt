@@ -24,5 +24,6 @@ class RepositoryHolder {
         skillRepository = s
         rewardRepository = r
         edgeRepository = e
+        cosmeticRepository = c
     }
 }

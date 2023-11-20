@@ -112,7 +112,5 @@ fun createDefaultCosmeticList() : ArrayList<Cosmetic> {
         description = "Stark's shoes"
     )
     )
-    Log.d("VALUE", Resources.getSystem().getResourceName(R.drawable.cosmetic_default_feet))
-
     return cosmeticList
 }
