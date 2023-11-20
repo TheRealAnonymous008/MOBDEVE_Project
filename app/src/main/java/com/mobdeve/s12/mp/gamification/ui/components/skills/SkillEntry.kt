@@ -38,21 +38,15 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SkillEntry(skill : Skill, profile : Profile, onUpdate: (s : Skill) -> Unit, onDelete : (s : Skill) -> Unit){
-    var isShowingTaskDetails by remember { mutableStateOf(false) }
+    var isShowingTaskDetails = remember { mutableStateOf(false) }
 
-    if (isShowingTaskDetails) {
-        Dialog(
-            onDismissRequest = {
-                isShowingTaskDetails = false
-                onUpdate(skill)
-            }) {
-            SkillDetailsLaoyut(skill = skill , profile = profile, onDelete = {
-                isShowingTaskDetails = false
-                profile.skills.remove(skill)
-                onDelete(skill)
-            })
-        }
-    }
+    SKillDialog(
+        isVisible = isShowingTaskDetails,
+        skill = skill,
+        profile = profile,
+        onUpdate = onUpdate,
+        onDelete = onDelete
+    )
 
     Card(
         colors = CardDefaults.cardColors(
@@ -62,7 +56,7 @@ fun SkillEntry(skill : Skill, profile : Profile, onUpdate: (s : Skill) -> Unit, 
             .fillMaxWidth()
             .padding(bottom = 16.dp),
         onClick = {
-            isShowingTaskDetails = true
+            isShowingTaskDetails.value = true
         }
 
     ) {

@@ -14,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,26 +55,46 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryH
                         }
                     },
                     onDelete = {
-                    skillListState.remove(it)
-                    scope.launch(Dispatchers.IO) {
-                        repo.skillRepository.delete(it.id)
-                        repo.rewardRepository.deleteWithSkill(it.id)
-                    }
-                })
+                        skillListState.remove(it)
+                        scope.launch(Dispatchers.IO) {
+                            repo.skillRepository.delete(it.id)
+                            repo.rewardRepository.deleteWithSkill(it.id)
+                        }
+                    })
+                }
             }
-        }
+
+        var isShowingTaskDetails = remember { mutableStateOf(false) }
+        var skillInserted = remember { mutableStateOf<Skill?>(null)}
+
+        SKillDialog(
+            isVisible = isShowingTaskDetails,
+            skill = skillInserted.value,
+            profile = profile,
+            onUpdate = {
+                scope.launch(Dispatchers.IO) {
+                    val id = repo.skillRepository.add(it)
+                    it.id = id
+                    skillList.add(it)
+                    skillListState.add(it)
+                }
+            },
+            onDelete = {
+                skillListState.remove(it)
+                scope.launch(Dispatchers.IO) {
+                    repo.skillRepository.delete(it.id)
+                    repo.rewardRepository.deleteWithSkill(it.id)
+                }
+            }
+        )
+
 
         LargeFloatingActionButton(
             modifier = Modifier
                 .align(Alignment.BottomStart),
             onClick = {
-                val s: Skill = createEmptySkill(-1)
-                scope.launch(Dispatchers.IO) {
-                    val id = repo.skillRepository.add(s)
-                    s.id = id
-                    skillList.add(s)
-                    skillListState.add(s)
-                }
+                skillInserted.value = createEmptySkill()
+                isShowingTaskDetails.value = true
             },
             containerColor = AccentColor,
             contentColor = Color.Black,
