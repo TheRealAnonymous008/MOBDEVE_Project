@@ -30,8 +30,6 @@ data class SkillEntity (
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     val name: String,
     val description: String,
-    val level: Int,
-    val xp: Int,
     val priority: SkillPriority,
     val imageId: Int
 )
@@ -136,9 +134,7 @@ fun getSkillEntity(skill : Skill) : SkillEntity{
         name = skill.name,
         description = skill.description,
         priority = skill.priority,
-        level = skill.level,
         imageId = skill.imageId,
-        xp = skill.xp
     )
 }
 
@@ -146,9 +142,7 @@ fun getSkillFromEntity(entry : SkillEntity) : Skill{
     // TODO: Look into how to save images.
     return Skill(
         id = entry.id,
-        xp = entry.xp,
         name = entry.name,
-        level = entry.level,
         priority = entry.priority,
         description = entry.description
     )

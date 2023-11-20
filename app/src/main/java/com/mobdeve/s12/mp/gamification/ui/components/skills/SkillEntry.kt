@@ -96,6 +96,7 @@ fun SkillEntry(skill : Skill, profile : Profile, onUpdate: (s : Skill) -> Unit, 
                     var name = skill.name
                     if (name.isBlank())
                         name = "Untitled Skill"
+                    name += " \t lvl. ${skill.level}"
                     Text(
                         text = name,
                         modifier = Modifier
@@ -113,6 +114,7 @@ fun SkillEntry(skill : Skill, profile : Profile, onUpdate: (s : Skill) -> Unit, 
                         )
                     }
                 }
+
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Progress Bar
