@@ -24,6 +24,10 @@ abstract class Cosmetic(
             modifier = modifier)
     }
 
+    override fun toString(): String {
+        return "${this.name}"
+    }
+
 }
 fun createDefaultCosmeticList() : ArrayList<Cosmetic> {
     val cosmeticList : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
