@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.NavHost
@@ -33,8 +34,9 @@ import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
-
-
+import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 
 
 class MainActivity : AppCompatActivity() {

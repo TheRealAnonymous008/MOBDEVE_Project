@@ -9,6 +9,7 @@ class RepositoryHolder {
     lateinit var skillRepository: SkillRepository
     lateinit var rewardRepository: RewardRepository
     lateinit var edgeRepository: EdgeRepository
+    lateinit var cosmeticRepository: CosmeticRepository
 
     constructor(context: Context, scope : CoroutineScope){
         val db by lazy { AppDatabase.getInstance(context, scope) }
@@ -16,6 +17,7 @@ class RepositoryHolder {
         val s by lazy { SkillRepository(database.skillDao())}
         val r by lazy { RewardRepository(database.rewardDao())}
         val e by lazy { EdgeRepository(database.edgeDao())}
+        val c by lazy { CosmeticRepository(database.cosmeticDao())}
 
         database = db
         taskRepository = t

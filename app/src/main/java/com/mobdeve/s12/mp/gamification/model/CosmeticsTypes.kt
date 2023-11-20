@@ -2,48 +2,48 @@ package com.mobdeve.s12.mp.gamification.model
 
 
 class HeadCosmetic(
-    id: Int,
+    id: Long,
     name: String,
     cost: Int,
-    image: Int,
+    image: String,
     description: String) :
-    Cosmetic(id, name, cost, image, description) {
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.HEAD) {
     override fun toString(): String {
         return super.toString()
     }
 }
 
 class TorsoCosmetic(
-    id: Int,
+    id: Long,
     name: String,
     cost: Int,
-    image: Int,
+    image: String,
     description: String) :
-    Cosmetic(id, name, cost, image, description) {
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.TORSO) {
     override fun toString(): String {
         return super.toString()
     }
 }
 
 class LegsCosmetic(
-    id: Int,
+    id: Long,
     name: String,
     cost: Int,
-    image: Int,
+    image: String,
     description: String) :
-    Cosmetic(id, name, cost, image, description) {
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.LEGS) {
     override fun toString(): String {
         return super.toString()
     }
 }
 
 class FeetCosmetic(
-    id: Int,
+    id: Long,
     name: String,
     cost: Int,
-    image: Int,
+    image: String,
     description: String) :
-    Cosmetic(id, name, cost, image, description) {
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.FEET) {
     override fun toString(): String {
         return super.toString()
     }
