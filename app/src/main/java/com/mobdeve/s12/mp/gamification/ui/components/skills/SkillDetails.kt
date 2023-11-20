@@ -2,6 +2,7 @@ package com.mobdeve.s12.mp.gamification.ui.components.skills
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.SkillPriority
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
@@ -32,11 +36,13 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) {
     var title by remember { mutableStateOf(skill.name) }
     var description by remember { mutableStateOf(skill.description) }
+    var priorityValue by remember { mutableStateOf(skill.priority.name) }
+    val priorities = SkillPriority.values().map { it.name }
 
     Column(
         modifier = Modifier
             .background(SecondaryColor)
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(16.dp)
     ) {
         // Title of the Skill
@@ -72,6 +78,39 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
                 }
             }
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Priority
+        Box {
+            var expanded by remember { mutableStateOf(false) }
+                Text(
+                    priorityValue,
+                    Modifier
+                        .clickable {
+                        expanded = true
+                    },
+                    color = TextColor
+                )
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    priorities.forEach { priority ->
+                    DropdownMenuItem(
+                        text = {
+                            PriorityIndicator(priority = SkillPriority.valueOf(priority) )
+                        },
+                        onClick = {
+                            priorityValue = priority
+                            expanded = false
+                            skill.priority = SkillPriority.valueOf(priority)
+                        }
+                    )
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 

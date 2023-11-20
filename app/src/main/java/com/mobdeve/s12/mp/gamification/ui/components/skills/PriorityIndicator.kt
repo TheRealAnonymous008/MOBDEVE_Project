@@ -1,8 +1,5 @@
 package com.mobdeve.s12.mp.gamification.ui.components.skills
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,9 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.SkillPriority
-import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.HighPriority
-import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 @Composable
 fun PriorityIndicator(priority : SkillPriority){
@@ -39,15 +34,14 @@ fun PriorityIndicator(priority : SkillPriority){
     Card (
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(end = 20.dp),
+            .padding(end = 30.dp),
         colors = CardDefaults.cardColors(
             containerColor = bgcolor
         ),
 
         ) {
         Text(
-            fontSize = 11.sp,
+            fontSize = 15.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxSize()
