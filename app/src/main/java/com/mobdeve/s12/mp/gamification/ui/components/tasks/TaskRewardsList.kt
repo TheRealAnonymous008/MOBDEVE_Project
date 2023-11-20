@@ -50,31 +50,29 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
     val rewards = task.getRewards()
     var rewardListState = remember { mutableStateListOf(*rewards.toTypedArray()) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-    ) {
-        LazyColumn(
-            // TODO: Add padding as necessary
 
-        ) {
-            items(rewardListState) { reward ->
-                RewardEntry(reward) {
-                    rewardListState.remove(reward)
-                    scope.launch {
-                        repo.rewardRepository.delete(reward.task.id, reward.skill.id)
-                    }
-                    task.deleteReward(reward)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        items(rewardListState) { reward ->
+            RewardEntry(reward) {
+                rewardListState.remove(reward)
+                scope.launch {
+                    repo.rewardRepository.delete(reward.task.id, reward.skill.id)
                 }
+                task.deleteReward(reward)
             }
         }
 
-        AddReward(task, profile) {
-            rewardListState.add(it)
-            scope.launch {
-                repo.rewardRepository.insert(it)
+        item {
+            AddReward(task, profile) {
+                rewardListState.add(it)
+                scope.launch {
+                    repo.rewardRepository.insert(it)
+                }
+                task.addReward(it)
             }
-            task.addReward(it)
         }
     }
 }
@@ -109,16 +107,18 @@ fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                 ) {
-                    profile.skills.skills.forEach { skill ->
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedSkill = skill
-                                expanded = false
-                            },
-                            text = {
-                                Text(skill.name)
-                            }
-                        )
+                    profile.skills.getSorted().forEach { skill ->
+                        if (!task.isMappedToSkill(skill)) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedSkill = skill
+                                    expanded = false
+                                },
+                                text = {
+                                    Text(skill.name)
+                                }
+                            )
+                        }
                     }
                 }
             }

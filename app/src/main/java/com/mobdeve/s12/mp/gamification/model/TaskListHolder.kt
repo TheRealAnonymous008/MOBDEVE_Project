@@ -33,4 +33,8 @@ class TaskListHolder() {
     fun clear() {
         tasks.clear()
     }
+
+    fun getSorted() : List<Task>{
+        return tasks.sortedBy { it.title }
+    }
 }

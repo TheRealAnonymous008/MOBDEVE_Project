@@ -34,4 +34,8 @@ class SkillListHolder() {
     fun clear() {
         skills.clear()
     }
+
+    fun getSorted() : List<Skill>{
+        return skills.sortedBy { it.name }
+    }
 }
