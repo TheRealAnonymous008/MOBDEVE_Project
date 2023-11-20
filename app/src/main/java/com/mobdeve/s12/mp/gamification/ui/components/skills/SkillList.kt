@@ -46,7 +46,7 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryH
                 .padding(10.dp)
 
         ) {
-            items(skillList.skills) { skill ->
+            items(skillList.getSorted()) { skill ->
                 SkillEntry(skill, profile,
                     onUpdate = {
                         scope.launch(Dispatchers.IO) {
