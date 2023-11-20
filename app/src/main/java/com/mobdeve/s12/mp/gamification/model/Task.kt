@@ -70,6 +70,14 @@ data class Task(
     fun pause() {
         // Do Nothing
     }
+
+    fun isMappedToSkill(sk : Skill) : Boolean {
+        for (reward in rewards) {
+            if (reward.skill == sk)
+                return true
+        }
+        return false
+    }
 }
 
 fun createEmptyTask() : Task {

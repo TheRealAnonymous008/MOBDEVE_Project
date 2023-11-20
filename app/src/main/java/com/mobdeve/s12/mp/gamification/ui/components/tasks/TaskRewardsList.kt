@@ -109,16 +109,18 @@ fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
                     expanded = expanded,
                     onDismissRequest = { expanded = false },
                 ) {
-                    profile.skills.skills.forEach { skill ->
-                        DropdownMenuItem(
-                            onClick = {
-                                selectedSkill = skill
-                                expanded = false
-                            },
-                            text = {
-                                Text(skill.name)
-                            }
-                        )
+                    profile.skills.getSorted().forEach { skill ->
+                        if (!task.isMappedToSkill(skill)) {
+                            DropdownMenuItem(
+                                onClick = {
+                                    selectedSkill = skill
+                                    expanded = false
+                                },
+                                text = {
+                                    Text(skill.name)
+                                }
+                            )
+                        }
                     }
                 }
             }
