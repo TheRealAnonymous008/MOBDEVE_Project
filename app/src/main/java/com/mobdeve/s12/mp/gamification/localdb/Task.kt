@@ -30,7 +30,9 @@ data class TaskEntity (
     val timeCreated : Long,
     val timeFrom : Long?,
     val timeTo : Long?,
-    val isFinished : Boolean
+    val isFinished : Boolean,
+    val datetimeFrom: Long?,
+    val datetimeTo: Long?
 )
 
 // Queries
@@ -53,6 +55,19 @@ interface TaskDao {
 
     @Query("DELETE FROM tasks")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM tasks WHERE id = :taskId")
+    fun getTaskById(taskId: Long): TaskEntity?
+
+    // Add these new queries
+    @Query("SELECT datetimeFrom, datetimeTo FROM tasks WHERE id = :taskId")
+    fun getTimeInfoById(taskId: Long): TimeInfoEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTimeInfo(timeInfo: TimeInfoEntity)
+
+    @Update
+    suspend fun updateTimeInfo(timeInfo: TimeInfoEntity)
 }
 
 // Repository
@@ -63,7 +78,13 @@ class TaskRepository(private val dao : TaskDao) {
     @WorkerThread
     suspend fun insert(task: Task) : Long{
         val entity = getTaskEntity(task)
-        return dao.add(entity)
+        val taskId = dao.add(entity)
+
+        // Save TimeInfo
+        val timeInfoEntity = TimeInfoEntity(taskId, entity.datetimeFrom, entity.datetimeTo)
+        dao.insertTimeInfo(timeInfoEntity)
+
+        return taskId
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -72,12 +93,27 @@ class TaskRepository(private val dao : TaskDao) {
         val entity = getTaskEntity(task)
         entity.id = task.id
         dao.update(entity)
+
+        // Update TimeInfo
+        val timeInfoEntity = TimeInfoEntity(task.id, entity.datetimeFrom, entity.datetimeTo)
+        dao.updateTimeInfo(timeInfoEntity)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(id: Long) {
         dao.delete(id)
+    }
+
+
+    fun getTimeInfoById(taskId: Long): TimeInfo? {
+        val timeInfoEntity = dao.getTimeInfoById(taskId)
+        return timeInfoEntity?.let {
+            TimeInfo(
+                datetimeFrom = it.datetimeFrom?.let { Timestamp(it) },
+                dateTimeTo = it.datetimeTo?.let { Timestamp(it) }
+            )
+        }
     }
 }
 
@@ -130,7 +166,9 @@ fun getTaskEntity(task : Task) : TaskEntity{
         timeCreated = task.timeInfo.datetimeCreated.time,
         timeFrom = timeFrom,
         timeTo = timeTo,
-        isFinished = task.isFinished
+        isFinished = task.isFinished,
+        datetimeFrom = timeFrom,
+        datetimeTo = timeTo
     )
 }
 
@@ -157,4 +195,12 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
         isFinished = entry.isFinished
     )
 }
+
+@Entity(tableName = "time_info")
+data class TimeInfoEntity(
+    @PrimaryKey val taskId: Long,
+    val datetimeFrom: Long?,
+    val datetimeTo: Long?
+)
+
 
