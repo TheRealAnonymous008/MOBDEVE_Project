@@ -7,5 +7,14 @@ data class ProfileDetails(
     var description : String,
     var avatar : Avatar,
     var currency : Int
-) : Serializable {}
+) : Serializable {
+
+    fun addCurrency(amount : Int) {
+        currency += amount
+    }
+
+    fun removeCurrency(amount : Int) {
+        currency -= amount
+    }
+}
 

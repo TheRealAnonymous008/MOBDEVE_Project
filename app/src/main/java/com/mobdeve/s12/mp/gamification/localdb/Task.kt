@@ -30,7 +30,9 @@ data class TaskEntity (
     val timeCreated : Long,
     val timeFrom : Long?,
     val timeTo : Long?,
-    val isFinished : Boolean
+    val isFinished : Boolean,
+    val datetimeFrom: Long?,
+    val datetimeTo: Long?
 )
 
 // Queries
@@ -53,6 +55,9 @@ interface TaskDao {
 
     @Query("DELETE FROM tasks")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM tasks WHERE id = :taskId")
+    fun getTaskById(taskId: Long): TaskEntity?
 }
 
 // Repository
@@ -63,7 +68,9 @@ class TaskRepository(private val dao : TaskDao) {
     @WorkerThread
     suspend fun insert(task: Task) : Long{
         val entity = getTaskEntity(task)
-        return dao.add(entity)
+        val taskId = dao.add(entity)
+
+        return taskId
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -130,7 +137,9 @@ fun getTaskEntity(task : Task) : TaskEntity{
         timeCreated = task.timeInfo.datetimeCreated.time,
         timeFrom = timeFrom,
         timeTo = timeTo,
-        isFinished = task.isFinished
+        isFinished = task.isFinished,
+        datetimeFrom = timeFrom,
+        datetimeTo = timeTo
     )
 }
 
@@ -157,4 +166,12 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
         isFinished = entry.isFinished
     )
 }
+
+@Entity(tableName = "time_info")
+data class TimeInfoEntity(
+    @PrimaryKey val taskId: Long,
+    val datetimeFrom: Long?,
+    val datetimeTo: Long?
+)
+
 
