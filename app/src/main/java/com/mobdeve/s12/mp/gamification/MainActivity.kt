@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification
 
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +8,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mobdeve.s12.mp.gamification.components.LockScreenOrientation
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModel
 import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModelFactory
@@ -191,13 +194,12 @@ class MainActivity : AppCompatActivity() {
         val cosmeticsHolder : CosmeticHolder = CosmeticHolder()
         cosmeticViewModel.allCosmetics.observe(this) { cosmetics ->
             val profile = profileState.value
-            profile.skills.clear()
+            profile.cosmetics.clear()
 
             for (cosmeticEntity in cosmetics) {
                 val cosmetic = getCosmeticFromEntity(cosmeticEntity)
                 profile.cosmetics.add(cosmetic) // change this
                 cosmeticsHolder.add(cosmetic)
-                Log.d("Cosmetic_Value", cosmetic.toString())
             }
             profileState.value = profile
             update()
@@ -215,6 +217,7 @@ class MainActivity : AppCompatActivity() {
     @Composable
     fun navigation() {
         val navController = rememberNavController()
+        LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED)
         NavHost(navController, startDestination = Routes.MAIN_WINDOW) {
             composable(Routes.MAIN_WINDOW) {
                 MainWindow(profile = profileState.value, cosmetics.cosmetics, repositoryHolder , navController = navController)

@@ -1,6 +1,7 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
 
+import android.content.pm.ActivityInfo
 import android.content.res.Resources
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
@@ -35,6 +36,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.MainActivity.Routes.SKILLTREE_WINDOW
 import com.mobdeve.s12.mp.gamification.R
+import com.mobdeve.s12.mp.gamification.components.LockScreenOrientation
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
@@ -74,7 +77,8 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
     MOBDEVEProjectTheme{
         // A surface container using the 'background' color from the theme
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             color = Background
         ) {
             Column(
@@ -146,17 +150,17 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                     },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                     modifier = Modifier
-                            .size(50.dp)
-                            .fillMaxHeight()
-                            .weight(2F)
-                            .advancedShadow(
-                                Color.Black,
-                                offsetX = 10.dp,
-                                offsetY = 5.dp,
-                                spread = 4.dp,
-                                blurRadius = 10.dp,
-                                borderRadius = 50.dp
-                            ),
+                        .size(50.dp)
+                        .fillMaxHeight()
+                        .weight(2F)
+                        .advancedShadow(
+                            Color.Black,
+                            offsetX = 10.dp,
+                            offsetY = 5.dp,
+                            spread = 4.dp,
+                            blurRadius = 10.dp,
+                            borderRadius = 50.dp
+                        ),
                         contentPadding = PaddingValues(0.dp)
                     )
                     {
