@@ -25,8 +25,6 @@ abstract class Cosmetic(
     fun ViewCosmetic(
         modifier: Modifier = Modifier
     ) {
-        Log.d("THE VALUE", image)
-        Log.d("THE VALUE TEST", Resources.getSystem().getIdentifier("cosmetic_default_feet", "drawable", BuildConfig.APPLICATION_ID).toString())
         Image(
             painter = painterResource(id = LocalContext.current.resources.getIdentifier(image, "drawable", BuildConfig.APPLICATION_ID)),
             contentDescription = "cosmetic_object",

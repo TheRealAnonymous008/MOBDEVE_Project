@@ -13,7 +13,7 @@ var default_head = HeadCosmetic(
     id = 0,
     name = "Default Head",
     cost = 0,
-    image = R.drawable.cosmetic_default_head,
+    image = "cosmetic_default_head",
     description = "The default head"
 )
 
@@ -21,7 +21,7 @@ var default_torso = TorsoCosmetic(
     id = 0,
     name = "Default Torso",
     cost = 0,
-    image = R.drawable.cosmetic_default_torso,
+    image = "cosmetic_default_torso",
     description = "The default torso"
 )
 
@@ -29,7 +29,7 @@ var default_legs = LegsCosmetic(
     id = 0,
     name = "Default Legs",
     cost = 0,
-    image = R.drawable.cosmetic_default_legs,
+    image = "cosmetic_default_legs",
     description = "The default legs"
 )
 
@@ -37,7 +37,7 @@ var default_feet = FeetCosmetic(
     id = 0,
     name = "Default Feet",
     cost = 0,
-    image = R.drawable.cosmetic_default_feet,
+    image = "cosmetic_default_feet",
     description = "The default feet"
 )
 
