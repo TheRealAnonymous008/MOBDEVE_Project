@@ -6,10 +6,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -20,8 +23,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -29,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.SkillPriority
+import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
@@ -36,7 +42,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) {
     var title by remember { mutableStateOf(skill.name) }
     var description by remember { mutableStateOf(skill.description) }
-    var priorityValue by remember { mutableStateOf(skill.priority.name) }
+    var priorityValue by remember { mutableStateOf(skill.priority) }
     val priorities = SkillPriority.values().map { it.name }
 
     Column(
@@ -48,6 +54,7 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
         // Title of the Skill
         BasicTextField(
             value = title,
+            cursorBrush = SolidColor(Color.White),
             onValueChange = {
                 skill.name = it
                 title = it
@@ -58,7 +65,7 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
                 color = TextColor,
             ),
             modifier = Modifier
-                .background(Color.Transparent)
+                .background(PrimaryColor)
                 .fillMaxWidth(),
             decorationBox = { innerTextField ->
                 Box(
@@ -81,42 +88,10 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Priority
-        Box {
-            var expanded by remember { mutableStateOf(false) }
-                Text(
-                    priorityValue,
-                    Modifier
-                        .clickable {
-                        expanded = true
-                    },
-                    color = TextColor
-                )
-
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    priorities.forEach { priority ->
-                    DropdownMenuItem(
-                        text = {
-                            PriorityIndicator(priority = SkillPriority.valueOf(priority) )
-                        },
-                        onClick = {
-                            priorityValue = priority
-                            expanded = false
-                            skill.priority = SkillPriority.valueOf(priority)
-                        }
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
         // Description
         BasicTextField(
             value = description,
+            cursorBrush = SolidColor(Color.White),
             onValueChange = {
                 description= it
                 skill.description = it
@@ -126,7 +101,7 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
                 color = TextColor,
             ),
             modifier = Modifier
-                .background(Color.Transparent)
+                .background(PrimaryColor)
                 .fillMaxWidth(),
             decorationBox = { innerTextField ->
                 Box(
@@ -137,7 +112,7 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
                     if (description.isEmpty()) {
                         Text(
                             text = "Blank Description",
-                            fontSize = 18.sp,
+                            fontSize = 14.sp,
                             fontWeight = FontWeight.Normal,
                             color = Color.LightGray
                         )
@@ -149,6 +124,41 @@ fun SkillDetailsLaoyut(skill : Skill, profile : Profile, onDelete : () -> Unit) 
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        // Priority
+        Box(modifier = Modifier.height(25.dp)) {
+            var expanded by remember { mutableStateOf(false) }
+            PriorityIndicator(
+                priority = priorityValue,
+                modifier = Modifier
+                    .clickable {
+                        expanded = true
+                    }
+            )
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier
+                    .background(SecondaryColor)
+                    .fillMaxWidth()
+            ) {
+                priorities.forEach { priority ->
+                    DropdownMenuItem(
+                        text = {
+                            PriorityIndicator(priority = SkillPriority.valueOf(priority) )
+                        },
+                        onClick = {
+                            priorityValue = SkillPriority.valueOf(priority)
+                            expanded = false
+                            skill.priority = SkillPriority.valueOf(priority)
+                        }
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
 
         // Delete Button
         Button(
