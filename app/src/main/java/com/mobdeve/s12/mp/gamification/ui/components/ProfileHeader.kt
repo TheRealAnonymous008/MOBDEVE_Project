@@ -16,8 +16,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,10 +29,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.MainActivity
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
+import com.mobdeve.s12.mp.gamification.model.ProfileViewModel
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -43,8 +49,11 @@ class ProfileHeaderParameters {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController){
+    val profileViewModel: ProfileViewModel = viewModel()
+    val profileDetails by profileViewModel.profileDetails
     Row  (
         modifier = Modifier
             .padding(start = 10.dp, end = 10.dp)
@@ -102,24 +111,31 @@ fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController)
                     .fillMaxSize()
             ) {
                 // Username
-                Text(
+                TextField(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = profileDetails.name,
-                    color = TextColor,
+                    value = profileDetails.name,
+                    onValueChange = { newName ->
+                        profileViewModel.updateName(newName)
+                    },
+                    label = { Text("Username") },
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = TertiaryColor),
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 // Description
-                Text(
+                TextField(
                     modifier = Modifier
                         .fillMaxSize(),
-                    text = profileDetails.description,
-                    color = TextColor,
+                    value = profileDetails.description,
+                    onValueChange = { newDescription ->
+                        profileViewModel.updateDescription(newDescription)
+                    },
+                    label = { Text("Description") },
+                    colors = TextFieldDefaults.textFieldColors(backgroundColor = TertiaryColor),
                 )
             }
         }
-
     }
 }
