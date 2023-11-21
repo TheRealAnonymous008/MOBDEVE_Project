@@ -40,7 +40,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.mobdeve.s12.mp.gamification.BuildConfig
 import com.mobdeve.s12.mp.gamification.MainActivity.Routes.SKILLTREE_WINDOW
 import com.mobdeve.s12.mp.gamification.R
 import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
@@ -65,9 +64,9 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 @Composable
 fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: RepositoryHolder, navController: NavController) {
     val horizontalPagerState = rememberPagerState(
-        initialPage = 2,
+        initialPage = 1,
         initialPageOffsetFraction = 0f
-    ) { 4 }
+    ) { 3 }
     val cosmeticList = cosmetics
     val isShopVisible = remember { mutableStateOf(false) }
     val isTaskVisible = remember {mutableStateOf(true)}
@@ -110,7 +109,6 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                                     0 -> TaskSchedule(taskList = profile.tasks)
                                     1 -> TaskList(taskList = profile.tasks, profile = profile, repo = repo)
                                     2 -> SkillList(skillList = profile.skills, profile = profile, repo = repo)
-                                    3 -> SkillTreeWindow(skillList = profile.skills, profile = profile)
                                 }
                             }
                         }}
@@ -122,7 +120,7 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ){
-                    Button( onClick = { TODO("PAIN") },
+                    Button( onClick = { navController.navigate(SKILLTREE_WINDOW) },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         shape = CircleShape,
                         modifier = Modifier

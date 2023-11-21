@@ -6,16 +6,16 @@ enum class SkillNodeVisibility {
     OPEN,
     HIDDEN
 }
-
 data class SkillNode (
     var skill : Skill,
     var breadth : Int,
     var xPos : Int,
     var yPos : Int,
-    var children : ArrayList<SkillNode> = ArrayList<SkillNode>(),
     var parent : SkillNode? = null,
     var visible : SkillNodeVisibility = SkillNodeVisibility.OPEN
 ) {
+    var children : ArrayList<SkillNode> = ArrayList<SkillNode>()
+
     override fun toString(): String {
         return "$skill whose children are $children"
     }
@@ -29,3 +29,4 @@ data class SkillNode (
         this.children.add(sk)
     }
 }
+
