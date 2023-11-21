@@ -52,7 +52,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                 .padding(10.dp)
 
         ) {
-            items(taskListState) { task ->
+            items(taskList.tasks) { task ->
                 if (!task.isFinished)
                     TaskEntry(task, profile,
                     onUpdate = {
@@ -75,7 +75,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                 Text(text = "Finished tasks")
             }
 
-            items(taskListState) { task ->
+            items(taskList.tasks) { task ->
                 if (task.isFinished) {
                     TaskEntry(task, profile,
                     onUpdate = {

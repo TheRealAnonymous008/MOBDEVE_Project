@@ -98,13 +98,12 @@ class MainActivity : AppCompatActivity() {
         val tasksLiveData = MutableLiveData<TaskListHolder>()
 
         taskViewModel.allTasks.observe(this) { tasks ->
-            tasks?.let {
-                val profile = profileState.value
-                profile.tasks.clear()
+            val profile = profileState.value
+            profile.tasks.clear()
 
+            tasks?.let {
                 for (task in it) {
-                    val task = getTaskFromEntity(task)
-                    profile.tasks.add(task)
+                    profile.tasks.add(getTaskFromEntity(task))
                 }
                 profileState.value = profile
                 tasksLiveData.value = profile.tasks
