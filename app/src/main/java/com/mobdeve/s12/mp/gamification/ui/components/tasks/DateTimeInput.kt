@@ -14,21 +14,23 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import java.sql.Date
 import java.sql.Timestamp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DateTimeInput(timeState : MutableState<Timestamp??>, onUpdate: (t : Timestamp?) -> Unit) {
+fun DateTimeInput(timeState : Timestamp??, onUpdate: (t : Timestamp?) -> Unit) {
 
     val state = rememberDatePickerState()
-    val date = remember { mutableStateOf<Date?>(null) }
+    var date by remember { mutableStateOf<Date?>(null) }
 
-    if (timeState.value != null) {
-        date.value = Date(timeState.value!!.time)
+    if (timeState != null) {
+        date = Date(timeState!!.time)
     }
 
     val openDialog = remember { mutableStateOf(false) }
@@ -46,9 +48,8 @@ fun DateTimeInput(timeState : MutableState<Timestamp??>, onUpdate: (t : Timestam
                         if (selectedDateMillis != null) {
                             val selectedDate = Date(selectedDateMillis)
                             val timestamp = Timestamp(selectedDateMillis)
-                            timeState.value = timestamp
                             onUpdate(timestamp)
-                            date.value = selectedDate
+                            date = selectedDate
                         }
                     }
                 ) {
@@ -73,7 +74,7 @@ fun DateTimeInput(timeState : MutableState<Timestamp??>, onUpdate: (t : Timestam
 
     // Just display the date
     Text(
-        text = "${date.value}",
+        text = "${date}",
         modifier = Modifier
             .clickable {
                 openDialog.value = true

@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.localdb
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -78,6 +79,7 @@ class TaskRepository(private val dao : TaskDao) {
     suspend fun update(task: Task) {
         val entity = getTaskEntity(task)
         entity.id = task.id
+
         dao.update(entity)
     }
 
@@ -130,7 +132,6 @@ fun getTaskEntity(task : Task) : TaskEntity{
         timeTo = timeToTimestamp.time
     }
 
-
     return TaskEntity(
         title = task.title,
         description = task.description,
@@ -145,13 +146,13 @@ fun getTaskEntity(task : Task) : TaskEntity{
 
 fun getTaskFromEntity(entry : TaskEntity) : Task{
     val dateTimeCreated = Timestamp(entry.timeCreated)
-    var dateTimeFrom = dateTimeCreated
+    var dateTimeFrom: Timestamp? = null
     if (entry.timeFrom !== null) {
-        val dateTimeFrom = Timestamp(entry.timeFrom)
+        dateTimeFrom = Timestamp(entry.timeFrom)
     }
-    var dateTimeTo = dateTimeCreated
+    var dateTimeTo: Timestamp? = null
     if (entry.timeFrom !== null) {
-        val dateTimeTo = Timestamp(entry.timeFrom)
+        dateTimeTo = Timestamp(entry.timeFrom)
     }
 
     return Task (
@@ -166,12 +167,5 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
         isFinished = entry.isFinished
     )
 }
-
-@Entity(tableName = "time_info")
-data class TimeInfoEntity(
-    @PrimaryKey val taskId: Long,
-    val datetimeFrom: Long?,
-    val datetimeTo: Long?
-)
 
 

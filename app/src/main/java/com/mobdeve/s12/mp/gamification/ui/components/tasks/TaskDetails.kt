@@ -36,7 +36,7 @@ import java.sql.Timestamp
 fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, repo: RepositoryHolder) {
     var title by remember { mutableStateOf(task.title)}
     var description by remember { mutableStateOf(task.description) }
-    var timeInfo = remember { mutableStateOf(task.timeInfo) }
+    var timeInfo by remember { mutableStateOf(task.timeInfo) }
 
     Column(
         modifier = Modifier
@@ -134,7 +134,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
         TimeInfoDetails(
             timeInfo = timeInfo,
             onUpdate = { updatedTimeInfo: TimeInfo ->
-                timeInfo.value = updatedTimeInfo
+                timeInfo = updatedTimeInfo
                 task.timeInfo = updatedTimeInfo
             }
         )
@@ -176,14 +176,14 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
 }
 
 @Composable
-fun TimeInfoDetails(timeInfo: MutableState<TimeInfo>, onUpdate: (TimeInfo) -> Unit) {
+fun TimeInfoDetails(timeInfo: TimeInfo, onUpdate: (TimeInfo) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         // Date time created (read-only)
         Text(
-            text = "Created: ${formatTimestampDate(timeInfo.value.datetimeCreated)}",
+            text = "Created: ${formatTimestampDate(timeInfo.datetimeCreated)}",
             fontSize = 14.sp,
             color = TextColor,
         )
@@ -191,30 +191,30 @@ fun TimeInfoDetails(timeInfo: MutableState<TimeInfo>, onUpdate: (TimeInfo) -> Un
         Spacer(modifier = Modifier.height(8.dp))
 
         // Date time from (editable)
-        var timeFrom = remember { mutableStateOf(timeInfo.value.datetimeFrom)}
+        var timeFrom by remember { mutableStateOf(timeInfo.datetimeFrom)}
         DateTimeInput(
             timeState = timeFrom,
             onUpdate = {
-                timeInfo.value.datetimeFrom = it
-                onUpdate(timeInfo.value)
+                timeInfo.datetimeFrom = it
+                onUpdate(timeInfo)
             }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Date time to (editable)
-        var timeTo = remember { mutableStateOf(timeInfo.value.dateTimeTo)}
+        var timeTo by remember { mutableStateOf(timeInfo.dateTimeTo)}
         DateTimeInput(
             timeState = timeTo,
             onUpdate = {
-                timeInfo.value.dateTimeTo = it
-                onUpdate(timeInfo.value)
+                timeInfo.dateTimeTo = it
+                onUpdate(timeInfo)
             }
         )
 
         // Progress
         Text(
-            text = "Progress: ${timeInfo.value.progress}%",
+            text = "Progress: ${timeInfo.progress}%",
             fontSize = 14.sp,
             color = TextColor,
         )
