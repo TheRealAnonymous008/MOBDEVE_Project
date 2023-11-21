@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.model
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
@@ -55,6 +56,9 @@ class Avatar(
     companion object {
         // Create Avatar from JSON string
         fun fromJson(json: String): Avatar {
+            if (json == "")
+                return Avatar()
+
             return Gson().fromJson(json, Avatar::class.java)
         }
     }

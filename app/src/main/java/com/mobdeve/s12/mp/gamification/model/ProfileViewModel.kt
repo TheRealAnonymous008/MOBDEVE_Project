@@ -8,10 +8,12 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val context: Context) : ViewModel() {
+class ProfileViewModel(private val context: Context) {
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("profile_prefs", Context.MODE_PRIVATE)
@@ -40,7 +42,7 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
     }
 
     private fun saveProfileDetails(profileDetails: ProfileDetails) {
-        viewModelScope.launch {
+        MainScope().launch {
             with(sharedPreferences.edit()) {
                 putString("name", profileDetails.name)
                 putString("description", profileDetails.description)
@@ -55,6 +57,7 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
         val name = sharedPreferences.getString("name", "") ?: ""
         val description = sharedPreferences.getString("description", "") ?: ""
         val avatarJson = sharedPreferences.getString("avatar", "") ?: ""
+
         val avatar = Avatar.fromJson(avatarJson)
         val currency = sharedPreferences.getInt("currency", 0)
 

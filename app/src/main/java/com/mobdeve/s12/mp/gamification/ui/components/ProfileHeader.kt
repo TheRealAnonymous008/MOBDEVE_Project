@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -52,7 +53,7 @@ class ProfileHeaderParameters {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController){
-    val profileViewModel: ProfileViewModel = viewModel()
+    val profileViewModel: ProfileViewModel = ProfileViewModel(context = LocalContext.current)
     val profileDetails by profileViewModel.profileDetails
     Row  (
         modifier = Modifier
