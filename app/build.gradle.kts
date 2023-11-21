@@ -89,7 +89,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     debugImplementation("androidx.compose.ui:ui-tooling")
 
-
     // Room Stuff
 
     val roomVersion = "2.6.0"
