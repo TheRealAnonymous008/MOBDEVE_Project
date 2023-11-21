@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.gson.Gson
 import com.mobdeve.s12.mp.gamification.R
 
 var default_head = HeadCosmetic(
@@ -45,6 +46,18 @@ class Avatar(
     var torso : TorsoCosmetic = default_torso,
     var legs : LegsCosmetic = default_legs,
     var feet : FeetCosmetic = default_feet) {
+
+    // Convert Avatar to JSON string
+    fun toJson(): String {
+        return Gson().toJson(this)
+    }
+
+    companion object {
+        // Create Avatar from JSON string
+        fun fromJson(json: String): Avatar {
+            return Gson().fromJson(json, Avatar::class.java)
+        }
+    }
 
     @Composable
     fun ConstructAvatar(

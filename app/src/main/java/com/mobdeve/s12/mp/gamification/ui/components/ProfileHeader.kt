@@ -113,13 +113,12 @@ fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController)
                 // Username
                 TextField(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth() .background(TertiaryColor),
                     value = profileDetails.name,
                     onValueChange = { newName ->
                         profileViewModel.updateName(newName)
                     },
                     label = { Text("Username") },
-                    colors = TextFieldDefaults.textFieldColors(backgroundColor = TertiaryColor),
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -127,13 +126,12 @@ fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController)
                 // Description
                 TextField(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize() .background(TertiaryColor),
                     value = profileDetails.description,
                     onValueChange = { newDescription ->
                         profileViewModel.updateDescription(newDescription)
                     },
                     label = { Text("Description") },
-                    colors = TextFieldDefaults.textFieldColors(backgroundColor = TertiaryColor),
                 )
             }
         }

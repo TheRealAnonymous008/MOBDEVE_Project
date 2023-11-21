@@ -29,11 +29,22 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
         saveProfileDetails(updatedProfile)
     }
 
+    fun updateAvatar(newAvatar: Avatar) {
+        val updatedProfile = _profileDetails.value.copy(avatar = newAvatar)
+        saveProfileDetails(updatedProfile)
+    }
+
+    fun updateCurrency(newCurrency: Int) {
+        val updatedProfile = _profileDetails.value.copy(currency = newCurrency)
+        saveProfileDetails(updatedProfile)
+    }
+
     private fun saveProfileDetails(profileDetails: ProfileDetails) {
         viewModelScope.launch {
             with(sharedPreferences.edit()) {
                 putString("name", profileDetails.name)
                 putString("description", profileDetails.description)
+                putString("avatar", profileDetails.avatar.toJson())
                 apply()
             }
             _profileDetails.value = profileDetails
@@ -43,10 +54,11 @@ class ProfileViewModel(private val context: Context) : ViewModel() {
     private fun getProfileDetails(): ProfileDetails {
         val name = sharedPreferences.getString("name", "") ?: ""
         val description = sharedPreferences.getString("description", "") ?: ""
-        val avatar = sharedPreferences.getString("avatar", "") ?: ""
+        val avatarJson = sharedPreferences.getString("avatar", "") ?: ""
+        val avatar = Avatar.fromJson(avatarJson)
         val currency = sharedPreferences.getInt("currency", 0)
 
         return ProfileDetails(name = name, description = description, avatar = avatar, currency = currency)
     }
-
 }
+

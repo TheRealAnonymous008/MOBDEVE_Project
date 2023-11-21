@@ -71,6 +71,7 @@ dependencies {
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.4")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.0")
     implementation ("androidx.compose.runtime:runtime-livedata:1.0.5")
+    implementation ("com.google.code.gson:gson:2.8.8")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-test-manifest")
