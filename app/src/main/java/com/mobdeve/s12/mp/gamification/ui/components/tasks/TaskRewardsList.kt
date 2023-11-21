@@ -105,8 +105,7 @@ fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
     var amount by remember { mutableStateOf("")}
     var expanded by remember { mutableStateOf(false) }
 
-    Column(
-    ) {
+    Column {
         Spacer(modifier = Modifier.height(4.dp))
 
         Row(
@@ -163,7 +162,7 @@ fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
                     modifier = Modifier
                         .fillMaxWidth(),
                     decorationBox = { innerTextField ->
-                        Box() {
+                        Box {
                             if (amount.isEmpty()) {
                                 Text(
                                     text = "0",

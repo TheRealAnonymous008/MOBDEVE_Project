@@ -136,7 +136,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .size(50.dp)
-                                    .wrapContentHeight(align = Alignment.CenterVertically),
+                                    .wrapContentHeight(align = CenterVertically),
                             )
                         }
 

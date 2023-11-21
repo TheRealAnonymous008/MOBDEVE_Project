@@ -1,8 +1,6 @@
 package com.mobdeve.s12.mp.gamification.model
 
-import android.util.Log
-
-class TaskListHolder() {
+class TaskListHolder {
     var tasks : ArrayList<Task> = ArrayList<Task>()
 
     fun get(str : String) : Task?{

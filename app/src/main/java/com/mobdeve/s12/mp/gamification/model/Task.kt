@@ -1,9 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
-import android.util.Log
 import java.io.Serializable
 import java.sql.Timestamp
-import java.time.Duration
 import kotlin.random.Random
 
 data class Task(
@@ -107,7 +105,7 @@ fun createDefaultTask(pool : ArrayList<Skill> = ArrayList<Skill>(), idx : Long =
     for (i in 1 .. 3) {
         if(pool.size > 0) {
             val skidx =Random.nextInt(pool.size)
-            val sk = pool[skidx];
+            val sk = pool[skidx]
             rw.add(createDefaultSkillReward(task, sk))
         }
         else {

@@ -3,7 +3,6 @@ package com.mobdeve.s12.mp.gamification.model
 import java.io.Serializable
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 data class TimeInfo(
@@ -11,7 +10,7 @@ data class TimeInfo(
     var datetimeFrom: Timestamp? = null,
     var dateTimeTo: Timestamp? = null,
 ) : Serializable {
-    var progress : Long = 0;
+    var progress : Long = 0
 
     fun getDurationAsString(): String {
         if (datetimeFrom == null && dateTimeTo == null)

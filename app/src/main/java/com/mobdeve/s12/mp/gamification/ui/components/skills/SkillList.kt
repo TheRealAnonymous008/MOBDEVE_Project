@@ -41,7 +41,7 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryH
     val scope = CoroutineScope(Dispatchers.Main)
     var skillListState = remember { mutableStateListOf(*skillList.skills.toTypedArray()) }
 
-    Box() {
+    Box {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

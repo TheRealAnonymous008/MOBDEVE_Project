@@ -1,7 +1,6 @@
 package com.mobdeve.s12.mp.gamification.model
 
 
-import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -9,11 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.core.content.res.ResourcesCompat
 import com.mobdeve.s12.mp.gamification.BuildConfig
-import com.mobdeve.s12.mp.gamification.R
-import dagger.hilt.android.qualifiers.ApplicationContext
-
 enum class CosmeticTypes {
     HEAD, TORSO, LEGS, FEET
 }
@@ -39,13 +34,13 @@ abstract class Cosmetic(
     }
 
     override fun toString(): String {
-        return "${this.name}"
+        return this.name
     }
 
 }
 
-class CosmeticHolder() {
-    var cosmetics : ArrayList<Cosmetic> = ArrayList<Cosmetic>()
+class CosmeticHolder {
+    var cosmetics : ArrayList<Cosmetic> = ArrayList()
 
     fun get(str : String) : Cosmetic?{
         for (c in cosmetics){
