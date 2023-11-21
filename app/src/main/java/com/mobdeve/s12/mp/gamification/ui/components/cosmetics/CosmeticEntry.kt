@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -30,12 +32,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
+import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -50,7 +53,8 @@ class ImageSizeParameters {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CosmeticEntry(
-    cosmetic : Cosmetic
+    cosmetic : Cosmetic,
+    profile : Profile
 ) {
     val showDialog = remember { mutableStateOf(false) }
 
@@ -58,7 +62,8 @@ fun CosmeticEntry(
         CosmeticDialog(
             cosmetic = cosmetic,
             showState = showDialog.value,
-            onDismissRequest = {showDialog.value = false})
+            onDismissRequest = {showDialog.value = false},
+            profile)
     }
     CosmeticContainer(cosmetic) {
         showDialog.value = !showDialog.value
@@ -114,7 +119,7 @@ fun CosmeticContainer(
 }
 
 @Composable
-fun CosmeticDialog( cosmetic: Cosmetic, showState : Boolean, onDismissRequest: () -> Unit) {
+fun CosmeticDialog(cosmetic: Cosmetic, showState : Boolean, onDismissRequest: () -> Unit, profile: Profile) {
     val isDialogVisible = remember {
         mutableStateOf(true)
     }
@@ -164,11 +169,13 @@ fun CosmeticDialog( cosmetic: Cosmetic, showState : Boolean, onDismissRequest: (
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center)
 
-                    Text(
-                        text = cosmetic.cost.toString(),
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
+                    Row {
+                        Text(
+                            text = cosmetic.cost.toString(),
+                            fontSize = 20.sp
                         )
+                        Icon(Icons.Default.Star, contentDescription = "currency indicator", tint = Color.Yellow)
+                    }
                     Text(
                         text = cosmetic.description,
                         fontSize = 20.sp,

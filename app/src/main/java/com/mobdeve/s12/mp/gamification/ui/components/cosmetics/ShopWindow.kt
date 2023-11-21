@@ -30,7 +30,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 @Composable
 fun ShopWindow(
-    profileDetails : ProfileDetails,
+    profile : Profile,
     cosmeticsList : ArrayList<Cosmetic>,
     modifier: Modifier
 ) {
@@ -65,7 +65,7 @@ fun ShopWindow(
                             .background(SecondaryColor)
                             .padding(10.dp)
                     ) {
-                        CosmeticList(cosmeticsList)
+                        CosmeticList(cosmeticsList, profile)
                     }
                 }
             }

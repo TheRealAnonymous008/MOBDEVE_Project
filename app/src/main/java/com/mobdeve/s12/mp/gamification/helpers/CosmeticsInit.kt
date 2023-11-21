@@ -51,7 +51,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
         HeadCosmetic(
             id = 0,
             name = "Stark's Hair",
-            cost = 0,
+            cost = 2,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_head),
             description = "Short red hair with a dark contrasting black in the center."
         )
@@ -60,7 +60,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
         TorsoCosmetic(
             id = 0,
             name = "Stark's Coat",
-            cost = 0,
+            cost = 2,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_torso),
             description = "Stark's coat"
         )
@@ -69,7 +69,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
         LegsCosmetic(
             id = 0,
             name = "Stark's Pants",
-            cost = 0,
+            cost = 2,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_legs),
             description = "Stark's pants"
         )
@@ -78,7 +78,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
         FeetCosmetic(
             id = 0,
             name = "Stark's Shoes",
-            cost = 0,
+            cost = 2,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_feet),
             description = "Stark's shoes"
         )

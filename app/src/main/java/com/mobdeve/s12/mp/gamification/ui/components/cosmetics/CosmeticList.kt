@@ -17,6 +17,8 @@ import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
 import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
 import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
+import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
@@ -54,7 +56,7 @@ fun CosmeticRowHeader(text : String) {
 }
 
 @Composable
-fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
+fun CosmeticList(cosmeticList : ArrayList<Cosmetic>, profile: Profile) {
     val headList : ArrayList<HeadCosmetic> = ArrayList()
     val torsoList : ArrayList<TorsoCosmetic> = ArrayList()
     val legsList : ArrayList<LegsCosmetic> = ArrayList()
@@ -75,13 +77,13 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>) {
         modifier = Modifier.fillMaxSize()
     ) {
         CosmeticRowHeader(text = "HEAD")
-        CosmeticRow(headList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
+        CosmeticRow(headList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
         CosmeticRowHeader(text = "TORSO")
-        CosmeticRow(torsoList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
+        CosmeticRow(torsoList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
         CosmeticRowHeader(text = "LEGS")
-        CosmeticRow(legsList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
+        CosmeticRow(legsList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
         CosmeticRowHeader(text = "FEET")
-        CosmeticRow(feetList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic) }
+        CosmeticRow(feetList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
     }
 }
 

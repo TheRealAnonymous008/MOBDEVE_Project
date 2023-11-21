@@ -11,7 +11,7 @@ var default_head = HeadCosmetic(
     id = 0,
     name = "Default Head",
     cost = 0,
-    image = "com.mobdeve.s12.mp.gamification:drawable/cosmetic_default_head",
+    image = "cosmetic_default_head",
     description = "The default head"
 )
 

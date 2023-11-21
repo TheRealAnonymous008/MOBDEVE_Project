@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
@@ -23,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -120,7 +122,7 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         modifier = Modifier
                             .size(50.dp)
                             .fillMaxHeight()
-                            .weight(0.5F)
+                            .weight(0.7F)
                             .advancedShadow(
                                 Color.Black,
                                 offsetX = 10.dp,
@@ -142,7 +144,7 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                     modifier = Modifier
                         .size(50.dp)
                         .fillMaxHeight()
-                        .weight(2F)
+                        .weight(2.8F)
                         .advancedShadow(
                             Color.Black,
                             offsetX = 10.dp,
@@ -160,26 +162,18 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                             fontSize = 20.sp
                         )
                     }
-                    Button( onClick = { TODO("Currency Image") },
-                        colors = ButtonDefaults.buttonColors(OtherAccent),
-                        shape = CircleShape,
+                    Card(
+                        colors = CardDefaults.cardColors(Color.Transparent),
                         modifier = Modifier
                             .size(50.dp)
                             .fillMaxHeight()
-                            .weight(0.75F)
-                            .advancedShadow(
-                                Color.Black,
-                                offsetX = 10.dp,
-                                offsetY = 5.dp,
-                                spread = 4.dp,
-                                blurRadius = 10.dp,
-                                borderRadius = 50.dp
-                            ),
-                        contentPadding = PaddingValues(0.dp)
+                            .fillMaxWidth()
+                            .padding(25.dp, 0.dp)
+                            .weight(0.85F),
                     )
                     {
-                        Text(text = "${profile.profileDetails.currency}")
-                        Icon(Icons.Default.Star, contentDescription = "currency indicator", tint = Color.White)
+                        Text(text = "${profile.profileDetails.currency}", color = Color.White)
+                        Icon(Icons.Default.Star, contentDescription = "currency indicator", tint = Color.Yellow)
                     }
 
                 }
@@ -193,7 +187,7 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                     )
                 ) {
                     ShopWindow(
-                        profileDetails = profile.profileDetails,
+                        profile = profile,
                         cosmeticsList = cosmetics,
                         modifier = Modifier.fillMaxHeight()
                     )
