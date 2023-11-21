@@ -5,10 +5,12 @@ import android.content.pm.ActivityInfo
 import android.content.res.Resources
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -107,7 +109,11 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                                 .background(SecondaryColor)
                                 .padding(10.dp),
                         ){
-                            HorizontalPager(state = horizontalPagerState) { page ->
+                            HorizontalPager(
+                                state = horizontalPagerState,
+                                beyondBoundsPageCount = 1
+
+                            ) { page ->
                                 // Our page content
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
