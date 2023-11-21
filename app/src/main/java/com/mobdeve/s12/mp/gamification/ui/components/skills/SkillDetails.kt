@@ -20,15 +20,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -56,9 +60,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SkillDetailsLayout(skill : Skill, profile : Profile, onDelete : () -> Unit, repo: RepositoryHolder) {
+    val scope = CoroutineScope(Dispatchers.Main)
     var title by remember { mutableStateOf(skill.name) }
     var description by remember { mutableStateOf(skill.description) }
     var priorityValue by remember { mutableStateOf(skill.priority) }
+    var childrenList = remember {mutableListOf(*skill.children.toTypedArray())}
     val priorities = SkillPriority.values().map { it.name }
 
     Column(
@@ -175,7 +181,14 @@ fun SkillDetailsLayout(skill : Skill, profile : Profile, onDelete : () -> Unit, 
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        ChildrenList(parent = skill, profile = profile, repo = repo)
+        ChildrenList(skill, childrenList, profile, repo) {child ->
+            childrenList.remove(child)
+            scope.launch {
+                repo.edgeRepository.delete(skill, child)
+            }
+            skill.removeChild(skill)
+
+        }
 
 
         // Delete Button
@@ -193,11 +206,10 @@ fun SkillDetailsLayout(skill : Skill, profile : Profile, onDelete : () -> Unit, 
 }
 
 @Composable
-fun ChildrenList(parent: Skill, profile: Profile, repo: RepositoryHolder) {
+fun ChildrenList(parent: Skill, childrenList : MutableList<Skill>,profile: Profile, repo: RepositoryHolder, onDelete : (child : Skill) -> Unit ) {
     val scope = CoroutineScope(Dispatchers.Main)
-    var childrenList = remember {mutableListOf(*parent.children.toTypedArray())}
-    var parentsList = remember {mutableListOf(*parent.getParents().toTypedArray())}
-    var validSelection : MutableList<Skill> = remember {
+    val parentsList = remember {mutableListOf(*parent.getParents().toTypedArray())}
+    val validSelection : MutableList<Skill> = remember {
         mutableListOf(*filterValid(childrenList.toList(), parentsList.toList(), profile.skills.skills).toTypedArray())
     }
 
@@ -218,16 +230,35 @@ fun ChildrenList(parent: Skill, profile: Profile, repo: RepositoryHolder) {
                 .fillMaxWidth()
         ) {
             items(childrenList) {child ->
-                Text(
-                    text = child.name,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.Transparent),
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    color = TextColor
-                )
+                Row {
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .weight(0.5f)
+                    ) {
+                        Text(
+                            text = child.name,
+                            modifier = Modifier
+                                .background(Color.Transparent)
+                                .fillMaxWidth(),
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.Bold,
+                            color = TextColor
+                        )
+                    }
+
+
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .weight(0.2f)
+                    ) {
+                        IconButton(onClick = { onDelete(child) }) {
+                            Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.White)
+                        }
+                    }
+                }
             }
         }
     else
@@ -240,9 +271,6 @@ fun ChildrenList(parent: Skill, profile: Profile, repo: RepositoryHolder) {
         }
         parent.addChild(child)
     }
-
-
-    Log.d("Valid Selection", validSelection.toString())
 }
 
 @Composable

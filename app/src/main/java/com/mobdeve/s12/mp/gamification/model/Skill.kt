@@ -23,10 +23,20 @@ data class Skill(
 ) {
 
     fun addChild(sk : Skill) {
-        children.add(sk)
-        sk.parent = this
+        if(sk !in children) {
+            children.add(sk)
+            sk.parent = this
+        }
     }
 
+    fun removeChild(sk : Skill) {
+        if(sk in children) {
+            children.remove(sk)
+            sk.parent = null
+        }
+
+
+    }
 
     fun getParents() : ArrayList<Skill> {
         val result = ArrayList<Skill>()
