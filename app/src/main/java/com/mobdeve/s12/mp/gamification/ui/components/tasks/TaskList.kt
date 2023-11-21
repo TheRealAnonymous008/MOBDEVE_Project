@@ -89,6 +89,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                             repo.taskRepository.update(it)
                             repo.rewardRepository.deleteWithTask(it.id)
                         }
+                        it.unfinish()
                     },
                         repo
                     )
