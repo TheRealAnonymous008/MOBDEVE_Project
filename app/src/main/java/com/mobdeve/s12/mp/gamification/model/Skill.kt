@@ -27,6 +27,18 @@ data class Skill(
         sk.parent = this
     }
 
+
+    fun getParents() : ArrayList<Skill> {
+        val result = ArrayList<Skill>()
+        var currSkill = this;
+        result.add(this)
+        while(currSkill.parent != null) {
+            result.add(currSkill.parent!!)
+            currSkill = currSkill.parent!!
+        }
+        return result
+    }
+
     fun levelUp(x : Int) {
         var total = getTotalPoints()
         total += x
