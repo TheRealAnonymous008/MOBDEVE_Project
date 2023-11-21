@@ -2,7 +2,7 @@ package com.mobdeve.s12.mp.gamification.model
 
 import java.io.Serializable
 
-data class Profile (
+class Profile (
     var profileDetails: ProfileDetails,
     var skills : SkillListHolder,
     var tasks: TaskListHolder,
@@ -23,4 +23,3 @@ fun generateDefaultProfile() : Profile{
         cosmetics,
     )
 }
-
