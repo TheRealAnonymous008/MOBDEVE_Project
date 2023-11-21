@@ -1,9 +1,5 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
-
-import android.content.pm.ActivityInfo
-import android.content.res.Resources
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -12,7 +8,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
@@ -36,26 +30,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.MainActivity.Routes.SKILLTREE_WINDOW
 import com.mobdeve.s12.mp.gamification.R
-import com.mobdeve.s12.mp.gamification.components.LockScreenOrientation
-import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
-import com.mobdeve.s12.mp.gamification.model.CosmeticHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
-import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.ui.components.calendar.TaskSchedule
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 import com.mobdeve.s12.mp.gamification.ui.components.skills.SkillList
-import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkillTreeWindow
 import com.mobdeve.s12.mp.gamification.ui.components.tasks.TaskList
 import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
@@ -63,14 +50,13 @@ import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: RepositoryHolder, navController: NavController) {
     val horizontalPagerState = rememberPagerState(
         initialPage = 1,
         initialPageOffsetFraction = 0f
     ) { 3 }
-    val cosmeticList = cosmetics
     val isShopVisible = remember { mutableStateOf(false) }
     val isTaskVisible = remember {mutableStateOf(true)}
 
@@ -107,7 +93,11 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                                 .background(SecondaryColor)
                                 .padding(10.dp),
                         ){
-                            HorizontalPager(state = horizontalPagerState) { page ->
+                            HorizontalPager(
+                                state = horizontalPagerState,
+                                beyondBoundsPageCount = 1
+
+                            ) { page ->
                                 // Our page content
                                 when(page) {
                                     0 -> TaskSchedule(taskList = profile.tasks)
@@ -204,8 +194,9 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                 ) {
                     ShopWindow(
                         profileDetails = profile.profileDetails,
-                        cosmeticsList = cosmeticList,
-                        modifier = Modifier.fillMaxHeight())
+                        cosmeticsList = cosmetics,
+                        modifier = Modifier.fillMaxHeight()
+                    )
                 }
             }
         }

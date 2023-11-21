@@ -8,9 +8,6 @@ class HeadCosmetic(
     image: String,
     description: String) :
     Cosmetic(id, name, cost, image, description, CosmeticTypes.HEAD) {
-    override fun toString(): String {
-        return super.toString()
-    }
 }
 
 class TorsoCosmetic(
@@ -20,9 +17,6 @@ class TorsoCosmetic(
     image: String,
     description: String) :
     Cosmetic(id, name, cost, image, description, CosmeticTypes.TORSO) {
-    override fun toString(): String {
-        return super.toString()
-    }
 }
 
 class LegsCosmetic(
@@ -32,9 +26,6 @@ class LegsCosmetic(
     image: String,
     description: String) :
     Cosmetic(id, name, cost, image, description, CosmeticTypes.LEGS) {
-    override fun toString(): String {
-        return super.toString()
-    }
 }
 
 class FeetCosmetic(
@@ -44,7 +35,4 @@ class FeetCosmetic(
     image: String,
     description: String) :
     Cosmetic(id, name, cost, image, description, CosmeticTypes.FEET) {
-    override fun toString(): String {
-        return super.toString()
-    }
 }

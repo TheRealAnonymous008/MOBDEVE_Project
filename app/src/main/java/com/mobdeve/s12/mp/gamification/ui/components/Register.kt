@@ -60,7 +60,7 @@ fun Register(navController: NavController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.White),
+                    .background(White),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Image(
@@ -81,7 +81,7 @@ fun Register(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(30.dp))
-                        .background(Color.White)
+                        .background(White)
                         .padding(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center

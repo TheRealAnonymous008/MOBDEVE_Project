@@ -1,8 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
-import android.util.Log
 import com.mobdeve.s12.mp.gamification.R
-import kotlin.reflect.typeOf
+
 
 enum class SkillPriority {
     NONE,

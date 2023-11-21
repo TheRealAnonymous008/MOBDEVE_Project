@@ -44,7 +44,7 @@ abstract class AppDatabase : RoomDatabase() {
     private class AppDBCallback(
         private val context: Context,
         private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
+    ) : Callback() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)

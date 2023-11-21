@@ -1,6 +1,6 @@
 package com.mobdeve.s12.mp.gamification.model
 
-class SkillListHolder() {
+class SkillListHolder {
     var skills : ArrayList<Skill> = ArrayList<Skill>()
     fun get(str : String) : Skill?{
         for (sk in skills){

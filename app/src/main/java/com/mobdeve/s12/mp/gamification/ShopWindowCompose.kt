@@ -8,6 +8,4 @@ import com.mobdeve.s12.mp.gamification.model.Avatar
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.ShopWindow
 
-class ShopWindowCompose : ComponentActivity() {
-
-}
+class ShopWindowCompose : ComponentActivity()

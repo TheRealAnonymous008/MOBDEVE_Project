@@ -45,7 +45,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
     val scope = CoroutineScope(Dispatchers.Main)
     var taskListState = remember { mutableStateListOf(*taskList.tasks.toTypedArray())}
 
-    Box() {
+    Box {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
