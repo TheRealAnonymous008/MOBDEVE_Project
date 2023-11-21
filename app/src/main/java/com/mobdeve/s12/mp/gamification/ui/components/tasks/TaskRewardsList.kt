@@ -1,10 +1,12 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -38,7 +41,9 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.Task
+import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
+import com.mobdeve.s12.mp.gamification.ui.theme.TertiaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,30 +54,39 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
     val rewards = task.getRewards()
     var rewardListState = remember { mutableStateListOf(*rewards.toTypedArray()) }
+    val allowScrollState = remember { mutableStateOf(true) }
 
+    Column {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxHeight(0.50f),
+            userScrollEnabled = allowScrollState.value,
+            verticalArrangement = Arrangement.spacedBy(1.dp)
+        ) {
+            allowScrollState.value = rewards.size > 3
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        items(rewardListState) { reward ->
-            RewardEntry(reward
-            ,onDelete = {
-                rewardListState.remove(reward)
-                scope.launch {
-                    repo.rewardRepository.delete(reward.task.id, reward.skill.id)
-                }
-                task.deleteReward(reward)
-            },
-            onUpdate = {
-                scope.launch {
-                    repo.rewardRepository.update(reward)
-                }
-                reward.xp = it
-            })
+            items(rewardListState) { reward ->
+                RewardEntry(reward
+                    ,onDelete = {
+                        rewardListState.remove(reward)
+                        scope.launch {
+                            repo.rewardRepository.delete(reward.task.id, reward.skill.id)
+                        }
+                        task.deleteReward(reward)
+                    },
+                    onUpdate = {
+                        scope.launch {
+                            repo.rewardRepository.update(reward)
+                        }
+                        reward.xp = it
+                    })
+            }
         }
 
-        item {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
             AddReward(task, profile) {
                 rewardListState.add(it)
                 scope.launch {
@@ -82,6 +96,7 @@ fun TaskRewardsList(task: Task , profile : Profile, repo : RepositoryHolder){
             }
         }
     }
+
 }
 
 @Composable
@@ -139,6 +154,7 @@ fun AddReward(task: Task, profile: Profile, onUpdate: (it: Reward) -> Unit){
                 BasicTextField(
                     value = amount,
                     onValueChange = { amount = it },
+                    cursorBrush = SolidColor(Color.White),
                     textStyle = TextStyle(
                         fontSize = 14.sp,
                         color = Color.White,

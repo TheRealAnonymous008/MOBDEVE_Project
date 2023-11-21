@@ -1,10 +1,10 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
-import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,7 +13,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -22,17 +25,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
+import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
+import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
@@ -107,36 +116,44 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
 
                     }
                     Spacer(Modifier.width(10.dp))
-                    Column(
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth(0.8f)
-                            .padding(start = 10.dp),
+                            .fillMaxHeight(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = CenterVertically
                     ) {
-                        // Task name
+
+                        // Task duration
+                        Box(
+                            Modifier
+                                .border(2.dp, SecondaryColor, shape = CircleShape),) {
+                            Text(
+                                text = task.timeInfo.getDurationAsString(),
+                                color = TextColor,
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .wrapContentHeight(align = Alignment.CenterVertically),
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.width(30.dp))
+
                         var title = task.title
                         if (title.isBlank())
                             title = "Untitled Task"
-
                         Text(
                             text = title,
+                            fontWeight = FontWeight.ExtraBold,
+                            modifier = Modifier
+                                .width(150.dp)
+                                .height(30.dp),
                             color = TextColor,
-                            modifier = Modifier.padding(top = 10.dp)
-                        )
-
-                        // Task description
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            text = task.description,
-                            color = TextColor
-                        )
-
-                        // Task duration
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            text = task.timeInfo.getDurationAsString(),
-                            color = TextColor
+                            fontSize = 18.sp,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                     TaskTimer(task = task)

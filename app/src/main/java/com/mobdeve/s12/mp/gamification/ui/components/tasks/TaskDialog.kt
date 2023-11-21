@@ -6,7 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
@@ -25,7 +27,9 @@ fun TaskDialog(
             onDismissRequest = {
                 isVisible.value = false
                 onUpdate(task)
-            })
+            },
+
+        )
         {
             TaskDetailsLayout(task = task, profile = profile,
                 onDelete = {

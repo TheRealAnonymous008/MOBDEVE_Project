@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.sharp.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -83,14 +85,14 @@ fun TaskTimer(task : Task) {
                     Icon(
                         painterResource(id = R.drawable.pause),
                         contentDescription = "Add FAB",
-                        modifier = Modifier.size(32.dp, 32.dp),
+                        modifier = Modifier.size(20.dp, 20.dp),
                         tint = AccentColor
                     )
                 } else {
                     Icon(
-                        painterResource(id = R.drawable.play),
+                        Icons.Sharp.PlayArrow,
                         contentDescription = "Add FAB",
-                        modifier = Modifier.size(32.dp, 32.dp),
+                        modifier = Modifier.size(30.dp, 30.dp),
                         tint = AccentColor
                     )
                 }

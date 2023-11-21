@@ -6,9 +6,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,7 +21,9 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.createDefaultTask
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
+import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
+import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
@@ -30,11 +35,12 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
     Column(
         modifier = Modifier
             .background(SecondaryColor)
-            .fillMaxSize()
+            .fillMaxHeight(0.90f)
             .padding(16.dp)
     ) {
         BasicTextField(
             value = title,
+            cursorBrush = SolidColor(Color.White),
             onValueChange = {
                 task.title = it
                 title = it
@@ -45,7 +51,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
                 color = TextColor,
             ),
             modifier = Modifier
-                .background(Color.Transparent)
+                .background(PrimaryColor)
                 .fillMaxWidth(),
             decorationBox = { innerTextField ->
                 Box(
@@ -71,6 +77,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
         // Description
         BasicTextField(
             value = description,
+            cursorBrush = SolidColor(Color.White),
             onValueChange = {
                 description= it
                 task.description = it
@@ -80,7 +87,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
                 color = TextColor,
             ),
             modifier = Modifier
-                .background(Color.Transparent)
+                .background(PrimaryColor)
                 .fillMaxWidth(),
             decorationBox = { innerTextField ->
                 Box(
@@ -126,7 +133,11 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
             text = "Rewards",
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-            color = TextColor
+            color = TextColor,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .background(AccentColor)
+                .fillMaxWidth()
         )
 
         Box(
