@@ -6,10 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.mobdeve.s12.mp.gamification.model.ProfileDetails
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 

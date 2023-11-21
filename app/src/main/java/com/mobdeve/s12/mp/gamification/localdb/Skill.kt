@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,11 +15,8 @@ import androidx.room.Query
 import androidx.room.Update
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.SkillPriority
-import com.mobdeve.s12.mp.gamification.model.Task
-import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.sql.Timestamp
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 

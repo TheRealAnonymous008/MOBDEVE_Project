@@ -1,6 +1,5 @@
 package com.mobdeve.s12.mp.gamification.ui.components.skilltree
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,13 +14,10 @@ import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.SkillTreeLazyLayout
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.SkillListHolder
-import com.mobdeve.s12.mp.gamification.skilltree.SkillNode
 import com.mobdeve.s12.mp.gamification.skilltree.SkillViewModel
-import com.mobdeve.s12.mp.gamification.skilltree.State
 import com.mobdeve.s12.mp.gamification.skilltree.X_SCALE
 import com.mobdeve.s12.mp.gamification.skilltree.rememberSkillTreeLazyLayoutState
 import com.mobdeve.s12.saquilayan.ethanjared.skilltreedemo.components.skillBox
-
 
 
 @Composable

@@ -1,37 +1,19 @@
 package com.mobdeve.s12.mp.gamification.localdb
 
 import android.content.Context
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
-import android.util.Log
-import androidx.compose.ui.res.booleanResource
-import androidx.compose.ui.text.capitalize
-import androidx.core.content.res.ResourcesCompat
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.mobdeve.s12.mp.gamification.BuildConfig
-import com.mobdeve.s12.mp.gamification.R
+import com.mobdeve.s12.mp.gamification.helpers.createDefaultSkillList
+import com.mobdeve.s12.mp.gamification.helpers.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.helpers.initializeCosmetics
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
-import com.mobdeve.s12.mp.gamification.model.CosmeticTypes
-import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
-import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
-import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
 import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.Task
-import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
-import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
-import com.mobdeve.s12.mp.gamification.skilltree.createDefaultSkillList
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.io.File
-import kotlin.io.path.fileVisitor
-import kotlin.math.cos
 
 @Database(entities=[TaskEntity::class, SkillEntity::class, RewardEntity::class, SkillEdge::class, CosmeticEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

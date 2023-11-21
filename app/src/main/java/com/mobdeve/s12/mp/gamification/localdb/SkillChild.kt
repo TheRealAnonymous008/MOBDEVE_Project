@@ -13,11 +13,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.mobdeve.s12.mp.gamification.model.Skill
-import com.mobdeve.s12.mp.gamification.model.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 // DB TabLE
 @Entity(tableName = "edges", primaryKeys = ["parent", "child"])

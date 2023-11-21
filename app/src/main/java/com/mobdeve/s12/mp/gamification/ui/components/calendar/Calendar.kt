@@ -36,15 +36,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mobdeve.s12.mp.gamification.helpers.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.model.Event
 import com.mobdeve.s12.mp.gamification.model.EventsProvider
-import com.mobdeve.s12.mp.gamification.model.TaskEvent
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
-import com.mobdeve.s12.mp.gamification.model.createDefaultTaskList
 import com.mobdeve.s12.mp.gamification.model.getSampleEvents
 import com.mobdeve.s12.mp.gamification.model.getTaskEvent
 import com.mobdeve.s12.mp.gamification.ui.theme.WeekScheduleTheme
@@ -58,7 +56,6 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalAccessor
-import java.time.temporal.TemporalAdjusters
 import java.util.*
 import kotlin.math.roundToInt
 

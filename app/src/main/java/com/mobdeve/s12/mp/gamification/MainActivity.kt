@@ -1,22 +1,19 @@
 package com.mobdeve.s12.mp.gamification
 
 import android.content.pm.ActivityInfo
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mobdeve.s12.mp.gamification.components.LockScreenOrientation
-import com.mobdeve.s12.mp.gamification.localdb.AppDatabase
 import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModel
 import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.EdgeViewModel
@@ -31,21 +28,14 @@ import com.mobdeve.s12.mp.gamification.localdb.TaskViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.getCosmeticFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getSkillFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
-import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.CosmeticHolder
-import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Reward
-import com.mobdeve.s12.mp.gamification.model.Skill
 import com.mobdeve.s12.mp.gamification.model.SkillListHolder
-import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
 import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkillTreeWindow
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
 
 
 class MainActivity : AppCompatActivity() {
