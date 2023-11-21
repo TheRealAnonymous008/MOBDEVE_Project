@@ -58,16 +58,6 @@ interface TaskDao {
 
     @Query("SELECT * FROM tasks WHERE id = :taskId")
     fun getTaskById(taskId: Long): TaskEntity?
-
-    // Add these new queries
-    @Query("SELECT datetimeFrom, datetimeTo FROM tasks WHERE id = :taskId")
-    fun getTimeInfoById(taskId: Long): TimeInfoEntity?
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTimeInfo(timeInfo: TimeInfoEntity)
-
-    @Update
-    suspend fun updateTimeInfo(timeInfo: TimeInfoEntity)
 }
 
 // Repository
@@ -80,10 +70,6 @@ class TaskRepository(private val dao : TaskDao) {
         val entity = getTaskEntity(task)
         val taskId = dao.add(entity)
 
-        // Save TimeInfo
-        val timeInfoEntity = TimeInfoEntity(taskId, entity.datetimeFrom, entity.datetimeTo)
-        dao.insertTimeInfo(timeInfoEntity)
-
         return taskId
     }
 
@@ -93,27 +79,12 @@ class TaskRepository(private val dao : TaskDao) {
         val entity = getTaskEntity(task)
         entity.id = task.id
         dao.update(entity)
-
-        // Update TimeInfo
-        val timeInfoEntity = TimeInfoEntity(task.id, entity.datetimeFrom, entity.datetimeTo)
-        dao.updateTimeInfo(timeInfoEntity)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(id: Long) {
         dao.delete(id)
-    }
-
-
-    fun getTimeInfoById(taskId: Long): TimeInfo? {
-        val timeInfoEntity = dao.getTimeInfoById(taskId)
-        return timeInfoEntity?.let {
-            TimeInfo(
-                datetimeFrom = it.datetimeFrom?.let { Timestamp(it) },
-                dateTimeTo = it.datetimeTo?.let { Timestamp(it) }
-            )
-        }
     }
 }
 
