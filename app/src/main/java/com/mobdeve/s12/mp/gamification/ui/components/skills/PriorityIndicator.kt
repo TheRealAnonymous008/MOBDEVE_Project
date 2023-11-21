@@ -20,7 +20,10 @@ import com.mobdeve.s12.mp.gamification.model.SkillPriority
 import com.mobdeve.s12.mp.gamification.ui.theme.HighPriority
 
 @Composable
-fun PriorityIndicator(priority : SkillPriority){
+fun PriorityIndicator(
+    modifier: Modifier = Modifier,
+    priority : SkillPriority
+){
     var bgcolor = Color.Gray
     if (priority == SkillPriority.LOW) {
         bgcolor = Color.Green
@@ -32,9 +35,8 @@ fun PriorityIndicator(priority : SkillPriority){
 
 
     Card (
+        modifier = modifier,
         shape = RoundedCornerShape(10.dp),
-        modifier = Modifier
-            .padding(end = 30.dp),
         colors = CardDefaults.cardColors(
             containerColor = bgcolor
         ),
@@ -45,7 +47,7 @@ fun PriorityIndicator(priority : SkillPriority){
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 5.dp, end = 5.dp, top = 2.dp, bottom = 2.dp),
+                .padding(start = 5.dp, top = 2.dp, bottom = 2.dp),
             text = priority.name,
             fontWeight = FontWeight.Bold,
             color = Color.Black
