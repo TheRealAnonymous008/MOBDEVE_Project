@@ -188,7 +188,8 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         contentPadding = PaddingValues(0.dp)
                     )
                     {
-                        Icon(Icons.Default.Star, contentDescription = "settings button", tint = Color.White)
+                        Text(text = "${profile.profileDetails.currency}")
+                        Icon(Icons.Default.Star, contentDescription = "currency indicator", tint = Color.White)
                     }
 
                 }
