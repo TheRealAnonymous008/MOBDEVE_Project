@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicTextField
@@ -28,13 +29,14 @@ import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
+import java.sql.Date
 import java.sql.Timestamp
 
 @Composable
 fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, repo: RepositoryHolder) {
     var title by remember { mutableStateOf(task.title)}
     var description by remember { mutableStateOf(task.description) }
-    var timeInfo by remember { mutableStateOf(task.timeInfo) }
+    var timeInfo = remember { mutableStateOf(task.timeInfo) }
 
     Column(
         modifier = Modifier
@@ -132,7 +134,7 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
         TimeInfoDetails(
             timeInfo = timeInfo,
             onUpdate = { updatedTimeInfo: TimeInfo ->
-                timeInfo = updatedTimeInfo
+                timeInfo.value = updatedTimeInfo
                 task.timeInfo = updatedTimeInfo
             }
         )
@@ -174,14 +176,14 @@ fun TaskDetailsLayout(task : Task, profile : Profile, onDelete : () -> Unit, rep
 }
 
 @Composable
-fun TimeInfoDetails(timeInfo: TimeInfo, onUpdate: (TimeInfo) -> Unit) {
+fun TimeInfoDetails(timeInfo: MutableState<TimeInfo>, onUpdate: (TimeInfo) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         // Date time created (read-only)
         Text(
-            text = "Created: ${formatTimestampDate(timeInfo.datetimeCreated)}",
+            text = "Created: ${formatTimestampDate(timeInfo.value.datetimeCreated)}",
             fontSize = 14.sp,
             color = TextColor,
         )
@@ -189,80 +191,30 @@ fun TimeInfoDetails(timeInfo: TimeInfo, onUpdate: (TimeInfo) -> Unit) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Date time from (editable)
-        BasicTextField(
-            value = timeInfo.datetimeFrom?.toString() ?: "",
-            onValueChange = {
-                // Handle updating datetimeFrom
-                // You might want to add proper validation and conversion here
-                timeInfo.datetimeFrom = Timestamp.valueOf(it)
-                onUpdate(timeInfo)
-            },
-            textStyle = TextStyle(
-                fontSize = 14.sp,
-                color = TextColor,
-            ),
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(),
-            decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier
-                        .background(Color.Transparent)
-                        .fillMaxWidth()
-                ) {
-                    if (timeInfo.datetimeFrom == null) {
-                        Text(
-                            text = "From: Not set",
-                            fontSize = 14.sp,
-                            color = Color.LightGray
-                        )
-                    }
-                    innerTextField()
-                }
+        var timeFrom = remember { mutableStateOf(timeInfo.value.datetimeFrom)}
+        DateTimeInput(
+            timeState = timeFrom,
+            onUpdate = {
+                timeInfo.value.datetimeFrom = it
+                onUpdate(timeInfo.value)
             }
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Date time to (editable)
-        BasicTextField(
-            value = timeInfo.dateTimeTo?.toString() ?: "",
-            onValueChange = {
-                // Handle updating dateTimeTo
-                // You might want to add proper validation and conversion here
-                timeInfo.dateTimeTo = Timestamp.valueOf(it)
-                onUpdate(timeInfo)
-            },
-            textStyle = TextStyle(
-                fontSize = 14.sp,
-                color = TextColor,
-            ),
-            modifier = Modifier
-                .background(Color.Transparent)
-                .fillMaxWidth(),
-            decorationBox = { innerTextField ->
-                Box(
-                    modifier = Modifier
-                        .background(Color.Transparent)
-                        .fillMaxWidth()
-                ) {
-                    if (timeInfo.dateTimeTo == null) {
-                        Text(
-                            text = "To: Not set",
-                            fontSize = 14.sp,
-                            color = Color.LightGray
-                        )
-                    }
-                    innerTextField()
-                }
+        var timeTo = remember { mutableStateOf(timeInfo.value.dateTimeTo)}
+        DateTimeInput(
+            timeState = timeTo,
+            onUpdate = {
+                timeInfo.value.dateTimeTo = it
+                onUpdate(timeInfo.value)
             }
         )
 
-        // Add other properties as needed
-
         // Progress
         Text(
-            text = "Progress: ${timeInfo.progress}%",
+            text = "Progress: ${timeInfo.value.progress}%",
             fontSize = 14.sp,
             color = TextColor,
         )
