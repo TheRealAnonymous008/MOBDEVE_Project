@@ -45,6 +45,8 @@ import com.mobdeve.s12.mp.gamification.model.EventsProvider
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.getSampleEvents
 import com.mobdeve.s12.mp.gamification.model.getTaskEvent
+import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
+import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.WeekScheduleTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.body1
 import com.mobdeve.s12.mp.gamification.ui.theme.body2
@@ -598,15 +600,12 @@ fun TaskSchedule(taskList: TaskListHolder) {
                     )
 
                     // Button to scroll to the right
-                    Button(
-                        onClick = {
-                            scrollState += 100 // adjust the scroll distance
-                        },
+                    Box(
                         modifier = Modifier
-                            .height(48.dp)
+                            .fillMaxHeight()
+                            .background(AccentColor)
                             .padding(start = 10.dp)
                     ) {
-                        Text("Scroll Right")
                     }
                 }
             }
