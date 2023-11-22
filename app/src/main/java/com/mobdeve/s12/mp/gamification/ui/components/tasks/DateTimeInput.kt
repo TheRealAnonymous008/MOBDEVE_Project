@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.mobdeve.s12.mp.gamification.model.formatTimestampDate
 import com.mobdeve.s12.mp.gamification.model.formatTimestampTime
+import com.mobdeve.s12.mp.gamification.model.getCurrentTimeStamp
 import java.sql.Timestamp
 import java.time.ZoneId
 import java.util.Calendar
@@ -48,6 +49,11 @@ fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
                         TextButton(
                             onClick = {
                                 openDateDialog.value = false
+
+                                if (timeStampState == null){
+                                    timeStampState = getCurrentTimeStamp()
+                                }
+
                                 if (datePickerState.selectedDateMillis != null) {
                                     val selectedDate = Date(datePickerState.selectedDateMillis!!)
                                     val localDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
@@ -104,6 +110,11 @@ fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
                         TextButton(
                             onClick = {
                                 openTimeDialog.value = false
+
+                                if (timeStampState == null){
+                                    timeStampState = getCurrentTimeStamp()
+                                }
+
                                 val calendar = Calendar.getInstance().apply {
                                     time = timeStampState
                                     set(Calendar.HOUR_OF_DAY, timePickerState.hour)
