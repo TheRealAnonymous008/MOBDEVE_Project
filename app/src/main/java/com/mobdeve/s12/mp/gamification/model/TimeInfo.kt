@@ -100,7 +100,7 @@ fun formatTimestampTime(timestamp: Timestamp?): String {
     if (timestamp == null){
         return "No Time"
     }
-    val sdf = SimpleDateFormat("hh:dd a", Locale.getDefault())
+    val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
     return sdf.format(timestamp)
 }
 

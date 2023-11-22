@@ -123,9 +123,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                     ) {
 
                         // Task duration
-                        Box(
-                            Modifier
-                                .border(2.dp, SecondaryColor, shape = CircleShape),) {
+                        Box {
                             Text(
                                 text = task.timeInfo.getDurationAsString(),
                                 color = TextColor,
