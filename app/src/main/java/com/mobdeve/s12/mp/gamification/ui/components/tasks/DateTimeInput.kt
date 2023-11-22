@@ -32,13 +32,24 @@ import kotlin.time.Duration.Companion.minutes
 fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
 
     val datePickerState = rememberDatePickerState()
-    val timePickerState = rememberTimePickerState()
+    var timePickerState = rememberTimePickerState()
     var timeStampState by remember {mutableStateOf(timeStamp)}
     val openDateDialog = remember { mutableStateOf(false) }
     val openTimeDialog = remember { mutableStateOf(false) }
 
     if (timeStamp != null){
         datePickerState.setSelection(timeStamp.time)
+
+        // This is a bad way to do this but documentation says that there
+        // is no other way.
+        val calendar = Calendar.getInstance().apply {
+            time = timeStampState
+        }
+
+        timePickerState = rememberTimePickerState(
+            initialHour = calendar.get(Calendar.HOUR_OF_DAY),
+            initialMinute =  calendar.get(Calendar.MINUTE)
+        )
     }
 
     Row() {
