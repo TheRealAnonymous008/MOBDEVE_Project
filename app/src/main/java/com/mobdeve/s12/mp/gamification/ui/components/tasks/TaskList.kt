@@ -19,12 +19,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.localdb.RepositoryHolder
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.createEmptyTask
+import com.mobdeve.s12.mp.gamification.notifications.notifyTask
+import com.mobdeve.s12.mp.gamification.notifications.unnotifyTask
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +38,7 @@ import kotlinx.coroutines.launch
 fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
     var taskListState = remember { mutableStateListOf(*taskList.tasks.toTypedArray())}
+    val context = LocalContext.current
 
     Box {
         LazyColumn(
@@ -49,6 +53,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     onUpdate = {
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.update(it)
+                            notifyTask(context , it)
                         }
                     },
                     onDelete={
@@ -56,6 +61,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.delete(it.id)
                             repo.rewardRepository.deleteWithTask(it.id)
+                            unnotifyTask(context, it)
                         }
                     },
                         repo
@@ -73,6 +79,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.update(it)
                         }
+                        unnotifyTask(context, task)
                     },
                     onDelete = {
                         taskListState.remove(it)
@@ -81,6 +88,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                             repo.rewardRepository.deleteWithTask(it.id)
                         }
                         it.unfinish()
+                        unnotifyTask(context, task)
                     },
                         repo
                     )
@@ -104,12 +112,16 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     taskListState.add(it)
 
                     repo.rewardRepository.insertForTask(it)
+
+                    notifyTask(context, it)
                 }
             },
             onDelete = {
                 scope.launch(Dispatchers.IO) {
                     repo.taskRepository.update(it)
                     repo.rewardRepository.deleteWithTask(it.id)
+
+                    unnotifyTask(context, it)
                 }
                 it.unfinish()
             },
