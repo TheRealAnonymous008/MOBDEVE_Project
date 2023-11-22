@@ -22,7 +22,7 @@ data class TimeInfo(
         if (dateTimeTo == null)
             return ""
 
-        return getTimeFormattedString(datetimeFrom!!.time - dateTimeTo!!.time)
+        return getTimeFormattedString(dateTimeTo!!.time - datetimeFrom!!.time)
     }
 
     fun getTimePassedAsString() : String {
