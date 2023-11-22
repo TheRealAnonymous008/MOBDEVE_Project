@@ -116,8 +116,6 @@ fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
                                     timeStampState = getCurrentTimeStamp()
                                 }
 
-                                Log.e("XYZ", timePickerState.minute.toString())
-
                                 val calendar = Calendar.getInstance().apply {
                                     time = timeStampState!!
                                     set(Calendar.HOUR_OF_DAY, timePickerState.hour)
@@ -145,7 +143,6 @@ fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
                     )
                 }
             }
-
 
             Text(
                 text = "${formatTimestampTime(timeStampState)}",
