@@ -1,6 +1,10 @@
 package com.mobdeve.s12.mp.gamification
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
@@ -33,6 +37,7 @@ import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.SkillListHolder
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.generateDefaultProfile
+import com.mobdeve.s12.mp.gamification.notifications.AlarmReceiver
 import com.mobdeve.s12.mp.gamification.ui.components.MainWindow
 import com.mobdeve.s12.mp.gamification.ui.components.avatar.AvatarEditWindow
 import com.mobdeve.s12.mp.gamification.ui.components.skilltree.SkillTreeWindow
@@ -73,6 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createNotificationChannel()
         repositoryHolder = ((application as MainApplication)).repositoryHolder
 
         fetchTasks().observe(this) { tasks ->
@@ -84,6 +90,21 @@ class MainActivity : AppCompatActivity() {
         cosmetics = fetchCosmetics()
 
         update()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Task Channel"
+            val descriptionText = "Channel for Task notification"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(AlarmReceiver.NOTIFICATION_CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+
     }
 
 
