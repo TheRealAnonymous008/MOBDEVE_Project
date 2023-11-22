@@ -54,7 +54,6 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.update(it)
 //                            notifyTask(context , it)
-                            Log.e("XY",task.getNormalizedProgress().toString())
                         }
                     },
                     onDelete={
