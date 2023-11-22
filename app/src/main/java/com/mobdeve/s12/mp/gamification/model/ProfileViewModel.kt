@@ -4,6 +4,7 @@ package com.mobdeve.s12.mp.gamification.model
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.MainScope

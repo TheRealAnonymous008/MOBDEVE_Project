@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.model.Avatar
@@ -28,6 +30,8 @@ import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.FeetCosmetic
 import com.mobdeve.s12.mp.gamification.model.HeadCosmetic
 import com.mobdeve.s12.mp.gamification.model.LegsCosmetic
+import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileViewModel
 import com.mobdeve.s12.mp.gamification.model.TorsoCosmetic
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.CosmeticContainer
 import com.mobdeve.s12.mp.gamification.ui.components.cosmetics.CosmeticRow
@@ -45,6 +49,7 @@ fun AvatarEditWindow(
     val AVATAR_SIZE = LocalConfiguration.current.screenHeightDp / AVATAR_DISPLAY_SCALER
 
     val avatarState = remember {mutableStateOf(avatar)}
+    val profileViewModel: ProfileViewModel = ProfileViewModel(context = LocalContext.current)
 
     key(avatarState.value) {
         Box(
@@ -57,7 +62,6 @@ fun AvatarEditWindow(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                Log.d("Avatar", avatarState.value.toString())
                 Row(
                     modifier = Modifier
                         .height(intrinsicSize = IntrinsicSize.Max)
@@ -66,13 +70,18 @@ fun AvatarEditWindow(
                     AvatarView(
                         AVATAR_SIZE,
                         avatarState = avatarState.value,
-                        onAvatarStateChange = { avatarState.value = it })
+                        onAvatarStateChange = {
+                            avatarState.value = it
+                        })
                 }
                 AvatarEdit(
                     ownedCosmetics = ownedCosmetics,
                     avatar,
                     avatarState = avatarState.value,
-                    onAvatarStateChange = { avatarState.value = it })
+                    onAvatarStateChange = {
+                        avatarState.value = it
+                        profileViewModel.updateAvatar(it)
+                    })
             }
         }
     }
