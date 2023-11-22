@@ -1,7 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -39,7 +37,6 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
-import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
@@ -125,7 +122,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                         // Task duration
                         Box {
                             Text(
-                                text = task.timeInfo.getTimeLeftAsString(),
+                                text = task.timeInfo.getDurationAsString(),
                                 color = TextColor,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,

@@ -25,11 +25,11 @@ data class TimeInfo(
         return getTimeFormattedString(datetimeFrom!!.time - dateTimeTo!!.time)
     }
 
-    fun getTimeLeftAsString() : String {
+    fun getTimePassedAsString() : String {
         if (dateTimeTo == null || datetimeFrom == null)
             return ""
 
-        val timeLeft = ((dateTimeTo!!.time - datetimeFrom!!.time)  * (1 - getNormalizedProgress())).toLong()
+        val timeLeft = ((dateTimeTo!!.time - datetimeFrom!!.time)  * (getNormalizedProgress())).toLong()
         return getTimeFormattedString(timeLeft)
     }
 
