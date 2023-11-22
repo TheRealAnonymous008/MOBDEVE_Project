@@ -79,6 +79,13 @@ data class TimeInfo(
         return formattedDuration.toString().trim()
     }
 
+    fun isValid(): Boolean {
+        if (datetimeFrom == null || dateTimeTo == null)
+            return true
+
+        return datetimeFrom!!.time < dateTimeTo!!.time
+    }
+
 }
 
 fun formatTimestampDate(timestamp: Timestamp?): String {
