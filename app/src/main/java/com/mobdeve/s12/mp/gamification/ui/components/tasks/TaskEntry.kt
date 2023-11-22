@@ -47,6 +47,7 @@ fun TaskEntry(
     profile : Profile,
     onUpdate : (t : Task) -> Unit,
     onDelete : (t : Task) -> Unit,
+    onProfileUpdate : (Profile) -> Unit,
     repo : RepositoryHolder)
 {
 
@@ -155,7 +156,7 @@ fun TaskEntry(
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    TaskTimer(task = task, onTick = onUpdate, profile = profile)
+                    TaskTimer(task = task, onTick = onUpdate, profile = profile, onProfileUpdate = onProfileUpdate)
                 }
             }
         }

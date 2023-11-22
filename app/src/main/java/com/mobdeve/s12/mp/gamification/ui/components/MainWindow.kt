@@ -1,6 +1,8 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -60,6 +62,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
+@RequiresApi(Build.VERSION_CODES.S)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: RepositoryHolder, navController: NavController) {
@@ -116,6 +119,11 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                                         1 -> TaskList(
                                             taskList = profileState.tasks,
                                             profile = profileState,
+                                            onProfileUpdate = {
+                                                profileState = it
+                                                currency.value =
+                                                    profileState.profileDetails.currency
+                                            },
                                             repo = repo
                                         )
 

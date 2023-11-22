@@ -33,13 +33,18 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-fun TaskTimer(task : Task, onTick : (task : Task) -> Unit, profile: Profile) {
+fun TaskTimer(
+    task : Task,
+    onTick : (task : Task) -> Unit,
+    profile: Profile,
+    onProfileUpdate: (Profile) -> Unit
+) {
     var isPlaying by remember { mutableStateOf(false)}
     var progress by remember { mutableFloatStateOf(task.getNormalizedProgress()) }
     val profileViewModel: ProfileViewModel = ProfileViewModel(context = LocalContext.current)
 
     val ONE_HOUR = 1000L * 60 * 60 * 1
-    val TIME_PER_REWARD = 2000L
+    val TIME_PER_REWARD = ONE_HOUR
 
     LaunchedEffect(key1 = isPlaying) {
         while (isPlaying) {
@@ -57,6 +62,7 @@ fun TaskTimer(task : Task, onTick : (task : Task) -> Unit, profile: Profile) {
             MainScope().launch {
                 profile.profileDetails.addCurrency(1)
                 profileViewModel.updateCurrency(profile.profileDetails.currency)
+                onProfileUpdate(profile)
             }
         }
     }

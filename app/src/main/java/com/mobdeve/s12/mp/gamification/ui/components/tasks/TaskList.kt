@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
-fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHolder){
+fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHolder, onProfileUpdate: (Profile) -> Unit){
     val scope = CoroutineScope(Dispatchers.Main)
     var taskListState = remember { mutableStateListOf(*taskList.tasks.toTypedArray())}
     val context = LocalContext.current
@@ -68,8 +68,8 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                             unnotifyTask(context, it)
                         }
                     },
-                        repo
-                    )
+                    onProfileUpdate=onProfileUpdate, repo
+                )
             }
 
             item {
@@ -94,6 +94,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                         it.unfinish()
                         unnotifyTask(context, task)
                     },
+                    onProfileUpdate = {},
                         repo
                     )
                 }
@@ -117,7 +118,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
 
                     repo.rewardRepository.insertForTask(it)
 
-//                    notifyTask(context, it)
+                    notifyTask(context, it)
                 }
             },
             onDelete = {
