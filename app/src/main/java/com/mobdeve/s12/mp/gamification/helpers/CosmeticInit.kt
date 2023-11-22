@@ -17,7 +17,8 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
             name = "Default Head",
             cost = 0,
             image = context.resources.getResourceName(R.drawable.cosmetic_default_head),
-            description = "The default head"
+            description = "The default head",
+            true
         )
     )
     cosmeticList.add(
@@ -26,7 +27,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
             name = "Default Torso",
             cost = 0,
             image = context.resources.getResourceName(R.drawable.cosmetic_default_torso),
-            description = "The default torso"
+            description = "The default torso", true
         )
     )
     cosmeticList.add(
@@ -35,7 +36,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
             name = "Default Legs",
             cost = 0,
             image = context.resources.getResourceName(R.drawable.cosmetic_default_legs),
-            description = "The default legs"
+            description = "The default legs", true
         )
     )
     cosmeticList.add(
@@ -44,7 +45,7 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
             name = "Default Feet",
             cost = 0,
             image = context.resources.getResourceName(R.drawable.cosmetic_default_feet),
-            description = "The default feet"
+            description = "The default feet", true
         )
     )
     cosmeticList.add(

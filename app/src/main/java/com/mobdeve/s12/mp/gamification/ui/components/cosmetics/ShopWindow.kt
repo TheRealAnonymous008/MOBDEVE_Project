@@ -28,7 +28,7 @@ fun ShopWindow(
     profile : Profile,
     onProfileUpdate : (Profile) -> Unit,
     cosmeticsList : ArrayList<Cosmetic>,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     MOBDEVEProjectTheme {
         Surface(

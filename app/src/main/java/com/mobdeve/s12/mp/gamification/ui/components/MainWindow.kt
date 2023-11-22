@@ -56,6 +56,8 @@ import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.MOBDEVEProjectTheme
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -226,9 +228,17 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         onProfileUpdate = {
                             profileState = it
                             currency.value = profileState.profileDetails.currency
+                            MainScope().launch {
+                                it.cosmetics.cosmetics.forEach {cosmetic ->
+                                    if(!cosmetic.owned) {
+                                        cosmetic.setOwned()
+                                        repo.cosmeticRepository.update(cosmetic)
+                                    }
+                                }
+                            }
                         },
                         cosmeticsList = cosmetics,
-                        modifier = Modifier.fillMaxHeight()
+                        modifier = Modifier.fillMaxHeight(),
                     )
                 }
             }

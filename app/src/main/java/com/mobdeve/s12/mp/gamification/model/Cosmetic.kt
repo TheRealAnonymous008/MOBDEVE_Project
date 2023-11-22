@@ -18,7 +18,8 @@ abstract class Cosmetic(
     val cost: Int,
     val image: String,
     val description: String,
-    val cosmeticTypes: CosmeticTypes) {
+    val cosmeticTypes: CosmeticTypes,
+    var owned : Boolean) {
 
     @Composable
     fun ViewCosmetic(
@@ -28,6 +29,10 @@ abstract class Cosmetic(
             painter = painterResource(id = LocalContext.current.resources.getIdentifier(image, "drawable", BuildConfig.APPLICATION_ID)),
             contentDescription = "cosmetic_object",
             modifier = modifier)
+    }
+
+    fun setOwned() {
+        this.owned = true;
     }
 
     override fun toString(): String {

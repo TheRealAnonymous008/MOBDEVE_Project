@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var profileSharedPref : ProfileViewModel
     lateinit var profileState : MutableState<Profile>
-    lateinit var cosmetics : CosmeticHolder
+    lateinit var cosmeticsHolder : CosmeticHolder
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,8 +86,9 @@ class MainActivity : AppCompatActivity() {
         createNotificationChannel()
         repositoryHolder = ((application as MainApplication)).repositoryHolder
         profileSharedPref = ProfileViewModel(application as MainApplication)
-        profileSharedPref.updateCurrency(1000)
+        profileSharedPref.updateCurrency(999)
         profileState = mutableStateOf(generateDefaultProfile(application as MainApplication))
+        cosmeticsHolder = CosmeticHolder()
 
         fetchTasks().observe(this) { tasks ->
             fetchSkills().observe(this) { skills ->
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                 fetchEdges(skills)
             }
         }
-        cosmetics = fetchCosmetics()
+        fetchCosmetics()
 
         update()
     }
@@ -208,22 +209,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchCosmetics() : CosmeticHolder {
-        val cosmeticsHolder : CosmeticHolder = CosmeticHolder()
+    private fun fetchCosmetics() {
         cosmeticViewModel.allCosmetics.observe(this) { cosmetics ->
             val profile = profileState.value
             profile.cosmetics.clear()
+            cosmeticsHolder.clear()
 
             for (cosmeticEntity in cosmetics) {
                 val cosmetic = getCosmeticFromEntity(cosmeticEntity)
-                profile.cosmetics.add(cosmetic) // change this
+                if(cosmetic.owned){
+                    profile.cosmetics.add(cosmetic)
+                    Log.d("cosmetic", "${cosmetic.name}")
+                }
+
                 cosmeticsHolder.add(cosmetic)
             }
             profileState.value = profile
             update()
 
         }
-        return cosmeticsHolder
     }
 
     private fun update() {
@@ -238,7 +242,7 @@ class MainActivity : AppCompatActivity() {
         LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED)
         NavHost(navController, startDestination = Routes.MAIN_WINDOW) {
             composable(Routes.MAIN_WINDOW) {
-                MainWindow(profile = profileState.value, cosmetics.cosmetics, repositoryHolder , navController = navController)
+                MainWindow(profile = profileState.value, cosmeticsHolder.cosmetics, repositoryHolder , navController = navController)
             }
             composable(Routes.AVATAR_WINDOW) {
                 AvatarEditWindow(profileState.value.cosmetics.cosmetics, profileState.value.profileDetails.avatar, navController)

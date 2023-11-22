@@ -32,7 +32,8 @@ data class CosmeticEntity (
     val cost: Int,
     val image: String,
     val description: String,
-    val cosmeticType: CosmeticTypes
+    val cosmeticType: CosmeticTypes,
+    val owned : Boolean
 )
 
 // Queries
@@ -136,7 +137,8 @@ fun getCosmeticEntity(cosmetic : Cosmetic) : CosmeticEntity{
         description = cosmetic.description,
         image = cosmetic.image,
         cost = cosmetic.cost,
-        cosmeticType = cosmetic.cosmeticTypes
+        cosmeticType = cosmetic.cosmeticTypes,
+        owned = cosmetic.owned
     )
 }
 
@@ -148,7 +150,8 @@ fun getCosmeticFromEntity(entry : CosmeticEntity) : Cosmetic {
             name = entry.name,
             description = entry.description,
             cost = entry.cost,
-            image = entry.image
+            image = entry.image,
+            owned = entry.owned
         )
     if(entry.cosmeticType == CosmeticTypes.TORSO)
         return TorsoCosmetic(
@@ -156,7 +159,8 @@ fun getCosmeticFromEntity(entry : CosmeticEntity) : Cosmetic {
             name = entry.name,
             description = entry.description,
             cost = entry.cost,
-            image = entry.image
+            image = entry.image,
+            owned = entry.owned
         )
     if(entry.cosmeticType == CosmeticTypes.LEGS)
         return LegsCosmetic(
@@ -164,7 +168,8 @@ fun getCosmeticFromEntity(entry : CosmeticEntity) : Cosmetic {
             name = entry.name,
             description = entry.description,
             cost = entry.cost,
-            image = entry.image
+            image = entry.image,
+            owned = entry.owned
         )
     if(entry.cosmeticType == CosmeticTypes.FEET)
         return FeetCosmetic(
@@ -172,7 +177,8 @@ fun getCosmeticFromEntity(entry : CosmeticEntity) : Cosmetic {
             name = entry.name,
             description = entry.description,
             cost = entry.cost,
-            image = entry.image
+            image = entry.image,
+            owned = entry.owned
         )
     throw error("No cosmetic type for cosmetic $entry")
 }

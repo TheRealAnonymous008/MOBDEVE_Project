@@ -6,8 +6,9 @@ class HeadCosmetic(
     name: String,
     cost: Int,
     image: String,
-    description: String) :
-    Cosmetic(id, name, cost, image, description, CosmeticTypes.HEAD) {
+    description: String,
+    owned : Boolean = false) :
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.HEAD, owned) {
 }
 
 class TorsoCosmetic(
@@ -15,8 +16,9 @@ class TorsoCosmetic(
     name: String,
     cost: Int,
     image: String,
-    description: String) :
-    Cosmetic(id, name, cost, image, description, CosmeticTypes.TORSO) {
+    description: String,
+    owned : Boolean = false) :
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.TORSO, owned) {
 }
 
 class LegsCosmetic(
@@ -24,8 +26,9 @@ class LegsCosmetic(
     name: String,
     cost: Int,
     image: String,
-    description: String) :
-    Cosmetic(id, name, cost, image, description, CosmeticTypes.LEGS) {
+    description: String,
+    owned : Boolean = false) :
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.LEGS, owned) {
 }
 
 class FeetCosmetic(
@@ -33,6 +36,7 @@ class FeetCosmetic(
     name: String,
     cost: Int,
     image: String,
-    description: String) :
-    Cosmetic(id, name, cost, image, description, CosmeticTypes.FEET) {
+    description: String,
+    owned : Boolean = false) :
+    Cosmetic(id, name, cost, image, description, CosmeticTypes.FEET, owned) {
 }

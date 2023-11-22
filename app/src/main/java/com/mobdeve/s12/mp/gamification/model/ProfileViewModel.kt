@@ -65,7 +65,6 @@ class ProfileViewModel(private val context: Context) {
     }
 
     private fun getProfileDetails(): ProfileDetails {
-        Log.d("THIS RAN", "RAN")
         if(!sharedPreferences.contains("exists"))
             createDefaultProfileDetails()
 

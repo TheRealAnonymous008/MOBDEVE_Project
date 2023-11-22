@@ -42,6 +42,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.ProfileViewModel
+import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -189,15 +190,19 @@ fun CosmeticDialog(cosmetic: Cosmetic, showState : Boolean, onDismissRequest: ()
                         modifier = Modifier
                             .padding(10.dp))
 
-                    TextButton( onClick = {
 
-                        profile.profileDetails.removeCurrency(cosmetic.cost)
-                        onProfileUpdate(profile)
-                        profileViewModel.updateCurrency(profile.profileDetails.currency)
-                    },
-                    ) {
-                        Text("Purchase")
+                    if(!cosmetic.owned) {
+                        TextButton( onClick = {
+                            profile.profileDetails.removeCurrency(cosmetic.cost)
+                            profile.cosmetics.add(cosmetic)
+                            onProfileUpdate(profile)
+                            profileViewModel.updateCurrency(profile.profileDetails.currency)
+                        },
+                        ) {
+                            Text("Purchase", modifier = Modifier.background(AccentColor))
+                        }
                     }
+
                 }
 
             }
