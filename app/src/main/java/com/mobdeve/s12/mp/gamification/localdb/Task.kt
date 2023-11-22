@@ -148,8 +148,8 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
         dateTimeFrom = Timestamp(entry.timeFrom)
     }
     var dateTimeTo: Timestamp? = null
-    if (entry.timeFrom !== null) {
-        dateTimeTo = Timestamp(entry.timeFrom)
+    if (entry.timeTo !== null) {
+        dateTimeTo = Timestamp(entry.timeTo)
     }
 
     return Task (

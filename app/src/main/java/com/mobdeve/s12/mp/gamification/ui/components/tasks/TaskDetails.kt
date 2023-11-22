@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -199,6 +200,7 @@ fun TimeInfoDetails(timeInfo: TimeInfo, onUpdate: (TimeInfo) -> Unit) {
             timeState = timeFrom,
             onUpdate = {
                 timeInfo.datetimeFrom = it
+
                 onUpdate(timeInfo)
             }
         )

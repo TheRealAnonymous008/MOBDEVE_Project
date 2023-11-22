@@ -22,7 +22,6 @@ fun TaskDialog(
                 isVisible.value = false
                 onUpdate(task)
             },
-
         )
         {
             TaskDetailsLayout(task = task, profile = profile,
