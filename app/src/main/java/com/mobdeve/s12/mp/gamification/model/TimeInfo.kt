@@ -15,12 +15,9 @@ data class TimeInfo(
 ) : Serializable {
 
     fun getDurationAsString(): String {
-        if (datetimeFrom == null && dateTimeTo == null)
+        if (datetimeFrom == null || dateTimeTo == null)
             return ""
-
-        if (dateTimeTo == null)
-            return ""
-
+        
         return getTimeFormattedString(dateTimeTo!!.time - datetimeFrom!!.time)
     }
 
