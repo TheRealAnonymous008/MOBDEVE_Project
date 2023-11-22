@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -115,8 +116,10 @@ fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
                                     timeStampState = getCurrentTimeStamp()
                                 }
 
+                                Log.e("XYZ", timePickerState.minute.toString())
+
                                 val calendar = Calendar.getInstance().apply {
-                                    time = timeStampState
+                                    time = timeStampState!!
                                     set(Calendar.HOUR_OF_DAY, timePickerState.hour)
                                     set(Calendar.MINUTE, timePickerState.minute)
                                 }
