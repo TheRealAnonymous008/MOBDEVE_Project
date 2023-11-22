@@ -33,6 +33,6 @@ class TaskListHolder {
     }
 
     fun getSorted() : List<Task>{
-        return tasks.sortedBy { it.title }
+        return tasks.sortedBy { it.getTimeFinished() }
     }
 }

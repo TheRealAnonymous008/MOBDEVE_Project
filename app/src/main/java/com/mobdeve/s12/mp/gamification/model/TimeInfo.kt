@@ -10,6 +10,8 @@ data class TimeInfo(
     var datetimeCreated: Timestamp = getCurrentTimeStamp(),
     var datetimeFrom: Timestamp? = null,
     var dateTimeTo: Timestamp? = null,
+    var dateTimeFinished : Timestamp? = null,
+
 ) : Serializable {
     var progress : Long = 0
 
@@ -32,6 +34,10 @@ data class TimeInfo(
     }
     fun addProgress(x : Long) {
         progress += x
+    }
+
+    fun setFinished() {
+        dateTimeFinished = getCurrentTimeStamp()
     }
 
     fun getNormalizedProgress() : Float {

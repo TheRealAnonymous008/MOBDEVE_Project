@@ -2,6 +2,7 @@ package com.mobdeve.s12.mp.gamification.model
 
 import java.io.Serializable
 import java.sql.Timestamp
+import kotlin.time.Duration.Companion.milliseconds
 
 data class Task(
     var id : Long,
@@ -44,6 +45,7 @@ data class Task(
             reward.skill.levelUp(reward.xp)
         }
         isFinished = true
+        timeInfo.setFinished()
     }
 
     fun unfinish() {
@@ -66,6 +68,12 @@ data class Task(
 
     fun pause() {
         // Do Nothing
+    }
+
+    fun getTimeFinished() : Long {
+        if (timeInfo.dateTimeFinished == null)
+            return 0
+        return timeInfo.dateTimeFinished!!.time
     }
 
     fun isMappedToSkill(sk : Skill) : Boolean {

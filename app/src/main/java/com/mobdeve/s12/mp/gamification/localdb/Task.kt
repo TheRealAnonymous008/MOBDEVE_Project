@@ -26,11 +26,11 @@ data class TaskEntity (
     val title: String,
     val description: String,
     val timeCreated : Long,
-    val timeFrom : Long?,
-    val timeTo : Long?,
     val isFinished : Boolean,
     val datetimeFrom: Long?,
-    val datetimeTo: Long?
+    val datetimeTo: Long?,
+    val dateTimeFinished : Long? ,
+    val progress: Long,
 )
 
 // Queries
@@ -117,40 +117,29 @@ class TaskViewModelFactory(private val repository: TaskRepository) : ViewModelPr
 // Helper functions for converting to and from Entities
 
 fun getTaskEntity(task : Task) : TaskEntity{
-    var timeFromTimestamp = task.timeInfo.datetimeFrom
-    var timeFrom : Long? = null
-    if (timeFromTimestamp !== null) {
-        timeFrom = timeFromTimestamp.time
-    }
+    var timeFrom : Long? = getLongOrNullFromTimestamp(task.timeInfo.datetimeFrom)
+    var timeTo : Long? = getLongOrNullFromTimestamp(task.timeInfo.dateTimeTo)
+    var timeFinished : Long? = getLongOrNullFromTimestamp(task.timeInfo.dateTimeFinished)
 
-    var timeToTimestamp = task.timeInfo.dateTimeTo
-    var timeTo : Long? = null
-    if (timeToTimestamp !== null) {
-        timeTo = timeToTimestamp.time
-    }
 
     return TaskEntity(
         title = task.title,
         description = task.description,
         timeCreated = task.timeInfo.datetimeCreated.time,
-        timeFrom = timeFrom,
-        timeTo = timeTo,
         isFinished = task.isFinished,
         datetimeFrom = timeFrom,
-        datetimeTo = timeTo
+        datetimeTo = timeTo,
+        dateTimeFinished = timeFinished,
+        progress = task.timeInfo.progress
     )
 }
 
 fun getTaskFromEntity(entry : TaskEntity) : Task{
     val dateTimeCreated = Timestamp(entry.timeCreated)
-    var dateTimeFrom: Timestamp? = null
-    if (entry.timeFrom !== null) {
-        dateTimeFrom = Timestamp(entry.timeFrom)
-    }
-    var dateTimeTo: Timestamp? = null
-    if (entry.timeTo !== null) {
-        dateTimeTo = Timestamp(entry.timeTo)
-    }
+    var dateTimeFrom: Timestamp? = getTimestampOrNull(entry.datetimeFrom)
+    var dateTimeTo: Timestamp? = getTimestampOrNull(entry.datetimeTo)
+    var dateTimeFinished: Timestamp? = getTimestampOrNull(entry.dateTimeFinished)
+
 
     return Task (
         id = entry.id,
@@ -159,10 +148,24 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
         timeInfo = TimeInfo(
             datetimeCreated =  dateTimeCreated,
             datetimeFrom = dateTimeFrom,
-            dateTimeTo = dateTimeTo
+            dateTimeTo = dateTimeTo,
+            dateTimeFinished = dateTimeFinished
         ),
         isFinished = entry.isFinished
     )
 }
 
 
+fun getTimestampOrNull(x : Long?) : Timestamp?{
+    if (x!== null) {
+        return Timestamp(x)
+    }
+    return null
+}
+
+fun getLongOrNullFromTimestamp(x : Timestamp?) : Long?{
+    if (x !== null) {
+        return x.time
+    }
+    return null
+}

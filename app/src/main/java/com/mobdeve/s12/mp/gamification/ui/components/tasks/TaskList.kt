@@ -66,7 +66,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                 Text(text = "Finished tasks")
             }
 
-            items(taskList.tasks) { task ->
+            items(taskList.getSorted()) { task ->
                 if (task.isFinished) {
                     TaskEntry(task, profile,
                     onUpdate = {
