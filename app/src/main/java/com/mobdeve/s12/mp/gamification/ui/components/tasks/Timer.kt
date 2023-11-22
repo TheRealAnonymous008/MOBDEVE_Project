@@ -20,17 +20,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.mobdeve.s12.mp.gamification.R
+import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileViewModel
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun TaskTimer(task : Task, onTick : (task : Task) -> Unit) {
+fun TaskTimer(task : Task, onTick : (task : Task) -> Unit, profile: Profile) {
     var isPlaying by remember { mutableStateOf(false)}
     var progress by remember { mutableFloatStateOf(task.getNormalizedProgress()) }
+    val profileViewModel: ProfileViewModel = ProfileViewModel(context = LocalContext.current)
+
+    val ONE_HOUR = 1000L * 60 * 60 * 1
+    val TIME_PER_REWARD = 2000L
 
     LaunchedEffect(key1 = isPlaying) {
         while (isPlaying) {
@@ -38,6 +47,17 @@ fun TaskTimer(task : Task, onTick : (task : Task) -> Unit) {
             task.updateProgress()
             progress = task.getNormalizedProgress()
             onTick(task)
+
+        }
+    }
+
+    LaunchedEffect(key1 = isPlaying) {
+        while (isPlaying) {
+            delay(TIME_PER_REWARD) // Change this to control how much the user gains currency.
+            MainScope().launch {
+                profile.profileDetails.addCurrency(1)
+                profileViewModel.updateCurrency(profile.profileDetails.currency)
+            }
         }
     }
 

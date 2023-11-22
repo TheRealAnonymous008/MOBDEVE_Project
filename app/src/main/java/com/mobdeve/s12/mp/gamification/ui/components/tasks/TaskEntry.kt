@@ -155,7 +155,7 @@ fun TaskEntry(
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    TaskTimer(task = task, onTick = onUpdate)
+                    TaskTimer(task = task, onTick = onUpdate, profile = profile)
                 }
             }
         }
