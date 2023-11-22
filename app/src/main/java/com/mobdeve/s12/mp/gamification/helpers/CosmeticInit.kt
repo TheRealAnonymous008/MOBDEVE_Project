@@ -52,38 +52,147 @@ fun initializeCosmetics(context: Context) : ArrayList<Cosmetic> {
         HeadCosmetic(
             id = 0,
             name = "Stark's Hair",
-            cost = 2,
+            cost = 10,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_head),
-            description = "Short red hair with a dark contrasting black in the center."
+            description = "Stark from Frieren's short red hair"
         )
     )
     cosmeticList.add(
         TorsoCosmetic(
             id = 0,
             name = "Stark's Coat",
-            cost = 2,
+            cost = 10,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_torso),
-            description = "Stark's coat"
+            description = "Stark from Frieren's coat"
         )
     )
     cosmeticList.add(
         LegsCosmetic(
             id = 0,
             name = "Stark's Pants",
-            cost = 2,
+            cost = 10,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_legs),
-            description = "Stark's pants"
+            description = "Stark from Frieren's pants"
         )
     )
     cosmeticList.add(
         FeetCosmetic(
             id = 0,
             name = "Stark's Shoes",
-            cost = 2,
+            cost = 10,
             image = context.resources.getResourceName(R.drawable.cosmetic_stark_feet),
-            description = "Stark's shoes"
+            description = "Stark from Frieren's shoes"
         )
     )
+    cosmeticList.add(
+        HeadCosmetic(
+            id = 0,
+            name = "Lena's Hair",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_lena_head),
+            description = "Lena from 86's head"
+        )
+    )
+    cosmeticList.add(
+        TorsoCosmetic(
+            id = 0,
+            name = "Lena's Coat",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_lena_torso),
+            description = "Lena from 86's torso"
+        )
+    )
+    cosmeticList.add(
+        LegsCosmetic(
+            id = 0,
+            name = "Lena's Pants",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_lena_legs),
+            description = "Lena from 86's pants"
+        )
+    )
+    cosmeticList.add(
+        FeetCosmetic(
+            id = 0,
+            name = "Lena's Shoes",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_lena_feet),
+            description = "Lena from 86's shoes"
+        )
+    )
+    cosmeticList.add(
+        HeadCosmetic(
+            id = 0,
+            name = "Black Hair",
+            cost = 5,
+            image = context.resources.getResourceName(R.drawable.cosmetic_darkhair_head),
+            description = "Sleek black hair"
+        )
+    )
+    cosmeticList.add(
+        TorsoCosmetic(
+            id = 0,
+            name = "Green Shirt",
+            cost = 5,
+            image = context.resources.getResourceName(R.drawable.cosmetic_greenshirt_torso),
+            description = "Nice shirt bro"
+        )
+    )
+    cosmeticList.add(
+        LegsCosmetic(
+            id = 0,
+            name = "Brown Pants",
+            cost = 5,
+            image = context.resources.getResourceName(R.drawable.cosmetic_brownpants_legs),
+            description = "They're brown"
+        )
+    )
+    cosmeticList.add(
+        FeetCosmetic(
+            id = 0,
+            name = "White Shoes",
+            cost = 5,
+            image = context.resources.getResourceName(R.drawable.cosmetic_whiteshoes_feet),
+            description = "Lena from 86's shoes"
+        )
+    )
+    cosmeticList.add(
+        HeadCosmetic(
+            id = 0,
+            name = "Black Long Hair",
+            cost = 5,
+            image = context.resources.getResourceName(R.drawable.cosmetic_longblackhair_head),
+            description = "Black sleek hair but longer"
+        )
+    )
+    cosmeticList.add(
+        TorsoCosmetic(
+            id = 0,
+            name = "Plaid Torso",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_plaid_torso),
+            description = "Memories"
+        )
+    )
+    cosmeticList.add(
+        LegsCosmetic(
+            id = 0,
+            name = "Black Pants",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_black_legs),
+            description = "Cozy"
+        )
+    )
+    cosmeticList.add(
+        FeetCosmetic(
+            id = 0,
+            name = "Blue Sandals",
+            cost = 10,
+            image = context.resources.getResourceName(R.drawable.cosmetic_bluesandals_feet),
+            description = "If you like sandals"
+        )
+    )
+    
 
     return cosmeticList
 }
