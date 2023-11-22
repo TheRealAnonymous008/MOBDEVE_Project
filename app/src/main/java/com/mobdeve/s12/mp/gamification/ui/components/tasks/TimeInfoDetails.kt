@@ -20,7 +20,7 @@ import com.mobdeve.s12.mp.gamification.model.TimeInfo
 import com.mobdeve.s12.mp.gamification.model.formatTimestampDate
 import com.mobdeve.s12.mp.gamification.model.formatTimestampTime
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
-
+import kotlin.math.round
 
 
 @Composable
@@ -72,7 +72,7 @@ fun TimeInfoDetails(timeInfo: TimeInfo, onUpdate: (TimeInfo) -> Unit) {
 
         // Progress
         Text(
-            text = "Progress: ${timeInfo.progress}%",
+            text = "Progress: ${round(timeInfo.getNormalizedProgress() * 100f)}%",
             fontSize = 14.sp,
             color = TextColor,
         )

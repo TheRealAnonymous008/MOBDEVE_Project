@@ -53,7 +53,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     onUpdate = {
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.update(it)
-                            notifyTask(context , it)
+//                            notifyTask(context , it)
                         }
                     },
                     onDelete={
