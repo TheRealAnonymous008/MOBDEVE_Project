@@ -11,6 +11,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,6 +34,8 @@ import com.mobdeve.s12.mp.gamification.localdb.getCosmeticFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getSkillFromEntity
 import com.mobdeve.s12.mp.gamification.localdb.getTaskFromEntity
 import com.mobdeve.s12.mp.gamification.model.CosmeticHolder
+import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileViewModel
 import com.mobdeve.s12.mp.gamification.model.Reward
 import com.mobdeve.s12.mp.gamification.model.SkillListHolder
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
@@ -73,13 +76,18 @@ class MainActivity : AppCompatActivity() {
         CosmeticViewModelFactory((application as MainApplication).repositoryHolder.cosmeticRepository)
     }
 
-    val profileState = mutableStateOf(generateDefaultProfile())
+    lateinit var profileSharedPref : ProfileViewModel
+    lateinit var profileState : MutableState<Profile>
     lateinit var cosmetics : CosmeticHolder
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
         repositoryHolder = ((application as MainApplication)).repositoryHolder
+        profileSharedPref = ProfileViewModel(application as MainApplication)
+        profileSharedPref.updateCurrency(1000)
+        profileState = mutableStateOf(generateDefaultProfile(application as MainApplication))
 
         fetchTasks().observe(this) { tasks ->
             fetchSkills().observe(this) { skills ->

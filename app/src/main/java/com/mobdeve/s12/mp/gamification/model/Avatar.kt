@@ -85,8 +85,12 @@ class Avatar(
         }
     }
 
-
-
+    override fun toString(): String {
+        return "HEAD: ${this.head} \n" +
+                " TORSO: ${this.torso} \n" +
+                " LEGS: ${this.legs} \n" +
+                " FEET: ${this.feet}"
+    }
 }
 
 @Composable

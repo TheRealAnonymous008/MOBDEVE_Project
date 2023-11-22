@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.cosmetics
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Star
@@ -31,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +41,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mobdeve.s12.mp.gamification.model.Cosmetic
 import com.mobdeve.s12.mp.gamification.model.Profile
+import com.mobdeve.s12.mp.gamification.model.ProfileViewModel
 import com.mobdeve.s12.mp.gamification.ui.theme.OtherAccent
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
@@ -53,7 +57,8 @@ class ImageSizeParameters {
 @Composable
 fun CosmeticEntry(
     cosmetic : Cosmetic,
-    profile : Profile
+    profile : Profile,
+    onProfileUpdate : (Profile) -> Unit
 ) {
     val showDialog = remember { mutableStateOf(false) }
 
@@ -62,7 +67,8 @@ fun CosmeticEntry(
             cosmetic = cosmetic,
             showState = showDialog.value,
             onDismissRequest = {showDialog.value = false},
-            profile)
+            profile,
+            onProfileUpdate)
     }
     CosmeticContainer(cosmetic) {
         showDialog.value = !showDialog.value
@@ -118,12 +124,13 @@ fun CosmeticContainer(
 }
 
 @Composable
-fun CosmeticDialog(cosmetic: Cosmetic, showState : Boolean, onDismissRequest: () -> Unit, profile: Profile) {
+fun CosmeticDialog(cosmetic: Cosmetic, showState : Boolean, onDismissRequest: () -> Unit, profile: Profile, onProfileUpdate : (Profile) -> Unit) {
     val isDialogVisible = remember {
         mutableStateOf(true)
     }
     if(!isDialogVisible.value) return
 
+    val profileViewModel: ProfileViewModel = ProfileViewModel(context = LocalContext.current)
     if(showState) {
         Dialog(
             onDismissRequest = {onDismissRequest() },
@@ -181,6 +188,16 @@ fun CosmeticDialog(cosmetic: Cosmetic, showState : Boolean, onDismissRequest: ()
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .padding(10.dp))
+
+                    TextButton( onClick = {
+
+                        profile.profileDetails.removeCurrency(cosmetic.cost)
+                        onProfileUpdate(profile)
+                        profileViewModel.updateCurrency(profile.profileDetails.currency)
+                    },
+                    ) {
+                        Text("Purchase")
+                    }
                 }
 
             }

@@ -16,7 +16,20 @@ class ProfileViewModel(private val context: Context) {
     private val _profileDetails = mutableStateOf(getProfileDetails())
     val profileDetails: State<ProfileDetails> get() = _profileDetails
 
-
+    private fun createDefaultProfileDetails() {
+        MainScope().launch {
+            with(sharedPreferences.edit()) {
+                putString("name", "Player")
+                putString("description", "My description!")
+                Log.d("AVATAR", Avatar().toString())
+                putString("avatar", Avatar().toJson())
+                putInt("currency", 10)
+                putString("exists", "exists")
+                apply()
+                _profileDetails.value = getProfileDetails()
+            }
+        }
+    }
 
     fun updateName(newName: String) {
         val updatedProfile = _profileDetails.value.copy(name = newName)
@@ -44,6 +57,7 @@ class ProfileViewModel(private val context: Context) {
                 putString("name", profileDetails.name)
                 putString("description", profileDetails.description)
                 putString("avatar", profileDetails.avatar.toJson())
+                putInt("currency", profileDetails.currency)
                 apply()
             }
             _profileDetails.value = profileDetails
@@ -51,6 +65,10 @@ class ProfileViewModel(private val context: Context) {
     }
 
     private fun getProfileDetails(): ProfileDetails {
+        Log.d("THIS RAN", "RAN")
+        if(!sharedPreferences.contains("exists"))
+            createDefaultProfileDetails()
+
         val name = sharedPreferences.getString("name", "") ?: ""
         val description = sharedPreferences.getString("description", "") ?: ""
         val avatarJson = sharedPreferences.getString("avatar", "") ?: ""

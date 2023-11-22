@@ -1,5 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -28,8 +30,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -61,8 +67,9 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
     ) { 3 }
     val isShopVisible = remember { mutableStateOf(false) }
     val isTaskVisible = remember {mutableStateOf(true)}
-
-    MOBDEVEProjectTheme{
+    var profileState by remember {mutableStateOf(profile)}
+    var currency = remember {mutableIntStateOf(profileState.profileDetails.currency)}
+    MOBDEVEProjectTheme {
         // A surface container using the 'background' color from the theme
         Surface(
             modifier = Modifier
@@ -76,8 +83,8 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
             ) {
                 AnimatedVisibility(visible = isTaskVisible.value) {
                     Column {
-                        ProfileHeader(profile.profileDetails, navController)
-                        Card (
+                        ProfileHeader(profileState.profileDetails, navController)
+                        Card(
                             modifier = Modifier
                                 .padding(10.dp)
                                 .advancedShadow(
@@ -90,33 +97,45 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                                 )
                                 .fillMaxHeight(0.85F)
 
-                        ) { Box(
-                            modifier = Modifier
-                                .background(SecondaryColor)
-                                .padding(10.dp),
-                        ){
-                            HorizontalPager(
-                                state = horizontalPagerState,
-                                beyondBoundsPageCount = 1
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .background(SecondaryColor)
+                                    .padding(10.dp),
+                            ) {
+                                HorizontalPager(
+                                    state = horizontalPagerState,
+                                    beyondBoundsPageCount = 1
 
-                            ) { page ->
-                                // Our page content
-                                when(page) {
-                                    0 -> TaskSchedule(taskList = profile.tasks)
-                                    1 -> TaskList(taskList = profile.tasks, profile = profile, repo = repo)
-                                    2 -> SkillList(skillList = profile.skills, profile = profile, repo = repo)
+                                ) { page ->
+                                    // Our page content
+                                    when (page) {
+                                        0 -> TaskSchedule(taskList = profileState.tasks)
+                                        1 -> TaskList(
+                                            taskList = profileState.tasks,
+                                            profile = profileState,
+                                            repo = repo
+                                        )
+
+                                        2 -> SkillList(
+                                            skillList = profileState.skills,
+                                            profile = profileState,
+                                            repo = repo
+                                        )
+                                    }
                                 }
                             }
-                        }}
+                        }
                     }
 
                 }
-                Row (
+                Row(
                     modifier = Modifier
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
-                ){
-                    Button( onClick = { navController.navigate(SKILLTREE_WINDOW) },
+                ) {
+                    Button(
+                        onClick = { navController.navigate(SKILLTREE_WINDOW) },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
                         shape = CircleShape,
                         modifier = Modifier
@@ -134,25 +153,30 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         contentPadding = PaddingValues(0.dp)
                     )
                     {
-                        Icon(painterResource(id = R.drawable.tree3), contentDescription = "settings button", tint = Color.White)
+                        Icon(
+                            painterResource(id = R.drawable.tree3),
+                            contentDescription = "settings button",
+                            tint = Color.White
+                        )
                     }
-                    Button( onClick = {
-                        isTaskVisible.value = !isTaskVisible.value
-                        isShopVisible.value = !isShopVisible.value
-                    },
+                    Button(
+                        onClick = {
+                            isTaskVisible.value = !isTaskVisible.value
+                            isShopVisible.value = !isShopVisible.value
+                        },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
-                    modifier = Modifier
-                        .size(50.dp)
-                        .fillMaxHeight()
-                        .weight(2.8F)
-                        .advancedShadow(
-                            Color.Black,
-                            offsetX = 10.dp,
-                            offsetY = 5.dp,
-                            spread = 4.dp,
-                            blurRadius = 10.dp,
-                            borderRadius = 50.dp
-                        ),
+                        modifier = Modifier
+                            .size(50.dp)
+                            .fillMaxHeight()
+                            .weight(2.8F)
+                            .advancedShadow(
+                                Color.Black,
+                                offsetX = 10.dp,
+                                offsetY = 5.dp,
+                                spread = 4.dp,
+                                blurRadius = 10.dp,
+                                borderRadius = 50.dp
+                            ),
                         contentPadding = PaddingValues(0.dp)
                     )
                     {
@@ -162,32 +186,47 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                             fontSize = 20.sp
                         )
                     }
-                    Card(
-                        colors = CardDefaults.cardColors(Color.Transparent),
-                        modifier = Modifier
-                            .size(50.dp)
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                            .padding(25.dp, 0.dp)
-                            .weight(0.85F),
-                    )
-                    {
-                        Text(text = "${profile.profileDetails.currency}", color = Color.White)
-                        Icon(Icons.Default.Star, contentDescription = "currency indicator", tint = Color.Yellow)
+                    key (profileState){
+                        Card(
+                            colors = CardDefaults.cardColors(Color.Transparent),
+                            modifier = Modifier
+                                .size(40.dp)
+                                .fillMaxHeight()
+                                .fillMaxWidth()
+                                .padding(25.dp, 0.dp)
+                                .weight(1F),
+                        )
+                        {
+                            Text(
+                                text = "${currency.value}",
+                                modifier = Modifier.fillMaxWidth(),
+                                color = Color.White
+                            )
+                            Icon(
+                                Icons.Default.Star,
+                                contentDescription = "currency indicator",
+                                tint = Color.Yellow
+                            )
+                        }
                     }
+
 
                 }
                 AnimatedVisibility(
                     visible = isShopVisible.value,
                     enter = slideInVertically(
-                        initialOffsetY = {fullHeight -> fullHeight}
-                    ) ,
+                        initialOffsetY = { fullHeight -> fullHeight }
+                    ),
                     exit = slideOutVertically(
-                        targetOffsetY = {fullHeight -> fullHeight}
+                        targetOffsetY = { fullHeight -> fullHeight }
                     )
                 ) {
                     ShopWindow(
-                        profile = profile,
+                        profile = profileState,
+                        onProfileUpdate = {
+                            profileState = it
+                            currency.value = profileState.profileDetails.currency
+                        },
                         cosmeticsList = cosmetics,
                         modifier = Modifier.fillMaxHeight()
                     )

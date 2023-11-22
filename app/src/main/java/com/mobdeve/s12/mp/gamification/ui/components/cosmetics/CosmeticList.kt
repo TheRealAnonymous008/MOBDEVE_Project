@@ -54,7 +54,7 @@ fun CosmeticRowHeader(text : String) {
 }
 
 @Composable
-fun CosmeticList(cosmeticList : ArrayList<Cosmetic>, profile: Profile) {
+fun CosmeticList(cosmeticList : ArrayList<Cosmetic>, profile: Profile, onProfileUpdate : (Profile) -> Unit) {
     val headList : ArrayList<HeadCosmetic> = ArrayList()
     val torsoList : ArrayList<TorsoCosmetic> = ArrayList()
     val legsList : ArrayList<LegsCosmetic> = ArrayList()
@@ -75,13 +75,13 @@ fun CosmeticList(cosmeticList : ArrayList<Cosmetic>, profile: Profile) {
         modifier = Modifier.fillMaxSize()
     ) {
         CosmeticRowHeader(text = "HEAD")
-        CosmeticRow(headList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
+        CosmeticRow(headList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile, onProfileUpdate) }
         CosmeticRowHeader(text = "TORSO")
-        CosmeticRow(torsoList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
+        CosmeticRow(torsoList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile, onProfileUpdate) }
         CosmeticRowHeader(text = "LEGS")
-        CosmeticRow(legsList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
+        CosmeticRow(legsList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile, onProfileUpdate)  }
         CosmeticRowHeader(text = "FEET")
-        CosmeticRow(feetList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile) }
+        CosmeticRow(feetList) { cosmetic: Cosmetic -> CosmeticEntry(cosmetic, profile, onProfileUpdate)  }
     }
 }
 

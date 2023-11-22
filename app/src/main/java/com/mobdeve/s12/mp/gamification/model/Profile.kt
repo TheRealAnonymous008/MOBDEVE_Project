@@ -1,5 +1,7 @@
 package com.mobdeve.s12.mp.gamification.model
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 import java.io.Serializable
 
 class Profile (
@@ -9,10 +11,8 @@ class Profile (
     var cosmetics : CosmeticHolder,
 ) : Serializable
 
-fun generateDefaultProfile() : Profile{
-    val profileDetails = ProfileDetails("Hello",
-        "Generic Description",
-        Avatar(), currency = 10)
+fun generateDefaultProfile(context: Context) : Profile {
+    val profileDetails = ProfileViewModel(context).profileDetails.value
     val cosmetics = CosmeticHolder()
     val taskListHolder = TaskListHolder()
     val skillListHolder = SkillListHolder()
