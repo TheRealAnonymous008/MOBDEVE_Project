@@ -37,6 +37,10 @@ fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
     val openDateDialog = remember { mutableStateOf(false) }
     val openTimeDialog = remember { mutableStateOf(false) }
 
+    if (timeStamp != null){
+        datePickerState.setSelection(timeStamp.time)
+    }
+
     Row() {
         Column(
             modifier = Modifier.weight(1f)
