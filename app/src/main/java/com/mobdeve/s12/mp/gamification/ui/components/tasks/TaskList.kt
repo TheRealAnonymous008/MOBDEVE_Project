@@ -1,6 +1,8 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,6 +29,7 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.model.TaskListHolder
 import com.mobdeve.s12.mp.gamification.model.createEmptyTask
+import com.mobdeve.s12.mp.gamification.notifications.notifyTask
 import com.mobdeve.s12.mp.gamification.notifications.unnotifyTask
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+@RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHolder){
     val scope = CoroutineScope(Dispatchers.Main)
@@ -53,7 +57,7 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     onUpdate = {
                         scope.launch(Dispatchers.IO) {
                             repo.taskRepository.update(it)
-//                            notifyTask(context , it)
+                            notifyTask(context , it)
                         }
                     },
                     onDelete={
