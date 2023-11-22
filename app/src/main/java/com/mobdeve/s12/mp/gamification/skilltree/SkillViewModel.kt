@@ -122,7 +122,7 @@ class SkillViewModel(val skills : ArrayList<Skill>): ViewModel(), Actions {
                     // This handles positioning
                     currentSkillNode.xPos = (depth) * X_SCALE
                     currentSkillNode.yPos = (cumY - 1) * Y_SCALE
-
+                    currentSkillNode.breadth = cumY - 1
                     // Do two things. First, add to the skill stack and second, add children
                     current.children.forEach {child ->
                         skillNodesMap[current.id]!!.addChild(skillNodesMap[child.id]!!)

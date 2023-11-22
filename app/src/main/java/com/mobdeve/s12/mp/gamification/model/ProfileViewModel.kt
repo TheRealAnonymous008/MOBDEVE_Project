@@ -1,7 +1,5 @@
 package com.mobdeve.s12.mp.gamification.model
 
-// ProfileViewModel.kt
-
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
@@ -17,6 +15,8 @@ class ProfileViewModel(private val context: Context) {
 
     private val _profileDetails = mutableStateOf(getProfileDetails())
     val profileDetails: State<ProfileDetails> get() = _profileDetails
+
+
 
     fun updateName(newName: String) {
         val updatedProfile = _profileDetails.value.copy(name = newName)

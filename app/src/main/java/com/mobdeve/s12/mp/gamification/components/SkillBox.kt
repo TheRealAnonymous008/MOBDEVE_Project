@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
@@ -17,8 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.Skill
+import com.mobdeve.s12.mp.gamification.model.SkillPriority
+import com.mobdeve.s12.mp.gamification.modifiers.advancedShadow
 import com.mobdeve.s12.mp.gamification.shapes.SkillNodeShape
 import com.mobdeve.s12.mp.gamification.skilltree.SkillNode
+import com.mobdeve.s12.mp.gamification.ui.components.skills.getPriorityColor
+import com.mobdeve.s12.mp.gamification.ui.theme.HighPriority
 
 @Composable
 fun skillBox(skillNode: SkillNode) {
@@ -27,16 +32,27 @@ fun skillBox(skillNode: SkillNode) {
         modifier = Modifier
             .width(80.dp)
     ) {
+        var bgcolor = getPriorityColor(skillNode.skill.priority)
         Box(
             modifier = Modifier
+                .advancedShadow(
+                    Color.Black,
+                    offsetX = 0.dp,
+                    offsetY = 0.dp,
+                    spread = 1.dp,
+                    blurRadius = 25.dp,
+                    borderRadius = 50.dp
+                )
                 .graphicsLayer {
                     shadowElevation = 8.dp.toPx()
                     shape = SkillNodeShape(24.dp.toPx())
                     clip = true
                 }
-                .background(color = Color.Red)
+                .background(color = bgcolor)
                 .size(50.dp)
         )
+
+
         Text(
             text = skillNode.skill.name,
             textAlign = TextAlign.Center,

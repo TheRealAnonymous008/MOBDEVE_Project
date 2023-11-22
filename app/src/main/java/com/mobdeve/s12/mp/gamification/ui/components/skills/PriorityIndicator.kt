@@ -15,20 +15,29 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mobdeve.s12.mp.gamification.model.SkillPriority
 import com.mobdeve.s12.mp.gamification.ui.theme.HighPriority
+import com.mobdeve.s12.mp.gamification.ui.theme.LowPriority
+import com.mobdeve.s12.mp.gamification.ui.theme.MediumPriority
+import com.mobdeve.s12.mp.gamification.ui.theme.NoPriority
+
+
+fun getPriorityColor(priority : SkillPriority) : Color {
+    var bgcolor = NoPriority
+    if (priority == SkillPriority.LOW) {
+        bgcolor = LowPriority
+    } else if (priority == SkillPriority.MEDIUM) {
+        bgcolor = MediumPriority
+    } else if (priority == SkillPriority.HIGH) {
+        bgcolor = HighPriority
+    }
+    return bgcolor
+}
 
 @Composable
 fun PriorityIndicator(
     modifier: Modifier = Modifier,
     priority : SkillPriority
 ){
-    var bgcolor = Color.Gray
-    if (priority == SkillPriority.LOW) {
-        bgcolor = Color.Green
-    } else if (priority == SkillPriority.MEDIUM) {
-        bgcolor = Color.Yellow
-    } else if (priority == SkillPriority.HIGH) {
-        bgcolor = HighPriority
-    }
+    var bgcolor = getPriorityColor(priority)
 
 
     Card (
