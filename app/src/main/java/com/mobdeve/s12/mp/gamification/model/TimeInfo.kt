@@ -77,7 +77,7 @@ data class TimeInfo(
 
 fun formatTimestampDate(timestamp: Timestamp?): String {
     if (timestamp == null){
-        return "No Time"
+        return "No Date"
     }
     val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     return sdf.format(timestamp)
@@ -85,7 +85,7 @@ fun formatTimestampDate(timestamp: Timestamp?): String {
 
 fun formatTimestampTime(timestamp: Timestamp?): String {
     if (timestamp == null){
-        return "No Date"
+        return "No Time"
     }
     val sdf = SimpleDateFormat("hh:dd a", Locale.getDefault())
     return sdf.format(timestamp)
