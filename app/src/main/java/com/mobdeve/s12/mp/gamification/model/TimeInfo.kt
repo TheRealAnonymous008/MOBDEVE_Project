@@ -3,6 +3,7 @@ package com.mobdeve.s12.mp.gamification.model
 import java.io.Serializable
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 data class TimeInfo(
@@ -74,12 +75,25 @@ data class TimeInfo(
 
 }
 
-fun formatTimestampDate(timestamp: Timestamp): String {
+fun formatTimestampDate(timestamp: Timestamp?): String {
+    if (timestamp == null){
+        return "No Time"
+    }
     val sdf = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
     return sdf.format(timestamp)
 }
 
-fun formatTimestampTime(timestamp: Timestamp): String {
+fun formatTimestampTime(timestamp: Timestamp?): String {
+    if (timestamp == null){
+        return "No Date"
+    }
     val sdf = SimpleDateFormat("hh:dd a", Locale.getDefault())
     return sdf.format(timestamp)
+}
+
+fun getTimeStampDate(timestamp: Timestamp?, defaultValue : Timestamp) : Date {
+    if (timestamp == null){
+        return Date(defaultValue.time)
+    }
+    return Date(timestamp.time)
 }

@@ -13,20 +13,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import java.sql.Date
+import com.mobdeve.s12.mp.gamification.model.formatTimestampDate
+import com.mobdeve.s12.mp.gamification.model.getTimeStampDate
 import java.sql.Timestamp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DateTimeInput(timeState : Timestamp??, onUpdate: (t : Timestamp?) -> Unit) {
+fun DateTimeInput(timeStamp : Timestamp?, onUpdate: (t : Timestamp?) -> Unit) {
 
     val state = rememberDatePickerState()
-    var date by remember { mutableStateOf<Date?>(null) }
-
-    if (timeState != null) {
-        date = Date(timeState!!.time)
-    }
-
+    var timeStampState by remember {mutableStateOf(timeStamp)}
     val openDialog = remember { mutableStateOf(false) }
 
     if (openDialog.value) {
@@ -40,10 +36,8 @@ fun DateTimeInput(timeState : Timestamp??, onUpdate: (t : Timestamp?) -> Unit) {
                         openDialog.value = false
                         val selectedDateMillis = state.selectedDateMillis
                         if (selectedDateMillis != null) {
-                            val selectedDate = Date(selectedDateMillis)
-                            val timestamp = Timestamp(selectedDateMillis)
-                            onUpdate(timestamp)
-                            date = selectedDate
+                            timeStampState = Timestamp(selectedDateMillis)
+                            onUpdate(timeStampState)
                         }
                     }
                 ) {
@@ -66,9 +60,9 @@ fun DateTimeInput(timeState : Timestamp??, onUpdate: (t : Timestamp?) -> Unit) {
         }
     }
 
-    // Just display the date
+
     Text(
-        text = "${date}",
+        text = "${formatTimestampDate(timeStampState)}",
         modifier = Modifier
             .clickable {
                 openDialog.value = true
