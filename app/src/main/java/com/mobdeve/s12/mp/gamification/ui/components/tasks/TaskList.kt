@@ -102,6 +102,8 @@ fun TaskList(taskList : TaskListHolder, profile : Profile, repo : RepositoryHold
                     it.id = id
                     taskList.add(it)
                     taskListState.add(it)
+
+                    repo.rewardRepository.insertForTask(it)
                 }
             },
             onDelete = {

@@ -69,6 +69,16 @@ class RewardRepository(private val dao : RewardDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun insertForTask(task : Task ) {
+        task.getRewards().forEach {
+            val entity = getTaskSkillReward(it)
+            dao.add(entity)
+        }
+    }
+
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun update(reward: Reward) {
         val entity = getTaskSkillReward(reward)
         dao.update(entity)
