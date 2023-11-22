@@ -11,9 +11,8 @@ data class TimeInfo(
     var datetimeFrom: Timestamp? = null,
     var dateTimeTo: Timestamp? = null,
     var dateTimeFinished : Timestamp? = null,
-
-) : Serializable {
     var progress : Long = 0
+) : Serializable {
 
     fun getDurationAsString(): String {
         if (datetimeFrom == null && dateTimeTo == null)

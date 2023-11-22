@@ -28,15 +28,16 @@ import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import kotlinx.coroutines.delay
 
 @Composable
-fun TaskTimer(task : Task) {
+fun TaskTimer(task : Task, onTick : (task : Task) -> Unit) {
     var isPlaying by remember { mutableStateOf(false)}
-    var progress by remember { mutableFloatStateOf(task.getProgress()) }
+    var progress by remember { mutableFloatStateOf(task.getNormalizedProgress()) }
 
     LaunchedEffect(key1 = isPlaying) {
         while (isPlaying) {
             delay(1000L)
             task.updateProgress()
-            progress = task.getProgress()
+            progress = task.getNormalizedProgress()
+            onTick(task)
         }
     }
 
