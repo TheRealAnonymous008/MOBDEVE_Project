@@ -11,9 +11,8 @@ data class TimeInfo(
     var datetimeFrom: Timestamp? = null,
     var dateTimeTo: Timestamp? = null,
     var dateTimeFinished : Timestamp? = null,
-
-) : Serializable {
     var progress : Long = 0
+) : Serializable {
 
     fun getDurationAsString(): String {
         if (datetimeFrom == null && dateTimeTo == null)
@@ -22,16 +21,17 @@ data class TimeInfo(
         if (dateTimeTo == null)
             return ""
 
-        return getTimeFormattedString()
+        return getTimeFormattedString(dateTimeTo!!.time - datetimeFrom!!.time)
     }
 
-    fun containsFrom() : Boolean {
-        return datetimeFrom != null
+    fun getTimePassedAsString() : String {
+        if (dateTimeTo == null || datetimeFrom == null)
+            return ""
+
+        val timeLeft = ((dateTimeTo!!.time - datetimeFrom!!.time)  * (getNormalizedProgress())).toLong()
+        return getTimeFormattedString(timeLeft)
     }
 
-    fun containsTo() : Boolean {
-        return dateTimeTo != null
-    }
     fun addProgress(x : Long) {
         progress += x
     }
@@ -50,8 +50,8 @@ data class TimeInfo(
         return 1.0f
     }
 
-    private fun getTimeFormattedString() : String{
-        val durationInMillis = dateTimeTo!!.time - datetimeFrom!!.time
+    private fun getTimeFormattedString(time: Long) : String{
+        val durationInMillis = time
 
         val seconds = durationInMillis / 1000 % 60
         val minutes = durationInMillis / (1000 * 60) % 60

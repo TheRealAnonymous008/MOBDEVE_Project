@@ -1,7 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components.tasks
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -39,13 +37,18 @@ import com.mobdeve.s12.mp.gamification.model.Profile
 import com.mobdeve.s12.mp.gamification.model.Task
 import com.mobdeve.s12.mp.gamification.ui.theme.AccentColor
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
-import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onDelete : (t : Task) -> Unit, repo : RepositoryHolder) {
+fun TaskEntry(
+    task : Task,
+    profile : Profile,
+    onUpdate : (t : Task) -> Unit,
+    onDelete : (t : Task) -> Unit,
+    repo : RepositoryHolder)
+{
 
     var offsetX by remember { mutableStateOf(Offset.Zero) }
     var show by remember { mutableStateOf(true) }
@@ -152,7 +155,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
-                    TaskTimer(task = task)
+                    TaskTimer(task = task, onTick = onUpdate)
                 }
             }
         }

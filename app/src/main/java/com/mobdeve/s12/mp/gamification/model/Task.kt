@@ -2,7 +2,6 @@ package com.mobdeve.s12.mp.gamification.model
 
 import java.io.Serializable
 import java.sql.Timestamp
-import kotlin.time.Duration.Companion.milliseconds
 
 data class Task(
     var id : Long,
@@ -58,9 +57,10 @@ data class Task(
     fun updateProgress()  {
         timeInfo.addProgress(1)
     }
-    fun getProgress() : Float {
+    fun getNormalizedProgress() : Float {
         return timeInfo.getNormalizedProgress()
     }
+
 
     fun play() {
         currentTimestamp = getCurrentTimeStamp()
@@ -75,6 +75,7 @@ data class Task(
             return 0
         return timeInfo.dateTimeFinished!!.time
     }
+
 
     fun isMappedToSkill(sk : Skill) : Boolean {
         for (reward in rewards) {

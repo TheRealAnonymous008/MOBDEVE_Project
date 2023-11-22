@@ -149,7 +149,8 @@ fun getTaskFromEntity(entry : TaskEntity) : Task{
             datetimeCreated =  dateTimeCreated,
             datetimeFrom = dateTimeFrom,
             dateTimeTo = dateTimeTo,
-            dateTimeFinished = dateTimeFinished
+            dateTimeFinished = dateTimeFinished,
+            progress = entry.progress,
         ),
         isFinished = entry.isFinished
     )
