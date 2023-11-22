@@ -125,7 +125,7 @@ fun TaskEntry(task : Task, profile : Profile, onUpdate : (t : Task) -> Unit, onD
                         // Task duration
                         Box {
                             Text(
-                                text = task.timeInfo.getDurationAsString(),
+                                text = task.timeInfo.getTimeLeftAsString(),
                                 color = TextColor,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,

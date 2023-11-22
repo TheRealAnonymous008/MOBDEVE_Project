@@ -76,6 +76,7 @@ data class Task(
         return timeInfo.dateTimeFinished!!.time
     }
 
+
     fun isMappedToSkill(sk : Skill) : Boolean {
         for (reward in rewards) {
             if (reward.skill == sk)

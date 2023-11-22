@@ -22,16 +22,17 @@ data class TimeInfo(
         if (dateTimeTo == null)
             return ""
 
-        return getTimeFormattedString()
+        return getTimeFormattedString(datetimeFrom!!.time - dateTimeTo!!.time)
     }
 
-    fun containsFrom() : Boolean {
-        return datetimeFrom != null
+    fun getTimeLeftAsString() : String {
+        if (dateTimeTo == null || datetimeFrom == null)
+            return ""
+
+        val timeLeft = ((dateTimeTo!!.time - datetimeFrom!!.time)  * (1 - getNormalizedProgress())).toLong()
+        return getTimeFormattedString(timeLeft)
     }
 
-    fun containsTo() : Boolean {
-        return dateTimeTo != null
-    }
     fun addProgress(x : Long) {
         progress += x
     }
@@ -50,8 +51,8 @@ data class TimeInfo(
         return 1.0f
     }
 
-    private fun getTimeFormattedString() : String{
-        val durationInMillis = dateTimeTo!!.time - datetimeFrom!!.time
+    private fun getTimeFormattedString(time: Long) : String{
+        val durationInMillis = time
 
         val seconds = durationInMillis / 1000 % 60
         val minutes = durationInMillis / (1000 * 60) % 60
