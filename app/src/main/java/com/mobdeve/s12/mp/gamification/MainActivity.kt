@@ -18,7 +18,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.mobdeve.s12.mp.gamification.components.LockScreenOrientation
+import com.mobdeve.s12.mp.gamification.utils.LockScreenOrientation
 import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModel
 import com.mobdeve.s12.mp.gamification.localdb.CosmeticViewModelFactory
 import com.mobdeve.s12.mp.gamification.localdb.EdgeViewModel
