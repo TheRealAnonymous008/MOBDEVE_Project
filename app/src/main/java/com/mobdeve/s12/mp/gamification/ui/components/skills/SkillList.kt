@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.runtime.Composable
@@ -84,7 +85,7 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryH
         )
 
 
-        LargeFloatingActionButton(
+        FloatingActionButton(
             modifier = Modifier
                 .align(Alignment.BottomStart),
             onClick = {
@@ -98,7 +99,7 @@ fun SkillList(skillList : SkillListHolder, profile : Profile, repo : RepositoryH
             Icon(
                 Icons.Filled.Add,
                 contentDescription = "Add FAB",
-                modifier = Modifier.size(80.dp, 80.dp)
+                modifier = Modifier.size(60.dp, 60.dp)
             )
         }
 
