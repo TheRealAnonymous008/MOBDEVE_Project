@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var cosmeticsHolder : CosmeticHolder
 
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         createNotificationChannel()
@@ -116,6 +118,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun fetchTasks(): LiveData<TaskListHolder> {
         val tasksLiveData = MutableLiveData<TaskListHolder>()
 
@@ -136,6 +139,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun fetchSkills(): LiveData<SkillListHolder> {
         val skillsLiveData = MutableLiveData<SkillListHolder>()
         skillViewModel.allSkills.observe(this) { skills ->
@@ -155,6 +159,7 @@ class MainActivity : AppCompatActivity() {
         return skillsLiveData
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun fetchRewards(holder: TaskListHolder, skills: SkillListHolder) {
         val profile = profileState.value
         val tasks = holder.tasks
@@ -183,6 +188,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun fetchEdges(holder : SkillListHolder) {
         val profile = profileState.value
         val skills = holder.skills
@@ -209,6 +215,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun fetchCosmetics() {
         cosmeticViewModel.allCosmetics.observe(this) { cosmetics ->
             val profile = profileState.value
@@ -230,12 +237,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun update() {
         setContent {
             navigation()
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     @Composable
     fun navigation() {
         val navController = rememberNavController()
