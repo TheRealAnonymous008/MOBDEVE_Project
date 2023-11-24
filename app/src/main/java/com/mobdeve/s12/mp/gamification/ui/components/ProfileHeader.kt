@@ -2,6 +2,7 @@ package com.mobdeve.s12.mp.gamification.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,18 +13,28 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mobdeve.s12.mp.gamification.MainActivity
 import com.mobdeve.s12.mp.gamification.model.ProfileDetails
@@ -33,6 +44,7 @@ import com.mobdeve.s12.mp.gamification.ui.theme.Background
 import com.mobdeve.s12.mp.gamification.ui.theme.PrimaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.SecondaryColor
 import com.mobdeve.s12.mp.gamification.ui.theme.TertiaryColor
+import com.mobdeve.s12.mp.gamification.ui.theme.TextColor
 
 
 class ProfileHeaderParameters {
@@ -104,27 +116,39 @@ fun ProfileHeader(profileDetails : ProfileDetails, navController: NavController)
                     .fillMaxSize()
             ) {
                 // Username
-                TextField(
-                    modifier = Modifier
-                        .fillMaxWidth() .background(TertiaryColor),
+                BasicTextField(
                     value = profileDetails.name,
+                    cursorBrush = SolidColor(Color.Unspecified),
+                    maxLines = 1,
                     onValueChange = { newName ->
                         profileViewModel.updateName(newName)
                     },
-                    label = { Text("Username") },
+                    textStyle = TextStyle(
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TextColor,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(TertiaryColor)
                 )
-
-                Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
 
                 // Description
-                TextField(
+                BasicTextField(
+                    cursorBrush = SolidColor(Color.Unspecified),
                     modifier = Modifier
-                        .fillMaxSize() .background(TertiaryColor),
+                        .fillMaxSize()
+                        .background(TertiaryColor),
                     value = profileDetails.description,
+                    textStyle = TextStyle(
+                        fontSize = 10.sp,
+                        color = TextColor
+                    ),
                     onValueChange = { newDescription ->
                         profileViewModel.updateDescription(newDescription)
                     },
-                    label = { Text("Description") },
+
                 )
             }
         }

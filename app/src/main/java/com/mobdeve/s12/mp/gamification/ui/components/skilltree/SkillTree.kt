@@ -61,7 +61,6 @@ fun SkillTreeWindow(skillList : SkillListHolder, profile : Profile){
                             pos2,
                             5.0f)
                     }
-                    Log.d("POSITON", "${child.skill.name} = ${child.xPos}, ${child.yPos} with Offset $pos2 \n and ${skillNode.skill.name} = ${skillNode.xPos} + ${skillNode.yPos} with Offset $pos1")
                 }
 
                 skillBox(skillNode)

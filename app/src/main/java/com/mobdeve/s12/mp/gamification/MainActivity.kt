@@ -226,7 +226,6 @@ class MainActivity : AppCompatActivity() {
                 val cosmetic = getCosmeticFromEntity(cosmeticEntity)
                 if(cosmetic.owned){
                     profile.cosmetics.add(cosmetic)
-                    Log.d("cosmetic", "${cosmetic.name}")
                 }
 
                 cosmeticsHolder.add(cosmetic)

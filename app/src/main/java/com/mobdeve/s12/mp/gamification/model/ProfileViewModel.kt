@@ -21,7 +21,6 @@ class ProfileViewModel(private val context: Context) {
             with(sharedPreferences.edit()) {
                 putString("name", "Player")
                 putString("description", "My description!")
-                Log.d("AVATAR", Avatar().toString())
                 putString("avatar", Avatar().toJson())
                 putInt("currency", 10)
                 putString("exists", "exists")
