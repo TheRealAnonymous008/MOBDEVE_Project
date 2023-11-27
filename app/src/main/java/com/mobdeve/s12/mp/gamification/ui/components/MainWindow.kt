@@ -1,7 +1,6 @@
 package com.mobdeve.s12.mp.gamification.ui.components
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -15,28 +14,26 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,18 +59,35 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 
+enum class HorDir(val direction : Int) {
+    LEFT(-1),
+    RIGHT(1)
+}
+
 @RequiresApi(Build.VERSION_CODES.S)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: RepositoryHolder, navController: NavController) {
+    val scope = rememberCoroutineScope()
     val horizontalPagerState = rememberPagerState(
         initialPage = 1,
         initialPageOffsetFraction = 0f
     ) { 3 }
     val isShopVisible = remember { mutableStateOf(false) }
     val isTaskVisible = remember {mutableStateOf(true)}
+
+    val isLeftScrollVisible = remember{ mutableStateOf(true) }
+    val isRightScrollVisible = remember{ mutableStateOf(true) }
+
     var profileState by remember {mutableStateOf(profile)}
     var currency = remember {mutableIntStateOf(profileState.profileDetails.currency)}
+
+    fun scrollPage(pageOffset : Int) {
+        scope.launch {
+            horizontalPagerState.animateScrollToPage(horizontalPagerState.currentPage + pageOffset)
+        }
+    }
+
     MOBDEVEProjectTheme {
         // A surface container using the 'background' color from the theme
         Surface(
@@ -144,6 +158,35 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                         .padding(10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
+                    if (horizontalPagerState.currentPage != 0) {
+                        Button(
+                            onClick = {
+                                MainScope().launch { scrollPage(HorDir.LEFT.direction) }
+                            },
+                            colors = ButtonDefaults.buttonColors(OtherAccent),
+                            shape = CircleShape,
+                            modifier = Modifier
+                                .size(50.dp)
+                                .fillMaxHeight()
+                                .weight(0.7F)
+                                .advancedShadow(
+                                    Color.Black,
+                                    offsetX = 10.dp,
+                                    offsetY = 5.dp,
+                                    spread = 4.dp,
+                                    blurRadius = 10.dp,
+                                    borderRadius = 50.dp
+                                ),
+                            contentPadding = PaddingValues(0.dp)
+                        )
+                        {
+                            Icon(
+                                Icons.Default.ArrowBack,
+                                contentDescription = "settings button",
+                                tint = Color.White
+                            )
+                        }
+                    }
                     Button(
                         onClick = { navController.navigate(SKILLTREE_WINDOW) },
                         colors = ButtonDefaults.buttonColors(OtherAccent),
@@ -196,29 +239,59 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                             fontSize = 20.sp
                         )
                     }
-                    key (profileState){
-                        Card(
-                            colors = CardDefaults.cardColors(Color.Transparent),
+                    if (horizontalPagerState.currentPage != 2) {
+                        Button(
+                            onClick = {
+                                MainScope().launch { scrollPage(HorDir.RIGHT.direction) }
+                            },
+                            colors = ButtonDefaults.buttonColors(OtherAccent),
+                            shape = CircleShape,
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(50.dp)
                                 .fillMaxHeight()
-                                .fillMaxWidth()
-                                .padding(25.dp, 0.dp)
-                                .weight(1F),
+                                .weight(0.7F)
+                                .advancedShadow(
+                                    Color.Black,
+                                    offsetX = 10.dp,
+                                    offsetY = 5.dp,
+                                    spread = 4.dp,
+                                    blurRadius = 10.dp,
+                                    borderRadius = 50.dp
+                                ),
+                            contentPadding = PaddingValues(0.dp),
                         )
                         {
-                            Text(
-                                text = "${currency.value}",
-                                modifier = Modifier.fillMaxWidth(),
-                                color = Color.White
-                            )
                             Icon(
-                                Icons.Default.Star,
-                                contentDescription = "currency indicator",
-                                tint = Color.Yellow
+                                Icons.Default.ArrowForward,
+                                contentDescription = "settings button",
+                                tint = Color.White
                             )
                         }
                     }
+
+//                    key (profileState){
+//                        Card(
+//                            colors = CardDefaults.cardColors(Color.Transparent),
+//                            modifier = Modifier
+//                                .size(40.dp)
+//                                .fillMaxHeight()
+//                                .fillMaxWidth()
+//                                .padding(25.dp, 0.dp)
+//                                .weight(1F),
+//                        )
+//                        {
+//                            Text(
+//                                text = "${currency.value}",
+//                                modifier = Modifier.fillMaxWidth(),
+//                                color = Color.White
+//                            )
+//                            Icon(
+//                                Icons.Default.Star,
+//                                contentDescription = "currency indicator",
+//                                tint = Color.Yellow
+//                            )
+//                        }
+//                    }
 
 
                 }
