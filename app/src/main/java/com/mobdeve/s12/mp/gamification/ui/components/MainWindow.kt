@@ -76,9 +76,6 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
     val isShopVisible = remember { mutableStateOf(false) }
     val isTaskVisible = remember {mutableStateOf(true)}
 
-    val isLeftScrollVisible = remember{ mutableStateOf(true) }
-    val isRightScrollVisible = remember{ mutableStateOf(true) }
-
     var profileState by remember {mutableStateOf(profile)}
     var currency = remember {mutableIntStateOf(profileState.profileDetails.currency)}
 
@@ -268,32 +265,6 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
                             )
                         }
                     }
-
-//                    key (profileState){
-//                        Card(
-//                            colors = CardDefaults.cardColors(Color.Transparent),
-//                            modifier = Modifier
-//                                .size(40.dp)
-//                                .fillMaxHeight()
-//                                .fillMaxWidth()
-//                                .padding(25.dp, 0.dp)
-//                                .weight(1F),
-//                        )
-//                        {
-//                            Text(
-//                                text = "${currency.value}",
-//                                modifier = Modifier.fillMaxWidth(),
-//                                color = Color.White
-//                            )
-//                            Icon(
-//                                Icons.Default.Star,
-//                                contentDescription = "currency indicator",
-//                                tint = Color.Yellow
-//                            )
-//                        }
-//                    }
-
-
                 }
                 AnimatedVisibility(
                     visible = isShopVisible.value,
@@ -326,3 +297,4 @@ fun MainWindow(profile : Profile, cosmetics: ArrayList<Cosmetic>, repo: Reposito
         }
     }
 }
+

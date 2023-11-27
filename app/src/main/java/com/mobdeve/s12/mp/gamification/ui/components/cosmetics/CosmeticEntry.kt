@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -150,13 +151,39 @@ fun CosmeticDialog(cosmetic: Cosmetic, showState : Boolean, onDismissRequest: ()
                     .wrapContentHeight(unbounded = true),
 
             ) {
-                Button(
-                    onClick = {
-                        isDialogVisible.value = false },
-                    colors = ButtonDefaults.buttonColors(Color.Transparent)
-                ) {
-                    Icon(Icons.Default.Close, contentDescription = "close button", tint = Color.Black)
+                Row {
+                    Button(
+                        onClick = {
+                            isDialogVisible.value = false },
+                        colors = ButtonDefaults.buttonColors(Color.Transparent)
+                    ) {
+                        Icon(Icons.Default.Close, contentDescription = "close button", tint = Color.Black)
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(0.25f)
+                            .background(Color.Transparent)
+                            .fillMaxHeight()
+                            .padding(10.dp, 0.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.End
+                    )
+                    {
+                        Text(
+                            text = profile.profileDetails.currency.toString(),
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            color = Color.Black,
+                            textAlign = TextAlign.Right
+                        )
+                        androidx.compose.material3.Icon(
+                            Icons.Default.Star,
+                            contentDescription = "currency indicator",
+                            tint = Color.Yellow
+                        )
+                    }
                 }
+
                 Column (
                     modifier = Modifier
                         .fillMaxWidth(),
